@@ -1,0 +1,373 @@
+    <%- include partials/header_product %>
+<style>
+button.btn.btn-primary.nextBtn.btn-lg{
+  outline: 0 none;
+  }
+ button.datas-btn.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     button.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+.panel-info{
+      border-color: #babf10;
+}
+.panel-info>.panel-heading{
+  color: #fff;
+  background-color: rgb(245, 245, 245);
+  border-color: #babf10;
+}
+h4,h6 {
+   margin-top: 25px;
+}
+.input-sm{
+   margin-top: 15px;
+}
+
+.btn-group-xs>.btn, .btn-xs{
+  margin-top: 20px;
+}
+</style>
+
+<div class="row-fluid">
+  <img src="/assets/img/shopping.gif" class="img-responsive">
+
+    
+ </div> 
+
+<div class="container" style="padding-top: 60px;">
+  <div class="row">
+    <div class="col-xs-12">
+   <h3 id="messageemptys" style="text-align: center;color: #000;font-weight: 600;"></h3>
+
+      <h6 id="messageemptyseconds" style="text-align: center;font-weight: 600;"></h6>
+      <br>
+      <a href="/"><button id="messagebutton" type="button" class="newbtn btn btn-primary btn-md" style="line-height: 20px">
+                 RETURN TO HOME
+                </button></a>
+    <div class="panel-body" id="cart" style="visibility: hidden;">
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">
+
+            <div class="row">
+
+             <div class="col-xs-8">
+              <h5 style="color:#9ca00c;margin-top: 20px;margin-left: 10px;">Product Name</h5>
+              
+              </div>
+              <div class="col-xs-1 text-right">
+                <h5 style="color:#9ca00c;margin-top: 20px;margin-left: 50px;">Price</h5>
+              </div>
+               <div class="col-xs-1">
+               <h5 style="color:#9ca00c;margin-top: 20px;margin-left: 50px;">Qty</h5>
+              </div>
+               <div class="col-xs-1 text-right">
+                <h5 style="color:#9ca00c;margin-top: 20px;margin-left: 50px;">Total</h5>
+              </div>
+               <div class="col-xs-1">
+                <h5 style="color:#9ca00c;margin-top: 20px;margin-left: 30px;">Action</h5>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+       
+
+        <br>
+
+       <div class="row" id="cartBody">
+            
+         
+          </div>
+        
+          
+          
+          
+          
+          <div class="row">
+            <div class="text-center">
+              <div class="col-xs-3">
+                 <input type="text" class="form-control" style="margin-top: 3px;margin-left: 5px;" placeholder="I HAVE A DISCOUNT COUPON">
+                 <br>
+              </div>
+              <div class="col-xs-3">
+                <button type="button" class="newbtn btn btn-primary btn-md pull-left" style="line-height: 20px">
+                 Apply Coupon
+                </button>
+
+              </div>
+              <div class="col-xs-3">
+            
+              </div>
+              <div class="col-xs-3">
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            
+            <div class="col-xs-3">
+            
+            </div>
+
+            <div class="col-xs-2"> 
+             
+            </div>
+
+            <div class="col-xs-2">
+            
+              </div>
+            
+            <div class="col-xs-3">
+               
+                <h4 style="text-align:center;"><strong>Grand Total</strong></h4>
+             </div>
+             
+              <div class="col-xs-2">
+               
+               
+                 <h4 style="text-align:center;margin-right: 32px;">$<strong  id="grandtotalprice"> </strong> </h4>
+              </div>
+          
+          </div>
+       
+        
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-xs-3">
+             <a href="/order-medicine"><button type="button" class="newbtn btn btn-primary btn-md" style="line-height: 20px"><span class="glyphicon glyphicon-share-alt"></span>
+                Continue Shopping
+              </button></a>
+            </div>
+            <div class="col-xs-6">
+            
+            </div>
+            <div class="col-xs-3">
+             <a href="/checkout"><button type="button" class="newbtn btn btn-primary btn-md" style="line-height: 20px">
+                Checkout
+              </button></a>
+            </div>
+          </div>
+        </div>
+      
+ 
+
+      </div>
+       </div> 
+    </div>
+  </div>
+</div>
+  
+<script>
+        var cart = [];
+        $(function () {
+            if (localStorage.cart)
+            {
+                cart = JSON.parse(localStorage.cart);
+                localStorage.clear();
+                window.location.reload();
+                
+               // alert("hii");
+                showCart();
+            }
+               if (cart.length == 0 || cart.length == null) {
+              //alert(cart.length);
+              document.getElementById("totalprice").textContent= "0";
+
+                $("#messageemptys").html("Thanks for Shopping");
+
+                 $("#messageemptyseconds").html("Please visit Again !!!");
+            }
+
+        });
+
+    
+
+           function showCart() {
+            if (cart.length == 0) {
+                $("#cart").css("visibility", "hidden");
+                //document.getElementById("totalitem").textContent= "0";
+               document.getElementById("totalprice").textContent= "0";
+
+                 $("#messageemptys").html("Thanks for Shopping");
+
+                 $("#messageemptyseconds").html("Please visit Again !!!");
+
+                 document.getElementById("messagebutton").style.display = "block";
+                
+                return;
+            }
+            
+          
+
+            $("#cart").css("visibility", "visible");
+            $("#cartBody").empty();
+
+            //document.getElementById("totalitem").textContent=cart.length;
+          
+              var total= 0;
+               var grandtotal= 0;
+              var final= 0;
+
+            for (var i in cart) {
+
+
+                var item = cart[i];
+
+
+               
+                var total = total + item.Qty * item.Price;
+
+                var grandtotal = grandtotal + item.Qty * item.Price;
+                //alert(grandtotal);
+                var productnames = $("#productname").textContent=item.Product;
+               //alert(productnames);
+                var newprices = $("#newprice").textContent=item.Price;
+                //alert(newprices);
+                var totalqtys = $("#totalqty").value=item.Qty;
+
+                 document.getElementById("totalprice").textContent=total;
+
+            
+                //  alert(totalqtys);
+
+                  document.getElementById("grandtotalprice").textContent=grandtotal;
+                 // alert(grandtotalprice);
+                   document.getElementById("messagebutton").style.display = "none";
+                    
+                     var row = "<div class='row'><div class='col-xs-8'><h5 style='margin-left:30px;' id='productname"+ i +"' name='productname"+ i +"'>" + item.Product + "</h5></div><div class='col-xs-1 text-right'><h5 id='newprice"+ i +"' name='newprice"+ i +"'><strong>$" + item.Price + "</strong></h5></div><div class='col-xs-1'><div class='input-group spinner'><input type='text' class='form-control cssQty' id='totalqty"+ i +"' name='totalqty"+ i +"' value='" + item.Qty + "' rowid='"+i+"'/><div class='input-group-btn-vertical'></div></div></div><div class='col-xs-1 text-right'><h5 style='text-align:right;' id='itemtotal" +i+"'><strong style='margin-right: 3px;'>"+"$"+ item.Qty * item.Price + "</strong></h5></div>"
+                             + "<div class='col-xs-1 text-right'><button class='btn btn-link btn-lg pull-right' style='margin-right: 30px;margin-top: -3px;' onclick='deleteItem(" + i + ")'><span class='glyphicon glyphicon-trash'> </span></button></div></div><hr style='margin-left: 15px;margin-right: 15px;'></div>";
+                $("#cartBody").append(row); 
+            }
+        }
+ </script>
+ <script type="text/javascript">
+     var checkout = [];
+        $(function () {
+            if (localStorage.checkout)
+            {
+               
+                checkout = JSON.parse(localStorage.checkout);
+                localStorage.clear();
+                window.location.reload();
+                showCheckout();
+            }
+        });
+
+          function deleteCheckout(index){
+            checkout.splice(index,1); // delete item at index
+            showCheckout();
+            saveCheckout();
+        }
+        function addvalue() {
+         var userid = $("#user_id").val();
+         var shippingfname = $("#shipfname").val();
+        // alert(shippingfname);
+            var shippinglname = $("#shiplname").val();
+            var shippingaddress = $("#shipaddress").val();
+            var shippingpcode = $("#shippcode").val();
+            var shippingcity = $("#shipcity").val();
+            var shippingstate = $("#shipstate").val();
+            var shippingphone = $("#shipphone").val();
+            var shippingemail = $("#shipemail").val();
+            var shippingcemail = $("#shipc_email").val();
+            var billingfname = $("#billfname").val();
+            var billinglname = $("#billfname").val();
+            var billingphone = $("#billphone").val();
+            var billingemail = $("#billemail").val();
+            var billingaddress = $("#billaddress").val();
+            var billingcity = $("#billcity").val();
+            var billingstate = $("#billstate").val();
+            var billingpcode = $("#billcode").val();
+            var cardName = $("#cardname").val();
+            var cardNo = $("#cardno").val();
+            var cvv = $("#cvvno").val();
+            var cardExDay = $("#exp_days").val();
+            var cardExMnth = $("#exp_month").val();
+
+            // update qty if product is already present
+       for (var i in checkout) {
+                if(checkout[i].Userid == userid)
+                {
+                    checkout[i].Shippingfname = shippingfname;
+                    checkout[i].Shippinglname = shippinglname;
+                    checkout[i].Shippingaddress = shippingaddress;
+                    checkout[i].Shippingpcode = shippingpcode;
+                    checkout[i].Shippingcity = shippingcity;
+                    checkout[i].Shippingstate = shippingstate;
+                    checkout[i].Shippingphone = shippingphone;
+                    checkout[i].Shippingemail = shippingemail;
+                    checkout[i].Shippingcemail = shippingcemail;
+                    checkout[i].Billingfname = billingfname;
+                    checkout[i].Billinglname = billinglname;
+                    checkout[i].Billingphone = billingphone;
+                    checkout[i].Billingemail = billingemail;
+                    checkout[i].Billingaddress = billingaddress;
+                    checkout[i].Billingcity = billingcity;
+                    checkout[i].Billingstate = billingstate;
+                    checkout[i].Billingpcode = billingpcode;
+                    checkout[i].CardName = cardName;
+                    checkout[i].CardNo = cardNo;
+                    checkout[i].Cvv = cvv;
+                    checkout[i].CardExDay = cardExDay;
+                    checkout[i].CardExMnth = cardExMnth;
+                    saveCheckout();
+                    showCheckout();
+                    return;
+                }
+            }
+            // create JavaScript Object
+
+         var newitem = { Userid: userid, Shippingfname: shippingfname,  Shippinglname: shippinglname, Shippingaddress: shippingaddress, Shippingpcode : shippingpcode , Shippingcity: shippingcity, Shippingstate: shippingstate , Shippingphone : shippingphone ,Shippingemail : shippingemail , Shippingcemail:shippingcemail, Billingfname: billingfname, Billinglname: billinglname, Billingphone:billingphone, Billingemail : billingemail , Billingaddress : billingaddress , Billingcity :billingcity, Billingstate : billingstate, Billingpcode : billingpcode , CardName : cardName, CardNo : cardNo, Cvv : cvv, CardExDay : cardExDay , CardExMnth : cardExMnth}; 
+
+             
+            checkout.push(newitem);
+            saveCheckout();
+            showCheckout();
+        }
+
+          function saveCheckout() {
+            // alert("save data");
+            if (window.localStorage)
+            {
+                localStorage.checkout = JSON.stringify(checkout);
+                //alert(JSON.stringify(checkout));
+
+            }
+        }
+
+
+          function showCheckout() {
+           // alert("show data");
+           if (checkout.length == 0) {
+                $("#checkout").css("visibility", "hidden");
+                return;
+            }
+
+           
+                 $("#checkout").css("visibility", "visible");
+               $("#checkoutbody").empty();
+            // alert(checkout.length-1);
+             //alert(checkout[checkout.length-1]);
+
+            for (var i in checkout) {
+                var checkoutitem = checkout[i];
+          
+    var rows="<div class='row'><div class='col-md-5 newcolumn'><p class='newpara'><strong style='margin-left: 12px;font-size: 20px;'>Billing Address</strong></p><div class='product_meta newmeta'><span class='posted_in'><strong>"+ checkoutitem.Billingfname  +   "&nbsp;" + checkoutitem.Billinglname +"</strong></span><span class='posted_in'><strong>"+ checkoutitem.Billingaddress +"</strong></span><span class='posted_in'><strong>"+ checkoutitem.Billingcity +"</strong></a></span><span class='posted_in'><strong>"+ checkoutitem.Billingstate +"</strong></span></div></div><div class='col-md-2'></div><div class='col-md-5 newcolumn'><p class='newpara'><strong style='margin-left: 12px;font-size: 20px;'>Shipping Address</strong></p><div class='product_meta newmeta'><span class='posted_in'><strong>"+ checkoutitem.Shippingfname  +   "&nbsp;" + checkoutitem.Shippinglname +"</strong></span><span class='posted_in'><strong>"+ checkoutitem.Shippingaddress +"</strong></span><span class='posted_in'><strong>"+ checkoutitem.Shippingcity +"</strong></a></span><span class='posted_in'><strong>"+ checkoutitem.Shippingstate +"</strong></span></div></div></div><br><div class='row'><div class='col-md-5 newcolumn'><p class='newpara'><strong style='margin-left: 12px;font-size: 20px;'>Payment Method</strong></p><div class='product_meta newmeta'><span class='posted_in'><strong>Credit Card - VISA</strong></span></div></div><div class='col-md-2'></div><div class='col-md-5 newcolumn'><p class='newpara'><strong style='margin-left: 12px;font-size: 20px;'>Shipping Method</strong></p><div class='product_meta newmeta'><span class='posted_in'><strong>Post Air Mail</strong></span></div></div></div><br><div class='row'><div class='col-md-12 newcolumn'><p class='newpara'><strong style='margin-left: 12px;font-size: 20px;'>Order Details</strong></p><div class='product_meta newmeta'><span class='posted_in' style='color: #999999;'><strong>Email:</strong> "+ checkoutitem.Shippingemail +"</span><span class='posted_in' style='color: #999999;'><strong>Phone:</strong> "+ checkoutitem.Shippingphone +"</span><span class='posted_in' style='color: #999999;'><strong>Additional Information: :</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</span></div></div></div><br><br><br>";  
+           $("#checkoutbody").append(rows);
+       
+            }
+  
+        }
+
+        
+
+
+    </script>
+ 
+    <%- include partials/footer_product %>

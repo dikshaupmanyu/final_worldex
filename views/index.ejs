@@ -1,0 +1,751 @@
+<!-- <!doctype html>
+<html>
+<head>
+	<title>Node Authentication</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		body 		{ padding-top:80px; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<div class="jumbotron text-center">
+		<h1><span class="fa fa-lock"></span> Node Authentication</h1>
+
+		<p>Login or Register with:</p>
+
+		<a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+		<a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+		<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+		<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+		<a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>
+	</div>
+
+	<div class="text-center">
+		<p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
+		<p>Visit the <a href="http://scotch.io/tutorials/javascript/easy-node-authentication-setup-and-local">tutorial</a>.</p>
+	</div>
+
+</div>
+</body>
+</html> -->
+
+
+    <%- include partials/header %>
+
+   
+    <style>
+     button.datas-btn.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     button.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+  
+    } @media (max-width: 767px){
+    .newborder{
+     border-right: 2px solid rgba(129, 200, 107, 0.36);
+     border-bottom: 2px solid rgba(129, 200, 107, 0.36);
+     margin-bottom: -2px;
+    }
+    
+    .newborders{
+     border-right: 2px solid rgba(129, 200, 107, 0.36);
+     margin-left: 7px !important;
+    }
+
+    .newbordersmob{
+     border-bottom: 2px solid rgba(129, 200, 107, 0.36);
+     margin-bottom: -2px;
+    }
+
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio:0)
+and (min-width:767px) {
+.datas-btn{
+
+   margin: 0px auto;display: block;
+  }
+
+.datas-btn new{
+
+  margin-left: 75px;
+}
+
+
+}
+
+@media  screen and (-webkit-min-device-pixel-ratio:0)
+and (max-width:320px){
+
+
+  a.newlogocss {
+    margin-left: 20px;
+    
+    font-size: 14px;
+}
+
+
+ .banner-section{
+
+  height: 152px;
+    line-height: 25px;
+}
+
+}
+    </style>
+
+ <style type="text/css">
+
+ .center-block a{
+  color: #fff;
+/*  height: 200px;
+*/ }
+
+ @media screen
+ and (-webkit-min-device-pixel-ratio:0)and (max-width : 768px)
+ {
+
+ .bottomborder{ border-bottom :2px solid rgba(129, 200, 107, 0.36);}
+
+.rightborder{ border-right :2px solid rgba(129, 200, 107, 0.36);}
+
+ }
+/*
+@media screen
+ and (-webkit-min-device-pixel-ratio:0)and (min-width : 768px) and (max-width : 50000px)
+{
+.rightborders{ border-right :2px solid rgba(129, 200, 107, 0.36);}
+
+
+.rightborder{ border-right :2px solid rgba(129, 200, 107, 0.36);}
+
+
+
+ }
+*/
+  @media screen
+ and (-webkit-min-device-pixel-ratio:0)and (min-width : 769px) and (max-width : 992px)
+{
+
+ .bottomborder{ border-bottom :2px solid rgba(129, 200, 107, 0.36);}
+
+
+
+.rightborder{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+.banner-section{
+ height: 152px;
+    line-height: 25px;
+}
+
+
+ }
+
+
+   @media screen
+ and (-webkit-min-device-pixel-ratio:0)and (min-width : 993px) and (max-width : 1024px)
+{
+.rightborders{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+
+.rightborder{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+.banner-section{
+ height: 75px;
+    line-height: 25px;
+}
+
+ }
+
+  @media screen
+ and (-webkit-min-device-pixel-ratio:0)and (min-width : 1025px) and (max-width : 1200px)
+{
+.rightborders{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+
+.rightborder{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+.banner-section{
+ height: 86px;
+    line-height: 28px;
+}
+
+ }
+
+ @media screen
+ and (-webkit-min-device-pixel-ratio:0)and (min-width : 1201px) and (max-width : 1439px)
+{
+.rightborders{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+
+.rightborder{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+.banner-section{
+ height: 55px;
+    line-height: 28px;
+}
+
+ }
+
+  @media screen
+ and (-webkit-min-device-pixel-ratio:0)and (min-width : 1440px) and (max-width : 5539px)
+{
+.rightborders{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+
+.rightborder{ border-right :1px solid rgba(129, 200, 107, 0.36);}
+
+.banner-section{
+ height: 60px;
+    line-height: 28px;
+}
+
+ }
+
+   #buttons{
+    float:right;
+    position:relative;
+    left:-50%;
+    text-align:left;
+}
+#buttons ul{
+    list-style:none;
+    position:relative;
+    left:50%;
+}
+
+#buttons li{float:left;position:relative;}/* ie needs position:relative here*/
+
+#buttons a{
+    text-decoration:none;
+    margin:10px;
+    /*background:red;*/
+    float:left;
+    border:none;
+    color:rgba(255, 255, 255, 0.78);
+    padding:2px 5px;
+    text-align:center;
+    white-space:nowrap;
+}
+
+#buttons a:hover{ border: none;
+    color: #fff;
+    background: #41a073;}
+#content{overflow:hidden}/* hide horizontal scrollbar*/
+ </style> 
+
+
+<!--<section class="parallax">
+                 
+               </section>-->
+
+
+ <div id="hpage">
+    <div class="row-fluid">
+  <img src="/img/homebanner1.png" class="img-responsive newimagecss">
+ </div> 
+
+           <!--        <% if(locals.error) { %>
+              <div class="alert alert-danger" style="text-align: center;width: 400px;float: right;position: absolute;top: 540px;left: 930px; display: none;"><%= error %>
+                  <button type="button" class="close-data" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              </div>
+                     <% } %>
+                     <% if(locals.success) { %>
+              <div class="alert alert-success" style="text-align: center;width: 400px;float: right;position: absolute;top: 540px;left: 930px;display: none;"><%= success %>
+                  <button type="button" class="close-data" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              </div>
+                      <% } %> 
+
+
+ -->
+                 
+              <section class="banner-section">
+               <div class="container" style="text-align: center;">
+                  <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 center-block bottomborder rightborder">
+       <a href="/res-philosophy"> <i class="fa fa-tree fa-1.5x"></i> <br>Resource  <br class="visible-xs visible-sm visible-md">&nbsp;</a>
+            </div>
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 center-block bottomborder rightborder">
+          <a href="#reviews"> <i class="fa fa-shopping-cart fa-1.5x"></i>
+                              <br> Order    <br class="visible-xs visible-sm visible-md">Supplement</a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 center-block bottomborder rightborders">
+         <a href="/symptomsapistep"><i class="fa fa-user-md fa-1.5x"></i>
+                              <br>  Self  <br class="visible-xs visible-sm visible-md">Consultants</a>  
+        </div> 
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 center-block rightborder">
+        <a href="#features"> <i class="fa fa-tree fa-1.5x"></i>
+                            <br>Consult a  <br class="visible-xs visible-sm visible-md">Doctor</a>
+            </div>
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 center-block rightborder">
+          <a href="#whyWorldex"> <i class="fa fa-cog fa-1.5x"></i>
+                             <br>   Why    <br class="visible-xs visible-sm visible-md">GreenLiving</a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 center-block">
+          <a href="#health-provider"><i class="fa fa-users fa-1.5x"></i>
+                              <br>  Certified  <br class="visible-xs visible-sm visible-md">Practitioners</a>
+        </div>  
+      </div>  
+                </div>
+                
+              </section>
+
+             <section id="features">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading sp-effect3">
+                    <h1>Consult a doctor</h1>
+                    <div class="divider"></div>
+                    <p>Connect with certified practitioners and get prescription online</p>
+                   </div>
+
+                     </div>
+                      <div class="col-lg-7 col-md-7">
+                        <div class="">
+                         <div class="panel-body orign">
+                        <div class="about-item">
+                       <img src="/img/consult-a-doctor.png" class="img-responsive sp-effect5" alt="">
+
+
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">                    
+                        <div class="newssss">
+                             <div class="about-item">
+                            <div class="panel-body" orign>
+                            <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">Tell us about your symptoms</h3>
+                             </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                              <h3 class="media-heading">Certified practitioners respond in 24 hours</h3>
+                           </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">100% private and confidential</h3>
+                             </div>
+                        </div>
+
+                          <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading"> Home delivery of your prescription in less than a week.</h3>
+                           </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">Treat yourself at home using our Laser Pen.</h3>
+                              
+                            </div>
+                        </div>
+                        <div class="media feature text-center">
+                           
+                            <div class="media-body">
+                                <h3 class="datas-neww media-heading"><a href="consult-online"> <button class="datas-btn btn btn-primary btn-md" style="border-radius: 5px;border: 1px solid #babf10;width:50%;">Consult Now</button></a>
+</h3>
+                              
+                            </div>
+                        </div>
+                            </div>
+
+                            
+
+                            </div>
+                        </div>
+                    </div>
+
+                     
+                     
+                  </div>
+               
+            </div>
+        </section>
+
+           <section id="reviews">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading inverse sp-effect3">
+                    <h1 style="color: #fff">Order 100% organic Herbs and Supplements</h1>
+                    <div class="divider"></div>
+                    <p> Find all your herbs, mix-n-match to create your secret formulae</p>
+                   </div>
+
+                     </div>
+                    
+                        <div class="col-lg-5 col-md-5">                    
+                  <div class="newssss">
+                    <div class="about-item">
+                      <div class="panel-body" orign>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">Guaranteed availability</h3>
+                               
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading"> Home delivery in less than a week</h3>
+                           
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">Custom Formulae </h3>
+                              
+                            </div>
+                        </div>
+
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">Over 200 classic formulas and over 500 single herbs</h3>
+                              
+                            </div>
+                        </div>
+                         <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">100 % organic and Genuine</h3>
+                              
+                            </div>
+                        </div>
+
+
+                         <div class="media feature text-center">
+                            
+                            <div class="media-body">
+                                <h3 class="datas-neww media-heading"> <a href="order-medicine"><button class="datas-btn btn btn-primary btn-md">Order Supplements</button></a></h3>
+                              
+                            </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                   
+                     <div class="col-lg-7 col-md-7">
+                        <div class="">
+                           
+                        <div class="panel-body orign">
+                        <div class="about-item">
+                       <img src="/img/Herbs-and-Supplements_1.png" class="img-responsive sp-effect5" alt="">
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                   
+                     
+                  </div>
+               
+            </div>
+        </section>
+
+
+
+
+             <section id="whyWorldex">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading sp-effect3">
+                    <h1>Why Green Living?</h1>
+                    <div class="divider"></div>
+                    <p>Know Here</p>
+                   </div>
+
+                     </div>
+                    <div class="col-lg-4 col-md-4">
+                     <div class="newssss">
+                        <div class="about-item">
+                        <div class="panel-body">
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading" style="font-weight: 300;">Why Traditional Chinese Medicine</h3>
+                             </div>
+                        </div>
+                       <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading" style="font-weight: 300;">100% Organic</h3>
+                           </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading" style="font-weight: 300;">TCM's view of the body is concern with the identification of functional entities.</h3>
+                             </div>
+                        </div>
+                     
+                       
+                        </div>
+
+                            
+
+                            </div>
+                        </div>  
+                    </div>
+                      <div class="col-lg-4 col-md-4">
+                        <div class="">
+                         
+                           <div class="about-item">
+                           <div class="panel-body orign">
+                              <img src="/img/Why_Green_Living.png" class="img-responsive  sp-effect5" alt="">
+                              <h3 class="media-heading text-center" style="font-weight: 500;">5 Elements of TCM</h3>
+                            </div>
+
+
+                        <div class="media feature text-center">
+                            <div class="media-body">
+
+                                <h3 class="datas-neww media-heading"> <a href="about-worldex"><button class="datas-btn btn btn-primary btn-md" style="border-radius: 5px;border: 1px solid #babf10;width:50%;">  Know more </button></a></h3>
+                              
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">                    
+                        <div class="newssss">
+                        <div class="about-item">
+                        <div class="panel-body" orign>
+                       
+                        
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading" style="font-weight: 300;">TCM recognizes energy flow, meridians</h3>
+                           </div>
+                        </div>
+
+                         <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                              <h3 class="media-heading" style="font-weight: 300;">TCM is based on Yin-Yang and the Five Phases</h3>
+                           </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading" style="font-weight: 300;">The majority of treatment in TCM is Chinese Herbology</h3>
+                           </div>
+                        </div>
+                        
+
+
+                        </div>
+
+                            
+
+                            </div>
+                        </div>
+                    </div>
+
+                     
+                     
+                  </div>
+               
+            </div>
+        </section>
+<style type="text/css">
+  section#health-provider img {
+    margin: 0 auto 20px;
+}
+section#reviews img {
+    margin: 0 auto 20px;
+}
+section#whyWorldex img {
+    margin: 0 auto 20px;
+}
+
+</style>
+          <section id="health-provider">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading inverse sp-effect3">
+                    <h1 style="color: #fff">For Licensed Practitioner</h1>
+                    <div class="divider"></div>
+                    <p>Order your customized formulae in wholesale</p>
+                   </div>
+
+                     </div>
+                    
+                        <div class="col-lg-5 col-md-5">                    
+                  <div class="newssss">
+                    <div class="about-item">
+                      <div class="panel-body orign" >
+                        
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading"> Get your hands on USDA certified organic herbs</h3>
+                           
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">Order wholesale and get discounted pricing</h3>
+                              
+                            </div>
+                        </div>
+
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">On time delivery</h3>
+                              
+                            </div>
+                        </div>
+
+                         <div class="media feature text-center">
+                            
+                            <div class="media-body">
+                                <h3 class="datas-neww media-heading"><a href="health-provider"> <button class="datas-btn btn btn-primary btn-md" style="width:50%;">Know More</button></a></h3>
+                              
+                            </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                   
+                     <div class="col-lg-7 col-md-7">
+                        <div class="text-center">
+                           
+                        <div class="panel-body orign">
+                        <div class="about-item">
+                       <img src="/img/Licensed-practitioner.png" class="img-responsive sp-effect5" alt="">
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                   
+                     
+                  </div>
+               
+            </div>
+        </section>
+          <section id="getApp">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading sp-effect3">
+                    <h1>Coming soon...</h1>
+                    <div class="divider"></div>
+                      <p>On Andriod and iOS Platform.</p>
+                       <p>Mobile <br> App</p>
+                   </div>
+                   </div>
+
+                  <br> 
+                    <br>
+                    <div class="col-md-12">
+                        
+                        <div class="platforms">
+                            <a href="download-app"> <button class="datas-btn btn btn-primary btn-md">Know More</button></a>
+                        </div>
+
+                    </div>
+               
+
+
+                     </div>
+                 
+                  
+               
+                </div>
+
+        </section>
+</div>
+    <%- include partials/footer %>
+
+<script type="text/javascript">
+         $(document).ready(function () {
+            // $('#sidebar-wrapper').hide();
+
+  //   $("#menu-toggle").click(function(e) {
+  //       e.preventDefault();
+  // e.stopPropagation()
+  //       //  $(this).toggleClass('open');
+  //         $("i", this).toggleClass("fa fa-bars fa fa-arrow-left");
+
+  //       $("#wrapper").toggleClass("active");
+
+
+      
+  //       //alert(1);
+
+  //   });
+
+       //document.getElementById('sidebar-wrapper').style.display="none";
+
+    });
+</script>
+    
+
+

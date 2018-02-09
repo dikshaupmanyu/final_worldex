@@ -1,0 +1,564 @@
+    <%- include partials/header_product %>
+
+	<style>
+   select
+  {
+height : 46px !important;
+
+  }
+  input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+  .chosen-single
+  {
+ border-radius : 25px !important;
+  box-shadow: 5px 5px 5px grey !important;
+  }
+  a.chosen-single.chosen-default{
+    border-radius:30px !important;
+
+
+  }
+  button.btn.btn-primary.nextBtn.btn-lg{
+  outline: 0 none;
+  }
+ button.datas-btn.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     button.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+  #searchForm {
+  position:absolute;
+    top:40%;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 320px) and (min-width: 301px){
+ #searchForm {
+ position:absolute;
+    top:10%;
+}
+.livesearch{
+ width: 145px;
+    height: 45px;
+  border-radius:30px !important;
+
+}
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 375px) and (min-width: 321px){
+ #searchForm {
+ position:absolute;
+    top:10%;
+}
+.livesearch{
+ width: 200px;
+    height: 45px;
+      border-radius:30px !important;
+
+}
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 767px) and (min-width: 376px){
+ #searchForm {
+ position:absolute;
+    top:10%;
+}
+.livesearch{
+ width: 240px;
+    height: 45px;
+      border-radius:30px !important;
+
+}
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 1023px) and (min-width: 768px){
+  .livesearch{
+    width:400px;height:60px;
+      border-radius:30px !important;
+
+  }
+ #searchForm {
+  position:absolute;
+        top: 20%;
+    right: 10%;
+}
+
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 1439px) and (min-width: 1024px){
+  .livesearch{
+    width:400px;height:60px;
+      border-radius:30px !important;
+
+  }
+ #searchForm {
+  position:absolute;
+        top: 20%;
+    right: 5%;
+}
+
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 1919px) and (min-width: 1440px){
+  .livesearch{
+    width:400px;height:60px;
+      border-radius:30px !important;
+
+  }
+ #searchForm {
+ position:absolute;
+    top:40%;
+}
+
+
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0)and (min-width: 1920px){
+  .livesearch{
+    width:600px;height:60px;
+      border-radius:30px !important;
+
+  }
+ #searchForm {
+ position:absolute;
+    top:40%;
+}
+
+
+}
+
+a.chosen-single.chosen-default {
+    border-radius: 30px !important;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.select2-container .select2-choice {
+    display: block;
+    height: 45px;
+    padding: 2px 0 0 8px;
+    /* overflow: hidden; */
+    position: relative;
+    border: 1px solid #babf10;
+    white-space: nowrap;
+    line-height: 40px;
+    color: #444;
+    text-decoration: none;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+}
+
+.select2-container .select2-choice .select2-arrow {
+    display: none;
+    width: 18px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #e5e5e5;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    background: transparent;
+}
+.input-group-addon {
+    padding: 12px 27px 0px 12px !important;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #fafafa;
+    display: inline-flex;
+    text-align: center;
+    background-color: #babf10;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-group-lg>.form-control, .input-group-lg>.input-group-addon, .input-group-lg>.input-group-btn>.btn{
+  height: 45px;
+}
+
+.select2-search input{
+  border: 1px solid #babf10;
+  color: #babf10;
+}
+
+.select2-drop-active {
+    border: 1px solid #babf10;
+    border-top: 1px solid #babf10;
+}
+
+
+.chosen-container-single .chosen-default {
+    color: #999;
+        border: 1px solid #babf10 !important;
+}
+li.active-result .highlighted{
+    background: #fff !important;
+}
+.chosen-container-single .chosen-single {
+    /* position: relative; */
+    display: block;
+    overflow: hidden;
+    padding: 9px 0px 0px 12px !important;
+    height: 46px !important;
+    border: 1px solid #babf10;
+    border-radius: 5px;
+    background-color: #fff;
+   
+    background: #fff !important;
+    background-clip: padding-box;
+    box-shadow: none;
+    color: #444;
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 0;
+}
+.chosen-container-single .chosen-search input[type=text]{
+  border: 1px solid #babf10 !important;
+}
+
+.chosen-container .chosen-drop {
+    position: absolute;
+    top: 100%;
+    left: 4px;
+    z-index: 1010;
+    margin-left: 20px;
+    width: 90%!important;
+    border: 1px solid #aaa;
+    border-top: 0;
+    background: #fff;
+    box-shadow: 0 4px 5px rgba(0,0,0,.15);
+}
+  @media screen and (max-width: 767px) {
+
+  #searchForm{
+    position:absolute;
+    top:15%;
+    }
+  .tabs nav ul li{
+    
+    padding-right: 100px;
+    padding-left: 100px;
+    position: relative;
+  }
+
+  .tabs nav li.tab-current a{
+    border:none;
+  }
+
+  .tabs-style-underline nav a{
+    border-left: 1px solid #fff;
+  }
+
+  .tabs-style-underline nav li:last-child a{
+    border-right: 1px solid #fff;
+  }
+
+
+}
+  </style>
+
+
+<!--<div class="container-fluid" id="parallax-order">
+  <div class="row">
+     
+    </div>
+</div>-->
+ <div id="hpage">
+
+ <div class="row-fluid">
+  <img src="/img/Order_supplements_banner_image.jpg" class="img-responsive">
+
+<form class="col-sm-12" method="post" action="/" id="searchForm">
+    <div class="form-group col-sm-4 col-sm-offset-4">
+<div class="input-group input-group-lg"> 
+    
+        <style type="text/css">
+          #default{
+            width :400px !important;
+            height :43px;
+            border-radius:30px!important;
+          }
+        </style>
+
+        <div id="page-wrapper">
+
+   <input type="text" list="languages" name="default" id="default" placeholder="Choose Product" class="form-control" autocomplete="off">
+  
+  <datalist id="languages">
+     
+                        <% for (var i = 0; i < data.length; i++) { %>
+                           <option data-id="order-detail?id=<%= data[i]._id %>" value="<%= data[i].productname %>">
+                            </option>
+                        <% } %>
+    </datalist>
+  
+  
+</div>
+            
+          <span class="input-group-btn">
+              <button id="p" class="btn btn-success" type="button" style="background: #babf10;border-color: #babf10;  border-radius:30px !important;">
+              <i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search
+              </button>
+          </span>
+ 
+      </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+  $(function(){
+    $('#p').click(function(){
+      var newlink = $("#languages option[value='" + $('#default').val() + "']").attr('data-id');
+       // alert(newlink);
+        var win = window.open(newlink, '_blank');
+        win.focus();
+    });
+});
+
+
+</script>
+
+ </div> 
+
+<section>
+        <div class="tabs tabs-style-underline">
+          <nav>
+            <ul>
+              <li class="col-sm-12"><a data-toggle="tab" href="#section-underline-1"><span style="font-size:17px;"> Frequently Bought Formulas</span></a></li>
+              <li class="col-sm-12"><a data-toggle="tab" href="#section-underline-2"><span style="font-size:17px;"> Single Herbs</span></a></li>
+              <li class="col-sm-12"><a data-toggle="tab" href="#section-underline-3"><span style="font-size:17px;"> Classic Formulas</span></a></li>
+              
+            </ul>
+          </nav>
+          <div class="content-wrap">
+            <section id="section-underline-1">
+             <% for (var i = 0; i < data.length; i++) if(data[i].productcategory === 'Frequently Bought Formulas' && data[i].producttype != 'Practicioner') { %>
+             <div class="col-md-6 col-sm-4 col-xs-12">
+                                      <div class="panel-body">
+                                          <h4>
+                                              <a target="_blank" href="order-detail?id=<%= data[i]._id %>" class="pro-title" style="float: left;text-transform:uppercase;font-size:23px;">
+                                                 <%= data[i].productname %>
+                                               
+                                                
+                                              </a>
+                                              </h4>
+                                            <br>
+                                            <h4 style="margin-top: 10px;">  
+                                              <a target="_blank" href="order-detail?id=<%= data[i]._id %>" class="pro-title" style="float: left;text-transform:uppercase;font-size:23px;">
+                                              
+                                                <%= data[i].productname_chineese %>
+                                                
+                                              </a>
+                                          </h4>
+                                          <br>
+
+                                           <p class="price" style="color:#babf10;font-size:23px;">$9.99</p>
+                                          
+                                           <p style="font-size: 17px;color:rgba(0, 0, 0, 0.65)"><%= data[i].productdescr.substring(0, 50) %></p>
+
+
+                                           <p><a target="_blank" href="order-detail?id=<%= data[i]._id %>"><button class="newbtn btn btn-primary btn-md" style="display:inline;font-size: 12px;line-height: 20px" type="button"><i class="icon-shopping-cart"></i> Buy Now</button></a></p>
+                                            
+                                             
+
+                                      </div>
+                              </div>
+
+            <% } %>
+            </section>
+            <section id="section-underline-2">
+            <% for (var i = 0; i < data.length; i++) if(data[i].productcategory === 'Single Herbs' && data[i].producttype != 'Practicioner') { %>
+             <div class="col-md-6 col-sm-4 col-xs-12">
+                                      <div class="panel-body">
+                                          <h4>
+                                              <a target="_blank" href="order-detail?id=<%= data[i]._id %>" class="pro-title" style="float: left;text-transform:uppercase;font-size:23px;">
+                                                 <%= data[i].productname %>
+                                                
+                                                
+                                              </a>
+                                            </h4>
+                                            <br>
+                                            <h4 style="margin-top: 10px;">  
+                                               <a target="_blank" href="order-detail?id=<%= data[i]._id %>" class="pro-title" style="float: left;text-transform:uppercase;font-size:23px;">
+                                              
+                                                <%= data[i].productname_chineese %>
+                                                
+                                              </a>
+                                          </h4>
+                                          <br>
+
+                                           <p class="price" style="color:#babf10;font-size:23px;">$9.99</p>
+                                          
+                                           <p style="font-size: 17px;color:rgba(0, 0, 0, 0.65)"><%= data[i].productdescr.substring(0, 50) %></p>
+
+                                           <p><a target="_blank" href="order-detail?id=<%= data[i]._id %>"><button class="newbtn btn btn-primary btn-md" style="display:inline;font-size: 12px;line-height: 20px" type="button"><i class="icon-shopping-cart"></i> Buy Now</button></a></p>
+                                            
+                                             
+
+                                      </div>
+                              </div>
+
+            <% } %>
+            </section>
+            <section id="section-underline-3">
+            <% for (var i = 0; i < data.length; i++) if(data[i].productcategory === 'Classic Formulas' && data[i].producttype != 'Practicioner') { %>
+             <div class="col-md-6 col-sm-4 col-xs-12">
+                                      <div class="panel-body">
+                                          <h4>
+                                              <a target="_blank" href="order-detail?id=<%= data[i]._id %>" class="pro-title" style="float: left;text-transform:uppercase;font-size:23px;">
+                                                 <%= data[i].productname %>
+                                                
+                                                
+                                              </a>
+                                            </h4>
+                                            <br>
+                                            <h4 style="margin-top: 10px;">  
+                                              
+                                               <a target="_blank" href="order-detail?id=<%= data[i]._id %>" class="pro-title" style="float: left;text-transform:uppercase;font-size:23px;">
+                                              
+                                                <%= data[i].productname_chineese %>
+                                                
+                                              </a>
+                                          </h4>
+                                          <br>
+
+                                           <p class="price" style="color:#babf10;font-size:23px;">$9.99</p>
+                                          
+                                           <p style="font-size: 17px;color:rgba(0, 0, 0, 0.65)"><%= data[i].productdescr.substring(0, 50) %></p>
+
+                                           <p><a target="_blank" href="order-detail?id=<%= data[i]._id %>"><button class="newbtn btn btn-primary btn-md" style="display:inline;font-size: 12px;line-height: 20px" type="button"><i class="icon-shopping-cart"></i> Buy Now</button></a></p>
+                                            
+                                             
+
+                                      </div>
+                              </div>
+
+            <% } %>
+            </section>
+       
+          </div><!-- /content -->
+        </div><!-- /tabs -->
+
+   
+      </section>
+
+
+
+  
+  
+
+    <script src="/js/cbpFWTabs.js"></script>
+        <script>
+            (function() {
+
+                [].slice.call( document.querySelectorAll( '.tabs' ) ).forEach( function( el ) {
+                    new CBPFWTabs( el );
+                });
+
+            })();
+        </script>
+
+        <script>
+        var cart = [];
+        $(function () {
+            if (localStorage.cart)
+            {
+                cart = JSON.parse(localStorage.cart);
+                showCart();
+            }
+        });
+
+        function addToCart() {
+          
+            var price = $("#productprice").text();
+           
+            var name = $("#productname").text();
+            var productcategory = $("#productcategory").text();
+            
+            var qty = $("#qty").val();
+            
+           // var total= price * qty;
+           var total=0;
+
+            // update qty if product is already present
+            for (var i in cart) {
+                if(cart[i].Product == name)
+                {
+                    cart[i].Price = price;
+                    cart[i].Qty = qty;
+                    cart[i].Total = total;
+                    showCart();
+                    saveCart();
+                    return;
+                }
+            }
+            // create JavaScript Object
+            var item = { Product: name,  Price: price, Qty: qty, Total : total }; 
+
+            cart.push(item);
+            saveCart();
+            showCart();
+        }
+
+        function deleteItem(index){
+            cart.splice(index,1); // delete item at index
+            showCart();
+            saveCart();
+        }
+
+        function saveCart() {
+            if ( window.localStorage)
+            {
+                localStorage.cart = JSON.stringify(cart);
+
+            }
+        }
+
+        function showCart() {
+            if (cart.length == 0) {
+                $("#cart").css("visibility", "hidden");
+              //  document.getElementById("totalitem").textContent= "0";
+                document.getElementById("totalprice").textContent= "0";
+                document.getElementById("totalprices").textContent= "0";
+                
+                return;
+            }
+            
+           
+
+            $("#cart").css("visibility", "visible");
+            $("#cartBody").empty();
+
+          //  document.getElementById("totalitem").textContent=cart.length;
+
+
+              var total= 0;
+            for (var i in cart) {
+                var item = cart[i];
+               
+                var total = total + item.Qty * item.Price;
+                //alert(total);
+                  document.getElementById("totalprice").textContent=parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                  document.getElementById("totalprices").textContent= parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                var row = "<tr><td>" + item.Product + "</td><td>" +
+                             item.Price + "</td><td>" + item.Qty + "</td><td>"
+                             + "$"+ item.Qty * item.Price + "</td><td>" +  total + "</td><td>"
+                             + "<button onclick='deleteItem(" + i + ")'>Delete</button></td></tr>";
+                $("#cartBody").append(row);
+            }
+        }
+    </script>
+
+</div>
+
+    <%- include partials/footer_product %>
+
+    

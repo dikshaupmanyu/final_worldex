@@ -1,0 +1,282 @@
+    <%- include partials/header_userdashboard %>
+
+ 
+    <div class="row-fluid">
+ <div class="row" style="background: #f0f0f5;">
+        <div class="container">
+
+                <div class="row-fluid" style="background-color: #f0f0f5;">
+                    <div class="span3 sidebar-content ">
+                    <ul class="ver-inline-menu tabbable margin-bottom-25">
+                         <li ng-class="{active: activeTab === 'home'}">
+                                <a href="home">
+                                <i class="fa fa-home" aria-hidden="true"></i> 
+                                Home
+                                </a> 
+                                <span class="after"></span>                                    
+                            </li>
+                            
+                            
+                 <li ng-class="{active: activeTab === 'account'}"><a href="account"><i class="fa fa-user"  aria-hidden="true"></i> My Account</a></li>
+
+                 
+                  <li ng-class="{active: activeTab === 'subscription'}"><a href="subscription" ><i class="fa fa-user"  aria-hidden="true"></i> My Subscription</a></li>
+
+
+
+                    <li ng-class="{active: activeTab === 'order'}" class="active"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
+
+
+                     <% if (user.user_role === 'admin') { %>
+                    <li ng-class="{active: activeTab === 'manageorder'}"><a href="manageorder"><i class="fa fa-user"  aria-hidden="true"></i> Order Managment</a></li>
+                    <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
+                    <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                    <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                     <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
+                     <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
+                    <% } %>
+
+                      
+                     <% if (user.user_role === 'user') { %>
+                     <li ng-class="{active: activeTab === 'consult'}"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
+                     <li ng-class="{active: activeTab === 'symptom-user'}"><a href="symptom-user" ><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                     <% } %>
+
+                     <% if (user.user_role === 'doctor') { %>
+                      <li ng-class="{active: activeTab === 'review-consult'}"><a href="review-consult"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Review Consultations</a></li>
+                      <li ng-class="{active: activeTab === 'symptom-all'}"><a href="symptom-all"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                      <% } %>
+					  <li><a href="/logout"><i class="fa fa-sign-out"  aria-hidden="true"></i> Logout</a></li>
+                        
+                            
+                    </ul>
+                        
+                    </div>
+
+                            <!--<li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin" ><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+
+                            <li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" ><i class="fa fa-first-order"  aria-hidden="true"></i> Order Management</a></li>-->
+
+            
+                    
+                          <div class="span9" style="height: 800px;">
+                        <!-- BEGIN PAGE HEADER-->
+                        <div class="row-fluid">
+                            <div class="span12">
+                            
+                                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                            <h6 class="page-title" style="font-size: 18px;">
+                                  <%= user.firstName %>'s Profile !!!!
+                                </h6>
+                            </div>
+                        </div>
+                        <!-- END PAGE HEADER-->
+                       
+
+
+                           <div class="row-fluid">
+                      <div class="span12">
+                        <!-- BEGIN SAMPLE FORM PORTLET-->   
+                        
+                        <div class="portlet box blue tabbable">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="hidden-480">Order Managment</span>
+                                </div>
+                            </div>
+
+                            <div class="portlet-body form">
+                                <div class="tabbable portlet-tabs">
+                                    
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="portlet_tab1">
+                                        <form class="form-horizontal" style="overflow: auto;">
+                                             <table class="table table-striped table-bordered" id="example">
+                                  <thead>
+                                    <tr>
+                                     <th>Order Id</th>
+                                      <th>Shipping Address</th>
+                                      <th>Billing Address</th>
+                                      <th>Total</th>
+                                      <th>Order Status</th>
+                                      <th>Payment Status</th>
+                                      <th>Token Id</th>
+                                      <th>Date</th>
+                                      <th>Info</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                     <% for (var i = 0; i < data.length; i++) if(data[i].userid == user._id) { %>
+                                    <tr>
+
+                                         <td><%= data[i]._id %> </td>
+                                         <td><%= data[i].shipaddress %></td>
+                                         <td><%= data[i].billaddress %></td>
+                                         <td>$<%= data[i].hdnCartTotal %></td>
+                                         <td><%= data[i].o_status %></td>
+                                         <td><%= data[i].PayerID %></td>
+                                         <td><%= data[i].token %></td>
+                                         <td><%= data[i].datetime %></td>
+                                  
+                                       <td><a href="list-orderitem?order_id=<%= data[i]._id %>"><i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 20px"></i></a></td>
+                                     
+                                    </tr>
+                                     <% } %>
+                                  </tbody>
+                                </table>
+                                        </form>
+                                        
+                                      
+
+                                          
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SAMPLE FORM PORTLET-->
+
+
+
+                    </div>
+                </div>
+                    
+                    </div>
+                </div>
+                </div>
+                </div>
+
+ <style type="text/css">
+  a.newlogocss{
+      margin-left: 20px;
+}
+
+ .navbar-brand{
+ padding: 15px !important;
+ }
+  
+  .dropdown.open .dropdown-toggle{
+    background-color: #fff !important;
+  }
+ .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: thin dotted;
+    outline: none;
+    outline-offset: -2px;
+}
+     .navbar-inverse .navbar-toggle {
+    border-color:  #ffffff;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+
+  color: #999;
+}
+.nav .dropdown-toggle .caret {
+    margin-top: 6px;
+    border-top-color: #020202 !important;
+    border-bottom-color: #121213 !important;
+}
+.modal {
+   /* width: 100%;
+    margin-left: 0px;*/
+    background-color: rgba(92, 92, 92, 0.03);
+    border: 0px;
+}
+.modal-body {
+   
+     padding: 0px; 
+    overflow-y: inherit; 
+  }
+/*.dropdown-toggle ng-binding
+{
+background-color: #ffffff !important;
+}*/
+
+
+@media (min-width: 414px){
+ .navbar-brand{
+  font-size: 25px !important;
+ }
+   }
+
+   @media (min-width: 320px) and (max-width: 320px){
+ .navbar-brand{
+     font-size: 15px !important;
+    padding: 0px;
+        margin: 14px 0px 0px 25px !important;
+   }
+
+
+ </style>
+ 
+</body>
+<!-- END BODY -->
+</html>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.3.1/jquery.maphilight.min.js"></script>
+
+ 
+    <script src="/assets_home/js/slick.min.js"></script>
+    <script src="/assets_home/js/placeholdem.min.js"></script>
+    <script src="/assets_home/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>  
+    <script src="/assets_home/js/waypoints.min.js"></script>   
+    <script src="/assets_home/js/scripts.js"></script> 
+ 
+
+<!--     <script src="/assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+ -->
+    <!-- <script src="/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> -->
+ 
+  <!--  <script src="/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>  -->
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    
+    <script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>   
+    <script type="text/javascript" src="/assets/plugins/select2/select2.min.js"></script>
+  <script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+    <script src="/assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script> 
+ 
+
+  
+
+
+
+
+ <style type="text/css">
+      input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{ 
+ height: 30px;
+    width: 80%;
+}
+
+textarea{
+       width: 80%;
+ 
+}
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0;
+    filter: alpha(opacity=80);
+}
+
+
+ </style>
+
+
+    <%- include partials/footer_userdashboard %>
+
+
+                                      
+
+                               
+                                        

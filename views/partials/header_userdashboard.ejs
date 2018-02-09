@@ -1,0 +1,602 @@
+﻿<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="utf-8" />
+    <title>Green Living</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+    <link href="/assets/css/reset.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/> 
+
+
+    <link href="/assets/css/style-responsive-profile.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/style-metro-profile.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/style-profile.css" rel="stylesheet" type="text/css"/>
+         
+  
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="/assets/css/themes/green.css" rel="stylesheet" type="text/css" id="style_color"/>    
+<!--     <link rel="shortcut icon" href="favicon.ico" />
+ --> <style type="text/css">
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) and (max-width :768px){
+  .newimagecss{
+
+  margin-top: 50px;
+}
+
+    }
+
+    .fa.fa-check {
+  color: #babf10;
+}
+
+@media screen and  (max-width:375px){
+  .shifting{       margin-left: 50px;}}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    left: 220px;
+    width: 0;
+    height: 100%;
+    margin-left: -220px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    position: fixed;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 220px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    padding-top: 70px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -220px;
+}
+
+
+/*-------------------------------*/
+/*     Sidebar nav styles        */
+/*-------------------------------*/
+
+
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+  height: 65px;
+  line-height: 60px;
+  font-size: 15px;
+}
+
+
+.sidebar-nav li {
+  line-height: 60px;
+  text-indent: 8px;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 220px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 3px;
+    background-color: #fff;
+    -webkit-transition: width .2s ease-in;
+      -moz-transition:  width .2s ease-in;
+       -ms-transition:  width .2s ease-in;
+            transition: width .2s ease-in;
+
+}
+.sidebar-nav li:first-child a {
+    color: #000;
+    background-color: #fff !important;
+}
+
+
+.sidebar-nav li:nth-child(2):before {
+   background-color: #fff !important;
+}
+.sidebar-nav li:nth-child(3):before {
+    background-color: #fff !important;
+}
+.sidebar-nav li:nth-child(4):before {
+background-color: #fff !important;
+}
+.sidebar-nav li:nth-child(5):before {
+    background-color: #fff !important;   
+}
+.sidebar-nav li:nth-child(6):before {
+    background-color: #fff !important;   
+}
+.sidebar-nav li:nth-child(7):before {
+   background-color: #fff !important;
+}
+
+.sidebar-nav li:hover:before,
+.sidebar-nav li.open:hover:before {
+    width: 100%;
+    -webkit-transition: width .2s ease-in;
+      -moz-transition:  width .2s ease-in;
+       -ms-transition:  width .2s ease-in;
+            transition: width .2s ease-in;
+
+}
+
+
+
+.sidebar-nav li a:hover,
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus,
+.sidebar-nav li.open a:hover,
+.sidebar-nav li.open a:active,
+.sidebar-nav li.open a:focus{
+    color: #000;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+
+.sidebar-nav .dropdown-menu {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+   /* background-color: #222;*/
+   background-color: #fff;
+    box-shadow: none;
+}
+
+
+
+/*-------------------------------*/
+/*       Hamburger-Cross         */
+/*-------------------------------*/
+
+.hamburger {
+  position: fixed;
+  top: 12px;  
+  z-index: 999;
+  display: block;
+   width: 18px;
+  height: 28px;
+  margin-left: 15px;
+  background: transparent;
+  border: none;
+}
+.hamburger:hover,
+.hamburger:focus,
+.hamburger:active {
+  outline: none;
+}
+.hamburger.is-closed:before {
+  content: '';
+  display: block;
+  width: 100px;
+  font-size: 14px;
+  color: #fff;
+  line-height: 32px;
+  text-align: center;
+  opacity: 0;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-transition: all .35s ease-in-out;
+}
+.hamburger.is-closed:hover:before {
+  opacity: 1;
+  display: block;
+  -webkit-transform: translate3d(-100px,0,0);
+  -webkit-transition: all .35s ease-in-out;
+}
+
+.hamburger.is-closed .hamb-top,
+.hamburger.is-closed .hamb-middle,
+.hamburger.is-closed .hamb-bottom,
+.hamburger.is-open .hamb-top,
+.hamburger.is-open .hamb-middle,
+.hamburger.is-open .hamb-bottom {
+  position: absolute;
+  left: 0;
+  height: 4px;
+  width: 100%;
+}
+.hamburger.is-closed .hamb-top,
+.hamburger.is-closed .hamb-middle,
+.hamburger.is-closed .hamb-bottom {
+  background-color: #1a1a1a;
+}
+.hamburger.is-closed .hamb-top { 
+  top: 5px; 
+  -webkit-transition: all .35s ease-in-out;
+}
+.hamburger.is-closed .hamb-middle {
+  top: 50%;
+  margin-top: -2px;
+}
+.hamburger.is-closed .hamb-bottom {
+  bottom: 5px;  
+  -webkit-transition: all .35s ease-in-out;
+}
+
+.hamburger.is-closed:hover .hamb-top {
+  top: 0;
+  -webkit-transition: all .35s ease-in-out;
+}
+.hamburger.is-closed:hover .hamb-bottom {
+  bottom: 0;
+  -webkit-transition: all .35s ease-in-out;
+}
+.hamburger.is-open .hamb-top,
+.hamburger.is-open .hamb-middle,
+.hamburger.is-open .hamb-bottom {
+  background-color: #1a1a1a;
+}
+.hamburger.is-open .hamb-top,
+.hamburger.is-open .hamb-bottom {
+  top: 50%;
+  margin-top: -2px;  
+}
+.hamburger.is-open .hamb-top { 
+  -webkit-transform: rotate(45deg);
+  -webkit-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
+}
+.hamburger.is-open .hamb-middle { display: none; }
+.hamburger.is-open .hamb-bottom {
+  -webkit-transform: rotate(-45deg);
+  -webkit-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
+}
+.hamburger.is-open:before {
+  content: '';
+  display: block;
+  width: 100px;
+  font-size: 14px;
+  color: #fff;
+  line-height: 32px;
+  text-align: center;
+  opacity: 0;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-transition: all .35s ease-in-out;
+}
+.hamburger.is-open:hover:before {
+  opacity: 1;
+  display: block;
+  -webkit-transform: translate3d(-100px,0,0);
+  -webkit-transition: all .35s ease-in-out;
+}
+
+/*-------------------------------*/
+/*            Overlay            */
+/*-------------------------------*/
+
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(250,250,250,.8);
+    z-index: 1;
+}
+
+  #abc a:-webkit-any-link {
+    
+    color: #171616 ! important;
+}
+
+
+
+     button.datas-btn.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     button.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: thin dotted;
+    outline: none;
+    outline-offset: -2px;
+}
+     .ver-inline-menu li i 
+     {
+       width: 15px;
+     }
+
+     .ver-inline-menu li a{
+          font-size: 14px;
+      background: #babf10;
+          color: #fff;
+     }
+     
+     .front-header .navbar-inner .dropdown-menu li a:hover, .front-header .navbar-inner li.active .dropdown-menu li a:hover {
+    border: none;
+    padding: 9px 15px;
+       color: #fff!important;
+    background: #babf10 !important;
+}
+.front-header .nav > li.dropdown.open.active > a:hover, .front-header .nav > li.dropdown.open.active > a:focus {
+    border-color: #babf10;
+}
+
+     .ver-inline-menu li:hover a, .ver-inline-menu li:hover i {
+    background: #e0eaf0;
+    text-decoration: none;
+    color: #babf10;
+}
+     .front-header{
+        box-shadow: 0 1px 0px #ddd;
+     }
+       p{
+      /* font-size: 18px;color: #171717;line-height: 30px;font-weight: 600;*/
+       }
+
+       .front-header .navbar-inner .btn-navbar{
+        background: #babf10 !important;
+            margin-top: 25px;
+
+       }
+       .front-header .navbar-inner .btn-navbar:hover {
+    background: #babf10 !important;
+}
+
+
+
+.front-header .navbar-inner .dropdown-menu{
+    min-width: 70px;
+}
+
+@media screen and (max-width: 360px) and (min-width: 300px) {
+    .navbar {
+           width: 340px;
+           position: fixed;
+           max-width: 100%;
+           box-shadow: 0 1px 0px #ddd;
+    }
+     .ver-inline-menu{
+
+          margin-top: 95px;
+
+    }
+
+   /* .newview{
+
+            padding-top: 80px;
+    }*/
+    .portlet-body form{
+
+           height: 590px;
+    }
+}
+
+
+
+@media screen and (max-width: 410px) and (min-width: 361px) {
+    .navbar {
+           width: 360px;
+           position: fixed;
+           max-width: 100%;
+           box-shadow: 0 1px 0px #ddd;
+    }
+     .ver-inline-menu{
+
+          margin-top: 95px;
+
+    }
+
+   /* .newview{
+
+            padding-top: 80px;
+    }*/
+    .productsubmitform{
+
+      height: 800px;
+    }
+    .portlet-body form {
+
+           height: 590px;
+    }
+}
+
+@media screen and (max-width: 599px) and (min-width: 411px) {
+    .navbar {
+           width: 395px;
+           position: fixed;
+           max-width: 100%;
+           box-shadow: 0 1px 0px #ddd;
+    }
+
+    .ver-inline-menu{
+
+          margin-top: 95px;
+
+    }
+
+    .newimageform{
+      height: 500px;
+    }
+
+
+    .newview{
+
+          /*  padding-top: 80px;*/
+    }
+
+      .portlet-body form {
+           height: 625px;
+           
+    }*
+}
+@media screen and (max-width: 766px) and (min-width: 600px) {
+    /*.navbar {
+           width: 335px;
+           position: fixed;
+           max-width: 100%;
+           box-shadow: 0 1px 0px #ddd;
+    }*/
+
+      .portlet-body form {
+           height: 590px;
+           
+    }
+}
+
+@media screen and (max-width: 2099px) and (min-width: 767px) {
+    .portlet-body form {
+           height: 600px;
+           
+    }
+    #page-content-wrapper{
+
+        margin-left: 280px;
+    }
+
+    .newimageform{
+      height: 0px;
+    }
+
+    
+
+
+
+
+ </style>
+ <style type="text/css">
+ 
+.num {
+  position: absolute;
+ 
+  top: 47px;
+  color: #babf10;
+}
+</style>   
+
+    <!-- BEGIN HEADER -->
+   <div class="front-header" style="background: #fff">
+        <div class="container">
+            <div class="navbar">
+                 <div class="navbar-inner">
+                
+                
+                      <a class="brand logo-v1" href="home" style="color: #000;text-decoration: none;font-size: 25px!important;">GREEN<b style="color: #6c9421;">LIVING</b></a>
+
+                   
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    
+
+                   <div class="nav-collapse collapse">
+                        <ul class="nav">
+                      
+                            <li class="dropdown active">
+                                <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#" style="color: #999;background-color: #ffffff ! important;">
+                                  <% if (user.local.email) { %>
+                                      <%= user.local.email %>
+                                   <% } %>
+                                    <i class="icon-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li ng-class="{active: activeTab === 'account'}"><a href="account">My Profile</a></li>
+                                    <li><a href="/logout">Logout</a></li>
+                                </ul>
+                            </li>             
+
+                
+                        </ul>
+                        
+                                                   
+                   </div>
+                 <!--    <a class="brand logo-v1" ui-sref="review-consult" style="padding-top:33px;font-size: 15px;color: #999;float: right;" ng-if = "vm.user.user_role === 'doctor'">
+                         <i class="fa fa-bell">
+                          <span class="num" id="totalconsultuser" style="color: #babf10"></span>
+                         </i>
+
+                    </a> -->
+
+                    
+                  <!--   <div class="nav-collapse collapse" ng-if = "vm.user.user_role === 'doctor'">
+                        <ul class="nav">
+                      
+                            <li class="dropdown active">
+                                <a class="brand logo-v1" ui-sref="review-consult" style="padding-top:30px;font-size: 15px;color: #999;float: right;margin-left: 0px;background: #fff!important;border-top: solid 2px #fff;">
+                                   <i class="fa fa-bell"> <span class="num" id="totalconsultuser" style="color: #babf10"></span></i>
+
+                              </a>
+                            </li>             
+
+                
+                        </ul>
+                        
+                                                   
+                    </div> -->  
+<!-- 
+                    <div class="nav-collapse collapse" ng-if = "vm.user.user_role === 'user'">
+                        <ul class="nav">
+                      
+                           <li class="dropdown active">
+                                <a class="brand logo-v1" ui-sref="consult" style="padding-top:30px;font-size: 15px;color: #999;float: right;margin-left: 0px;background: #fff!important;border-top: solid 2px #fff;">
+                                     <i class="fa fa-bell"> <span class="num" id="unread" style="color: #babf10"></span></i>
+
+                                </a>
+                            </li>             
+
+                
+                        </ul>
+                        
+                    </div> 
+ -->
+                   
+                </div>
+            </div>
+        </div>                   
+    </div>
+
+ 
+
+

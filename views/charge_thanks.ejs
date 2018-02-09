@@ -1,0 +1,153 @@
+    <%- include partials/header_product_login %>
+<style>
+button.btn.btn-primary.nextBtn.btn-lg{
+  outline: 0 none;
+  }
+ button.datas-btn.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     button.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+.panel-info{
+      border-color: #babf10;
+}
+.panel-info>.panel-heading{
+  color: #fff;
+  background-color: rgb(245, 245, 245);
+  border-color: #babf10;
+}
+h4,h6 {
+   margin-top: 25px;
+}
+.input-sm{
+   margin-top: 15px;
+}
+
+.btn-group-xs>.btn, .btn-xs{
+  margin-top: 20px;
+}
+</style>
+
+<div class="row-fluid">
+  <img src="/assets/img/shopping.gif" class="img-responsive">
+
+    
+ </div> 
+
+<div class="container" style="padding-top: 60px;">
+  <div class="row">
+    <div class="col-xs-12">
+   <h3 id="messageemptys" style="text-align: center;color: #000;font-weight: 600;"></h3>
+
+      <h6 id="messageemptyseconds" style="text-align: center;font-weight: 600;"></h6>
+      <br>
+
+    
+
+      <a href="home"><button id="messagebutton" type="button" class="newbtn btn btn-primary btn-md" style="line-height: 20px">
+                 RETURN TO HOME
+                </button></a>
+    <div class="panel-body" id="cart" style="visibility: hidden;">
+
+     
+
+       
+
+        <br>
+
+      </div>
+       </div> 
+    </div>
+  </div>
+</div>
+  
+<script>
+        var cart = [];
+        $(function () {
+            if (localStorage.cart)
+            {
+                cart = JSON.parse(localStorage.cart);
+                localStorage.clear();
+                window.location.reload();
+                
+              // alert("hii");
+                showCart();
+            }
+               if (cart.length == 0 || cart.length == null) {
+              //alert(cart.length);
+              document.getElementById("totalprice").textContent= "0";
+
+                $("#messageemptys").html("Thanks for Shopping");
+
+                  $("#messageemptyseconds").html("Please visit Again !!!");
+            }
+
+        });
+
+    
+
+           function showCart() {
+            localStorage.clear();
+            window.location.reload();
+          //  alert(cart.length);
+            if (cart.length == 0) {
+                $("#cart").css("visibility", "hidden");
+                //document.getElementById("totalitem").textContent= "0";
+               document.getElementById("totalprice").textContent= "0";
+
+                 $("#messageemptys").html("Thanks for Shopping");
+
+                 $("#messageemptyseconds").html("Please visit Again !!!");
+
+                 document.getElementById("messagebutton").style.display = "block";
+                
+                return;
+            }
+            
+          
+
+            $("#cart").css("visibility", "visible");
+            $("#cartBody").empty();
+
+            //document.getElementById("totalitem").textContent=cart.length;
+          
+              var total= 0;
+               var grandtotal= 0;
+              var final= 0;
+
+            for (var i in cart) {
+
+
+                var item = cart[i];
+
+
+               
+                var total = total + item.Qty * item.Price;
+
+                var grandtotal = grandtotal + item.Qty * item.Price;
+                //alert(grandtotal);
+                var productnames = $("#productname").textContent=item.Product;
+               //alert(productnames);
+                var newprices = $("#newprice").textContent=item.Price;
+                //alert(newprices);
+                var totalqtys = $("#totalqty").value=item.Qty;
+
+                 document.getElementById("totalprice").textContent=total;
+
+            
+                //  alert(totalqtys);
+
+                  document.getElementById("grandtotalprice").textContent=grandtotal;
+                 // alert(grandtotalprice);
+                   document.getElementById("messagebutton").style.display = "none";
+                    
+                     var row = "<div class='row'><div class='col-xs-8'><h5 style='margin-left:30px;' id='productname"+ i +"' name='productname"+ i +"'>" + item.Product + "</h5></div><div class='col-xs-1 text-right'><h5 id='newprice"+ i +"' name='newprice"+ i +"'><strong>$" + item.Price + "</strong></h5></div><div class='col-xs-1'><div class='input-group spinner'><input type='text' class='form-control cssQty' id='totalqty"+ i +"' name='totalqty"+ i +"' value='" + item.Qty + "' rowid='"+i+"'/><div class='input-group-btn-vertical'></div></div></div><div class='col-xs-1 text-right'><h5 style='text-align:right;' id='itemtotal" +i+"'><strong style='margin-right: 3px;'>"+"$"+ item.Qty * item.Price + "</strong></h5></div>"
+                             + "<div class='col-xs-1 text-right'><button class='btn btn-link btn-lg pull-right' style='margin-right: 30px;margin-top: -3px;' onclick='deleteItem(" + i + ")'><span class='glyphicon glyphicon-trash'> </span></button></div></div><hr style='margin-left: 15px;margin-right: 15px;'></div>";
+                $("#cartBody").append(row); 
+            }
+        }
+ </script>
+
+ 
+    <%- include partials/footer_product %>

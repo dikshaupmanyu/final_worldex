@@ -1,0 +1,1337 @@
+ <footer style="background: #262F36;color: rgba(255, 255, 255, .7) !important;">
+           <div class="container">
+                <div class="row">
+                <div class="col-md-12">
+                <div class="panel-body">
+                  <div class="col-md-6">
+
+                       
+                    <h2 style="color: #fff;text-align: center;">About</h2>
+                    <p style="text-align: center;font-size:13.5px;letter-spacing: 0px;font-family:'Lato', Arial !important;">Vivamus imperdiet felis consectetur onec eget orci adipiscing nunc. Pellentesque fermentum, ante ac interdum ullamcorper.</p>
+                      
+                    </div>
+                    <div class="col-md-6" >
+                       <h2 style="color: #fff;text-align: center;font-family:'Open Sans', sans-serif !important;">Contact Us</h2>
+                  
+                        Loop, Inc. <br />
+                        259, Meridian Ave, Suite 14 <br />
+                        San Jose, CA 95126 <br />
+                        P: (234) 145-1810 <br />
+                        Email: <a href="mailto:info@medical.com" style="color:rgba(255, 255, 255, .7) !important;">info@greenliving.com</a>                        
+                   
+                        
+                    </div>
+               
+                </div>
+                </div>
+          </div>
+           </div>     
+             
+        </footer>
+
+        <div class="front-copyright" style="height: 50px;background: #babf10;color: #fff;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                   
+         <span class="new-copyright">2013 © Green Living | ALL Rights Reserved. | <a href="#" style="color:#fff;">Privacy Policy</a> | <a href="#" style="color:#fff;">Terms of Service</a></span>       
+                </div>
+               
+            </div>
+        </div>
+    </div>  
+
+ 
+
+
+<script>
+        var cart = [];
+        $(function () {
+            if (localStorage.cart)
+            {
+                cart = JSON.parse(localStorage.cart);
+                showCart();
+            }
+            if (cart.length == 0 || cart.length == null) {
+              //alert(cart.length);
+              document.getElementById("totalprice").textContent= "0";
+                   document.getElementById("totalprices").textContent= "0";
+
+                $("#messageempty").html("YOUR CART IS CURRENTLY EMPTY");
+
+                 $("#messageemptysecond").html("You have not added any items in your shopping cart");
+            }
+        });
+
+        function addToCart() {
+            var price = $("#productprice").text();
+            var name = $("#productname").text();
+            var productcategory = $("#productcategory").text();
+            
+            var qty = $("#qty").val();
+            var total= 0;
+
+            // update qty if product is already present
+            for (var i in cart) {
+                if(cart[i].Product == name)
+                {
+                    cart[i].Price = price;
+                    cart[i].Qty = qty;
+                    cart[i].Total = total;
+                    showCart();
+                    saveCart();
+                    return;
+                }
+            }
+            // create JavaScript Object
+            var item = { Product: name,  Price: price, Qty: qty, Total : total }; 
+
+            cart.push(item);
+            saveCart();
+            showCart();
+        }
+
+        function deleteItem(index){
+            cart.splice(index,1); // delete item at index
+            showCart();
+            saveCart();
+        }
+
+        function saveCart() {
+            if ( window.localStorage)
+            {
+                localStorage.cart = JSON.stringify(cart);
+
+            }
+        }
+
+        function showCart() {
+            if (cart.length == 0) {
+                $("#cart").css("visibility", "hidden");
+              //  document.getElementById("totalitem").textContent= "0";
+              
+                document.getElementById("totalprice").textContent= "0";
+                     document.getElementById("totalprices").textContent= "0";
+                
+                return;
+            }
+            
+           
+
+            $("#cart").css("visibility", "visible");
+            $("#cartBody").empty();
+
+           // document.getElementById("totalitem").textContent=cart.length;
+
+
+              var total= 0;
+            for (var i in cart) {
+                var item = cart[i];
+               
+                var total = total + item.Qty * item.Price;
+                //alert(total);
+
+                 document.getElementById("totalprice").textContent=parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                  document.getElementById("totalprices").textContent= parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                var row = "<tr><td>" + item.Product + "</td><td>" +
+                             item.Price + "</td><td>" + item.Qty + "</td><td>"
+                             + "$"+ item.Qty * item.Price + "</td><td>" +  total + "</td><td>"
+                             + "<button onclick='deleteItem(" + i + ")'>Delete</button></td></tr>";
+                $("#cartBody").append(row);
+            }
+        }
+    </script>
+
+
+     
+<div id="myModal11" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm" style="padding-top: 100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">
+                    Login/Sign Up</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                       
+                        <ul class="nav nav-tabs" style="padding-left: 45px;"> 
+                            <li class="active"><a href="#station" data-toggle="tab">Login</a></li>
+                            <li><a href="#play" data-toggle="tab">Registration</a></li>
+                        </ul>
+                       
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="station">
+                                 
+                        
+                              <form role="form"  action="/login" class="form-horizontal" method="post">
+
+                                 <% if(locals.errorlogin) { %>
+                     <div class="alert alert-danger">
+                  <%= errorlogin %> 
+
+                </div>
+                 
+                         <% } %>
+
+                       
+                         <% if(locals.successlogin) { %>
+                     <div class="alert alert-success"><%= successlogin %>
+                     </div>
+                          <% } %>
+
+
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <input type="email" name="email" value="<%= locals.email || '' %>" class="form-control" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+
+                                        <!-- <input type="password" name="password" id="password" class="form-control" placeholder="Password" /> -->
+
+                                          <input type="text" name="fake_pass" id="fake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="password" class="form-control"/>
+                                    </div>
+                                </div>
+
+
+
+                                 <div>
+      
+    </div>    
+
+
+
+                                <div class="row">
+                                
+                                    <div class="col-sm-12">
+                                        <button id="sendreqs" type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Submit</button>
+
+                                         <br>
+                                         <p id="demo"></p>
+                                          
+                                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#myModalforget" style="text-align: center;margin: 0 auto;display: block;">Forgot your password?</a>
+
+
+                                    </div>
+                                </div>
+                                <br>
+ <div class="text-center">
+    <a href="/auth/facebook" class="btn btn-primary" style="color: #fff;background-color: #336799;border-color: #fff;"><span class="fa fa-facebook"></span> Facebook</a>
+    <br> <br>
+<!-- <a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+ -->    <a href="/auth/google" class="btn btn-danger" style="color: #fff;"><span class="fa fa-google-plus"></span> Google+</a>
+</div>
+                               </form>
+                            </div>
+                            <div class="tab-pane" id="play">
+                                
+                            
+
+                                <form role="form" action="/signup" class="form-horizontal" method="post" id="emailForms">
+
+                             <!--          <% if(locals.error) { %>
+              <div class="alert alert-danger"><%= error %></div>
+                     <% } %>
+                     <% if(locals.success) { %>
+              <div class="alert alert-success"><%= success %></div>
+                      <% } %> -->
+
+                        <% if(locals.error) { %>
+                     <div class="alert alert-danger">
+                          <%= error %>
+                      </div>
+                 
+                         <% } %>
+
+                            
+                     <% if(locals.success) { %>
+              <div class="alert alert-success"><%= success %></div>
+                      <% } %>
+
+
+
+                                <input type="hidden" name="consult_status" id="consult_status" class="m-wrap" placeholder="Consult Status" value="0" required />
+
+                                <div class="form-group">
+                                  
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+
+                                             <input type="hidden" name="user_role" id="user_roles" class="form-control" value="user" required />
+                                            
+                                                   <input type="text" name="firstName" id="firstNames" class="form-control" placeholder="First Name" value="<%= locals.firstName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+                                            
+                                                   <input type="text" name="lastName" id="lastNames" class="form-control" placeholder="Last Name" value="<%= locals.lastName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <div class="col-sm-12">
+                                      
+                                        <input type="email" name="email" class="form-control" value="<%= locals.email || '' %>" placeholder="Email" required />
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                  
+
+                                   <!--   <input type="password" name="password" id="password" class="form-control"  placeholder="Password" required /> -->
+
+                                      <input type="text" name="nfake_pass" id="nfake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="npassword" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                  
+                                    <!--  <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder=" Confirm Password" required /> -->
+
+                                      <input type="text" name="cfake_pass" id="cfake_pass" value="Enter Confirm Password" class="form-control" style="display:none"/>
+                               <input type="password" name="cpassword" id="cpassword" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+
+                                <div class="row"> 
+                                   
+                                    <div class="col-sm-12">
+                                        <button id="send" type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Register</button>
+                                     
+                                    </div>
+                                </div>
+                                </form>
+                             <!--    <br>
+<div class="text-center">
+                                 <a href="/auth/facebook" class="btn btn-primary" style="color: #fff;
+    background-color: #272f65ba;
+    border-color: #272f65ba;"><span class="fa fa-facebook"></span> Facebook</a>
+      <br> <br>
+        <a href="/auth/google" class="btn btn-danger" style="color: #fff;"><span class="fa fa-google-plus"></span> Google</a>
+</div>
+        <br> -->
+                            </div>
+                        </div>
+                      
+                   
+                   </div>
+
+           
+        
+               </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+    <div id="myModal12" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm" style="padding-top: 100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">
+                    Login/Sign Up</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" style="padding-left: 45px;"> 
+                            <li class="active"><a href="#stations" data-toggle="tab">Login</a></li>
+                            <li><a href="#plays" data-toggle="tab">Registration</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="stations">
+                              <form role="form"  action="/login" class="form-horizontal" method="post">
+
+                                  <% if(locals.errorlogin) { %>
+                     <div class="alert alert-danger">
+                  <%= errorlogin %> 
+
+                </div>
+                 
+                         <% } %>
+
+                       
+                         <% if(locals.successlogin) { %>
+                     <div class="alert alert-success"><%= successlogin %>
+                     </div>
+                          <% } %>
+
+
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <input type="email" name="username" value="<%= locals.username || '' %>" class="form-control" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                       <!--  <input type="password" name="password" id="password" class="form-control" placeholder="Password" /> -->
+
+                                          <input type="text" name="pl-fake_pass" id="pl-fake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="pl-password" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Submit</button>
+                                         <br>
+                                         <a href="#" id="forgotPass" data-dismiss="modal" data-toggle="modal" data-target="#myModalforget" style="text-align: center;margin: 0 auto;display: block;">Forgot your password?</a>
+                                    </div>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="tab-pane" id="plays">
+                                
+                            
+
+                                <form role="form" action="/registers" class="form-horizontal" method="post" id="emailForm" enctype="multipart/form-data">
+
+                                  <% if(locals.errorregister) { %>
+                     <div class="alert alert-danger">
+                          <%= errorregister %>
+                      </div>
+                 
+                         <% } %>
+
+                            
+                     <% if(locals.successregister) { %>
+              <div class="alert alert-success"><%= successregister %></div>
+                      <% } %>
+
+                                <div class="form-group">
+                                  
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+
+                                             <input type="hidden" name="user_role" id="user_role" class="form-control" value="health-provider" required />
+                                            
+                                                   <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name" value="<%= locals.firstName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+                                            
+                                                   <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name" value="<%= locals.lastName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <div class="col-sm-12">
+                                      
+                                        <input type="email" name="username" id="username" class="form-control" value="<%= locals.username || '' %>" placeholder="Email" required />
+                                    </div>
+                                </div>
+                               
+                                  
+                                <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                   
+
+                                     <!-- <input type="password" name="password" id="password" class="form-control"  placeholder="Password" required /> -->
+
+                                       <input type="text" name="pn-fake_pass" id="pn-fake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="pn-password" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                  
+                                    <!--  <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder=" Confirm Password" required /> -->
+
+                                       <input type="text" name="pc-fake_pass" id="pc-fake_pass" value="Confirm Password" class="form-control" style="display:none"/>
+                               <input type="password" name="cpassword" id="pc-password" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                     <input type="file" name="licenseimg" id="licenseimg" required />
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                   
+                                    <div class="col-sm-12">
+                                        <button id="sendreq" type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Register</button>
+                                     
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+   </div>
+</div>
+
+
+
+   <div id="myModalforget" class="modal fade" tabindex="-1">
+    <div class="modal-dialog" style="padding-top: 100px;">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close-model-forget">
+                    ×</button>
+          <h4 class="modal-title">Please enter your registered email.</h4>
+        </div>
+        <form action="/forget" method="post" class="form-horizontal">
+                    <% if(locals.errorforget) { %>
+                     <div class="alert alert-danger">
+                  <%= errorforget %> 
+
+                </div>
+                 
+                         <% } %>
+
+                       
+                         <% if(locals.successforget) { %>
+                     <div class="alert alert-success"><%= successforget %></div>
+                          <% } %>
+
+        <div class="modal-body">
+         <div class="form-group">
+             <div class="col-sm-12">
+             <input type="email" name="username"  value="<%= locals.username || '' %>" class="form-control" placeholder="Enter Email" />
+             </div>
+        </div>
+              <div class="row">
+                 <div class="col-sm-12">
+                 <button type="submit" class="datas btn btn-primary btn-md" style="margin:0 auto;display: block;"> Submit</button>
+                  <br>
+                 </div>
+             </div>                     
+        </div>
+
+      </form>
+        
+      </div>
+      
+    </div>
+  </div>
+
+<script type="text/javascript">
+       $('#password').hide();
+
+$('#cpassword').hide();
+$('#npassword').hide();
+$('#pl-password').hide();
+$('#pn-password').hide();
+$('#pc-password').hide();
+
+
+
+// Show the fake pass (because JS is enabled)
+$('#fake_pass').show();
+$('#nfake_pass').show();
+
+$('#cfake_pass').show();
+
+$('#pl-fake_pass').show();
+$('#pn-fake_pass').show();
+$('#pc-fake_pass').show();
+
+
+
+// On focus of the fake password field
+$('#fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#password').show().focus(); // and show the real password input password
+});
+
+$('#nfake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#npassword').show().focus(); // and show the real password input password
+});
+
+$('#cfake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#cpassword').show().focus(); // and show the real password input password
+});
+
+$('#pl-fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#pl-password').show().focus(); // and show the real password input password
+});
+
+$('#pn-fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#pn-password').show().focus(); // and show the real password input password
+});
+
+$('#pc-fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#pc-password').show().focus(); // and show the real password input password
+});
+
+// On blur of the real pass
+$('#password').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#fake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+$('#npassword').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#nfake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+$('#cpassword').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#cfake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+$('#pl-password').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#pl-fake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+// ('#pn-password').blur(function(){
+//     if($(this).val() == ""){ // if the value is empty, 
+//         $(this).hide(); // hide the real password field
+//         $('#pn-fake_pass').show(); // show the fake password
+//     }
+//     // otherwise, a password has been entered,
+//     // so do nothing (leave the real password showing)
+// });
+
+// ('#pc-password').blur(function(){
+//     if($(this).val() == ""){ // if the value is empty, 
+//         $(this).hide(); // hide the real password field
+//         $('#pc-fake_pass').show(); // show the fake password
+//     }
+//     // otherwise, a password has been entered,
+//     // so do nothing (leave the real password showing)
+// });
+
+     </script>
+
+  
+  
+ 
+
+           <!-- <section id="reviews">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading inverse sp-effect3">
+                    <h1 style="color: #fff">For clinics</h1>
+                    <div class="divider"></div>
+                    <p>Simple yet powerful solutions that are built to grow your practice.
+</p>
+                   </div>
+
+                     </div>
+                    
+                        <div class="col-lg-5 col-md-5">                    
+                  <div class="newssss">
+                    <div class="about-item">
+                      <div class="panel-body" orign>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading">  50,000 doctors are able to manage their practice efficiently</h3>
+                               
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading"> Offering premium experience to over 25 million patients</h3>
+                           
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="datas media-heading"> Higher online visibility for doctors across 5 countries
+</h3>
+                              
+                            </div>
+                        </div>
+
+                       
+
+                         <div class="media feature">
+                            
+                            <div class="media-body">
+                                <h3 class="datas-neww media-heading"> <button data-toggle="modal" data-target="#myModal" class="datas-btn btn btn-primary btn-md" style="color:#fff;border-color: #fff;border-radius: 5px;border: 1px solid #ffffff;">Know More</button></h3>
+                              
+                            </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                   
+                     <div class="col-lg-7 col-md-7">
+                        <div class="">
+                           
+                        <div class="panel-body orign">
+                        <div class="about-item">
+                       <img src="img/clinic.jpg" class="img-responsive sp-effect5" alt="">
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                   
+                     
+                  </div>
+               
+            </div>
+        </section>
+ <section id="features">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading sp-effect3">
+                    <h1>For hospitals</h1>
+                    <div class="divider"></div>
+                    <p>Robust plug-and-play software solutions
+</p>
+                   </div>
+
+                     </div>
+                      <div class="col-lg-7 col-md-7">
+                        <div class="">
+                           
+                        <div class="panel-body orign">
+                        <div class="about-item">
+                       <img src="img/hospital.jpg" class="img-responsive sp-effect5" alt="">
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">                    
+                        <div class="newssss">
+                             <div class="about-item">
+                            <div class="panel-body" orign>
+                            <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">  1,000+ hospitals</h3>
+                               
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">  17+ countries</h3>
+                           
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">28 Million patients managed</h3>
+                              
+                            </div>
+                        </div>
+
+                        
+                        <div class="media feature">
+                           
+                            <div class="media-body">
+                                <h3 class="datas-neww media-heading"> <button data-toggle="modal" data-target="#myModal" class="datas-btn btn btn-primary btn-md" style="border-radius: 5px;border: 1px solid #66cdcc;">Know More</button>
+</h3>
+                              
+                            </div>
+                        </div>
+                            </div>
+
+                            
+
+                            </div>
+                        </div>
+                    </div>
+
+                     
+                     
+                  </div>
+               
+            </div>
+        </section>-->
+       
+      
+               
+
+
+
+
+    <!-- <div class="wrapper">
+
+
+       <div id="wrapperss">
+        <div class="overlay"></div>
+    
+       
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+          
+
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="index"><h3 style="color: #fff;float: right;margin-top: 12px;">WORLD<b style="color: #fff;">EX</b></h3></a>
+                </li>
+                  <li><a href="#about"><span> <i class="fa fa-users" aria-hidden="true"></i> </span>    Services</a> </li>
+                  <li><a href="#reviews"><span> <i class="fa fa-mobile" aria-hidden="true"></i> </span>     Shop</a></li>
+                  <li><a href="#features"><span><i class="fa fa-user-md" aria-hidden="true"></i> </span>    Consult</a></li>
+                  <li><a href="#getApp"><span><i class="fa fa-film" aria-hidden="true"></i></span>    Get App</a></li>
+                 
+ 
+            </ul>
+
+                
+           
+        </nav>
+       
+                    <div id="page-content-wrapper" style="z-index: 100000000;">
+                        <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                            <span class="hamb-top"></span>
+                            <span class="hamb-middle"></span>
+                            <span class="hamb-bottom"></span>
+                        </button>
+                        
+
+                    </div>
+                
+
+
+
+
+                  
+
+    </div>-->
+  
+ 
+
+    
+
+      
+      
+     
+
+
+<!-- Large modal -->
+
+
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+<!-- <script type="text/javascript">
+    
+    $("#sendreqs").on("click", function () {
+
+        alert("hii");
+         $(window).load(function(){        
+   $('#myModal11').modal('show');
+    }); 
+
+  
+         
+});
+</script> -->
+
+  <!--  <script type="text/javascript">
+    
+    $(".close-data").on("click", function () {
+
+     location.assign('login');
+    }); 
+
+     
+</script> -->
+
+<script type="text/javascript">
+   $(document).ready(function()
+   {
+    $("#forgotPass").click(function(){
+        $("body").css("overflow-y", "hidden");
+    });
+});
+
+//     $(document).ready(function()
+//    {
+//     $("#close-model-forget").click(function(){
+   
+//     //  $("body").css("overflow-y", "visible");
+     
+
+     
+
+//     });
+// });
+        $(document).ready(function()
+   {
+    $(".modal-open").click(function(){
+   
+      $("body").css("overflow-y", "hidden");
+      $("body").css("padding-right","0px !important");
+     
+
+     
+
+    });
+    
+});
+
+
+    $("body").click(function(){
+    $(this).css("padding-right","");//used rotate to see the effect
+});
+    $(".modal-open").click(function(){
+    $(this).css("padding-right","0px !important");//used rotate to see the effect
+});
+
+    
+
+   
+
+ </script>
+
+
+
+
+
+      <script type="text/javascript">
+       
+//        $(document).ready(function () {
+//   var trigger = $('.hamburger'),
+//       overlay = $('.overlay'),
+//      isClosed = false;
+
+//     trigger.click(function () {
+//       hamburger_cross();      
+//     });
+
+//     function hamburger_cross() {
+
+//       if (isClosed == true) {          
+//         overlay.hide();
+
+//         trigger.removeClass('is-open');
+
+//         trigger.addClass('is-closed');
+//         isClosed = false;
+//       } else {   
+//         overlay.show();
+//         trigger.removeClass('is-closed');
+//         trigger.addClass('is-open');
+//         isClosed = true;
+//       }
+//   }
+  
+//   $('[data-toggle="offcanvas"]').click(function () {
+//         $('#wrapperss').toggleClass('toggled');
+//   });  
+// });
+    
+  /*Menu-toggle*/
+//     $("#menu-toggle").click(function(e) {
+//         e.preventDefault();
+//   e.stopPropagation()
+//         //  $(this).toggleClass('open');
+//           $("i", this).toggleClass("fa fa-bars fa fa-close");
+
+//         $("#wrapper").toggleClass("active");
+
+
+      
+//         //alert(1);
+
+//     });
+
+// // added code
+
+// // $('body,html').click(function(e){
+// //         // alert('call'); 
+// //         $(this).find($("#hambgr")).removeClass('fa fa-toggle-on').addClass('fa fa-toggle-off');
+
+// //        $("#wrapper").removeClass("active");
+// // });  
+// // added code
+// $('#hpage').click(function(e){
+//        //  alert('call'); 
+
+
+//        $("#hambgr").removeClass('fa fa-close').addClass('fa fa-bars');
+//        $("#wrapper").removeClass("active");
+// }); 
+
+
+
+
+</script>
+
+ 
+    <!-- <script src="/assets_home/js/bootstrap.min.js"></script>   -->
+     <script src="/assets_home/js/slick.min.js"></script>
+    <script src="/assets_home/js/placeholdem.min.js"></script>    
+    <script src="/assets_home/js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script src="/assets_home/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>    
+    <script src="/assets_home/js/waypoints.min.js"></script>
+    <script src="/assets_home/js/scripts.js"></script>   
+      <script>
+        $(document).ready(function() {
+            appMaster.preLoader();
+        });
+
+ </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.3.1/jquery.maphilight.min.js"></script>
+  
+    <script type="text/javascript">
+      $(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+
+      hamburger_cross();  
+     
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {   
+       // alert("close sidebar");       
+        overlay.hide();
+        $("#sidebar-wrapper").css("width", "0");
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else{
+     // alert("open sidebar");   
+        overlay.show();
+        $("#sidebar-wrapper").css("width", "250");
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      } 
+  }
+
+  
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+  });  
+
+$('#hpage').click(function(e){
+         if (isClosed == true) {   
+        // alert("true");   
+        //alert("close divison sidebar");      
+        overlay.hide();
+        $("#sidebar-wrapper").css("width", "0");
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        
+        isClosed = false;
+      } 
+}); 
+
+      
+});
+    </script>
+ <script>
+        var cart = [];
+        $(function () {
+            if (localStorage.cart)
+            {
+                cart = JSON.parse(localStorage.cart);
+                showCart();
+            }
+            if (cart.length == 0 || cart.length == null) {
+              //alert(cart.length);
+              document.getElementById("totalprice").textContent= "0";
+              document.getElementById("totalprices").textContent= "0";
+
+              
+            }
+        });
+
+        function addToCart() {
+            var price = $("#productprice").text();
+            var name = $("#productname").text();
+            var productcategory = $("#productcategory").text();
+            
+            var qty = $("#qty").val();
+            var total= 0;
+
+            // update qty if product is already present
+            for (var i in cart) {
+                if(cart[i].Product == name)
+                {
+                    cart[i].Price = price;
+                    cart[i].Qty = qty;
+                    cart[i].Total = total;
+                    showCart();
+                    saveCart();
+                    return;
+                }
+            }
+            // create JavaScript Object
+            var item = { Product: name,  Price: price, Qty: qty, Total : total }; 
+
+            cart.push(item);
+            saveCart();
+            showCart();
+        }
+
+        function deleteItem(index){
+            cart.splice(index,1); // delete item at index
+            showCart();
+            saveCart();
+        }
+
+        function saveCart() {
+            if ( window.localStorage)
+            {
+                localStorage.cart = JSON.stringify(cart);
+
+            }
+        }
+
+        function showCart() {
+            if (cart.length == 0) {
+                $("#cart").css("visibility", "hidden");
+               // document.getElementById("totalitem").textContent= "0";
+                document.getElementById("totalprice").textContent= "0";
+                document.getElementById("totalprices").textContent= "0";
+                return;
+            }
+            
+           
+
+            $("#cart").css("visibility", "visible");
+            $("#cartBody").empty();
+
+            //document.getElementById("totalitem").textContent=cart.length;
+
+
+              var total= 0;
+            for (var i in cart) {
+                var item = cart[i];
+               
+                var total = total + item.Qty * item.Price;
+                //alert(total);
+                 document.getElementById("totalprice").textContent=parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                  document.getElementById("totalprices").textContent= parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                var row = "<tr><td>" + item.Product + "</td><td>" +
+                             item.Price + "</td><td>" + item.Qty + "</td><td>"
+                             + "$"+ item.Qty * item.Price + "</td><td>" +  total + "</td><td>"
+                             + "<button onclick='deleteItem(" + i + ")'>Delete</button></td></tr>";
+                $("#cartBody").append(row);
+            }
+        }
+    </script>
+
+
+    
+
+ 
+   
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+<script type="text/javascript">
+    
+    $(".close-data").on("click", function () {
+    location.assign('index');
+});
+</script>
+
+
+
+      <script type="text/javascript">
+   
+       
+ /*Menu-toggle*/
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+  e.stopPropagation()
+        //  $(this).toggleClass('open');
+ $("i", this).toggleClass("fa fa-bars fa fa-close");
+        $("#wrapper").toggleClass("active");
+
+
+      
+        //alert(1);
+
+    });
+
+// added code
+
+
+
+// $('body,html').click(function(e){
+//         // alert('call'); 
+//         $(this).find($("#hambgr")).removeClass('fa fa-toggle-on').addClass('fa fa-toggle-off');
+
+//        $("#wrapper").removeClass("active");
+// });  
+
+
+        
+$('#hpage').click(function(e){
+        // alert('call'); 
+       $("#hambgr").removeClass('fa fa-close').addClass('fa fa-bars');
+
+       $("#wrapper").removeClass("active");
+});  
+// added code
+
+
+
+
+</script>
+
+ 
+
+    <script type="text/javascript">
+    /*  $('a').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+});*/
+// Select all links with hashes
+$('a[href*="#"]')
+  // Remove links that don't actually link to anything
+  .not('[href="#"]')
+  .not('[href="#0"]')
+  .click(function(event) {
+    // On-page links
+    if (
+      location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+      && 
+      location.hostname == this.hostname
+    ) {
+      // Figure out element to scroll to
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      // Does a scroll target exist?
+      if (target.length) {
+        // Only prevent default if animation is actually gonna happen
+        event.preventDefault();
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 1000, function() {
+          // Callback after animation
+          // Must change focus!
+          var $target = $(target);
+          $target.focus();
+          if ($target.is(":focus")) { // Checking if the target was focused
+            return false;
+          } else {
+            $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+            $target.focus(); // Set focus again
+          };
+        });
+      }
+    }
+  });
+    </script>
+     <!--  <script src="/assets_home/js/jquery-1.11.1.min.js"></script>  -->
+     <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/assets_home/js/slick.min.js"></script>
+    <script src="/assets_home/js/placeholdem.min.js"></script>  -->
+   <!-- <script src="/assets_home/js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>-->
+    <!--<script src="/assets_home/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>  
+    <script src="/assets_home/js/waypoints.min.js"></script>   
+    <script src="/assets_home/js/scripts.js"></script>-->   
+      <script>
+        $(document).ready(function() {
+            appMaster.preLoader();
+        });
+
+ </script>
+     
+</body>
+
+</html>

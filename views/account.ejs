@@ -1,0 +1,395 @@
+    <%- include partials/header_userdashboard %>
+
+ 
+    <div class="row-fluid">
+ <div class="row" style="background: #f0f0f5;">
+        <div class="container">
+
+                <div class="row-fluid" style="background-color: #f0f0f5;">
+                    <div class="span3 sidebar-content ">
+                    <ul class="ver-inline-menu tabbable margin-bottom-25">
+                         <li ng-class="{active: activeTab === 'home'}">
+                                <a href="home">
+                                <i class="fa fa-home" aria-hidden="true"></i> 
+                                Home
+                                </a> 
+                                <span class="after"></span>                                    
+                            </li>
+                            
+                            
+                 <li ng-class="{active: activeTab === 'account'}" class="active"><a href="account"><i class="fa fa-user"  aria-hidden="true"></i> My Account</a></li>
+
+                 
+                  <li ng-class="{active: activeTab === 'subscription'}"><a href="subscription" ><i class="fa fa-user"  aria-hidden="true"></i> My Subscription</a></li>
+
+
+
+                    <li ng-class="{active: activeTab === 'order'}"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
+
+
+                     <% if (user.user_role === 'admin') { %>
+                    <li ng-class="{active: activeTab === 'manageorder'}"><a href="manageorder"><i class="fa fa-user"  aria-hidden="true"></i> Order Managment</a></li>
+                    <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
+                    <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                    <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                     <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
+                     <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
+                    <% } %>
+
+                      
+                     <% if (user.user_role === 'user') { %>
+                     <li ng-class="{active: activeTab === 'consult'}"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
+                     <li ng-class="{active: activeTab === 'symptom-user'}"><a href="symptom-user" ><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                     <% } %>
+
+                     <% if (user.user_role === 'doctor') { %>
+                      <li ng-class="{active: activeTab === 'review-consult'}"><a href="review-consult"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Review Consultations</a></li>
+                      <li ng-class="{active: activeTab === 'symptom-all'}"><a href="symptom-all"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                      <% } %>
+					  <li><a href="/logout"><i class="fa fa-sign-out"  aria-hidden="true"></i> Logout</a></li>
+                        
+                            
+                    </ul>
+                        
+                    </div>
+
+                            <!--<li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin" ><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+
+                            <li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" ><i class="fa fa-first-order"  aria-hidden="true"></i> Order Management</a></li>-->
+
+            
+                    
+                        <div class="span9">
+                                   
+                     
+                            <!-- BEGIN PAGE HEADER-->   
+                            <div class="row-fluid" style="margin-top: 20px;">
+                               
+                            </div>
+                            <!-- END PAGE HEADER-->
+                            <!-- BEGIN PAGE CONTENT-->
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <!-- BEGIN SAMPLE FORM PORTLET-->   
+                                     <div class="flash-message" ng-if="flash">
+                                                <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+                                     </div>
+                                    <div class="portlet box blue tabbable">
+                                        <div class="portlet-title">
+                                            <div class="caption">
+                                             
+                                                <span class="hidden-480">My Profile</span>
+                                            </div>
+                                        </div>
+
+                                    <div class="portlet-body form">
+                                            <div class="tabbable portlet-tabs">
+                                                
+                                                <div class="tab-content">
+                                    <div class="tab-pane active" id="portlet_tab1">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <div class="span9">
+                                             <form action="/profile-update" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+                                             	 <input type="hidden" name="userid" class="form-control" value="<%= user._id %>" required />
+
+                                                                 <div class="control-group">
+                                                                    <label class="control-label">First Name</label>
+                                                                    <div class="controls">
+                                                                       <input type="text"  name="firstName" class="form-control" value="<%= user.firstName || ''  %>"  placeholder="First Name" required />
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                                <div class="control-group">
+                                                                    <label class="control-label">Last Name</label>
+                                                                    <div class="controls">
+                                                                        <input type="text" id="lastName" name="lastName" class="form-control" value="<%= user.lastName || ''  %>"  placeholder="Last Name" required />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="control-group">
+                                                                    <label class="control-label">Email</label>
+                                                                    <div class="controls">
+                                                                         <input type="email" name="username" class="form-control" value="<% if (user.local.email) { %>
+									                                      <%= user.local.email %>
+									                                   <% } %>"   placeholder="Email" required />
+									                                </div>
+                                                                </div>
+
+                                                                  <div class="control-group">
+                                                                    <label class="control-label">Password</label>
+                                                                    <div class="controls">
+                                                                         <input type="password"  placeholder="Password" name="password" class="form-control" />
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div class="control-group">
+                                                                    <label class="control-label">Mobile Number</label>
+                                                                    <div class="controls">
+                                                                         <input type="text" name="phone" id="phone" class="form-control" value="<%= user.phone || ''  %>"  placeholder="Mobile Number" required />
+                                                                    </div>
+                                                                </div>
+
+                                                               <div class="control-group">
+                                                                    <label class="control-label">User Role</label>
+                                                                    <div class="controls">
+                                                                        <select name="user_role" class="form-control"  value="<%= user.user_role || '' %>">
+                                                                        <option>Select User Role </option>
+                                                                          <option value="admin">Admin</option>
+	                                                                      <option value="doctor" >Doctor</option>
+	                                                                         <option value="user">User</option>
+                                                                         </select>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="control-group">
+                                                                    <label class="control-label">Address</label>
+                                                                    <div class="controls">
+                                                                    <textarea id="address" name="address" class="form-control" rows="3" required="required"><%= user.address || ''  %></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                           <!--       <div class="control-group" ng-if= "vm.user.user_role === 'health-provider' ">
+                                                                    <label class="control-label">License Image</label>
+                                                                    <div class="controls">
+                                                                   <img ng-src="/uploads/license/{{vm.user.licenseimg.originalname}}" class="img-responsive" id="originalname" name="originalname" ng-model="vm.user.licenseimg.originalname" style="height: 150px;width: 300px;">
+                                                                   <input type="file" name="avatar"> 
+                                                                    <input type="text" id="_id" name="_id" class="m-wrap large" ng-model="vm.user._id"  style="display: none;" />
+
+                                                                     <input type="text" id="user_role" name="user_role" class="m-wrap large" value="health-provider"  style="display: none;" />
+
+                                                                    </div>
+                                                                </div> -->
+
+
+
+                                                             <div class="row-fluid">
+                                                             <div class="span4"></div>
+                                                             <div class="span3">
+                                                             <button style="display: block;margin: 0 auto;" class="btn theme-btn"> <i class="fa fa-check"></i> Update Your Info</button>
+                                                             </div>
+                                                             <div class="span3">
+                                                             <a ui-sref="account"><button style="text-decoration: none;outline: 0 none;" class="btn theme-btn"><i class="fa fa-arrow"></i> Cancel</button></a>
+                                                                </div>
+                                                              <div class="span2"></div>  
+                                                                </div>
+           
+                            </form>
+
+
+                                        </div>
+                                        <div class="span3">
+                                             
+                                             <form action="/image-upload" method="POST" enctype="multipart/form-data" style="" class="newimageform">
+
+                                   
+                                            <div class="control-group">
+                                          
+                                                <img src="/uploads/<%= user.img.originalname %>" name="originalname" class="img-responsive">
+                                                 <input type="text" name="originalname" value="<%= user.img.originalname %>">
+                                               </div>
+
+
+                                             <input type="file"  name="avatar" required="required" onchange="previewFile()">
+                                              <input type="text" name="userid" class="m-wrap large" value="<%= user._id || ''  %>"  />
+
+                                         <!-- <img src="" alt="Image preview...">-->
+
+										 <input class="btn theme-btn" type="submit"  value="Upload Image" ng-click="vm.imgupload();">
+                                         </form>
+                                         
+
+                                         
+
+        
+                                        </div>
+
+                                         
+                                        
+                                    </div>
+                                 
+                                </div>
+                                     </div>
+                                                   
+                                                </div>
+                                            </div>
+                                    </div>
+                                    </div>
+                                    <!-- END SAMPLE FORM PORTLET-->
+
+
+
+                                </div>
+                            </div>
+                            <!-- END PAGE CONTENT-->         
+                      </div>
+                 </div>
+           </div>
+</div>
+
+<script>
+   function previewFile(){
+       var preview = document.querySelector('img'); //selects the query named img
+       var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+       var reader  = new FileReader();
+
+       reader.onloadend = function () {
+           preview.src = reader.result;
+       }
+
+       if (file) {
+           reader.readAsDataURL(file); //reads the data as a URL
+       } else {
+           preview.src = "";
+       }
+  }
+
+  previewFile();  //calls the function named previewFile()
+  </script>
+  <script type="text/javascript">
+  $(function() {
+    $('.pop').on('click', function() {
+      $('.imagepreviews').attr('src', $(this).find('img').attr('src'));
+      $('#imagemodal').modal('show');   
+    });   
+});
+</script>
+  
+
+ </div>
+
+ <style type="text/css">
+  a.newlogocss{
+      margin-left: 20px;
+}
+
+ .navbar-brand{
+ padding: 15px !important;
+ }
+  
+  .dropdown.open .dropdown-toggle{
+    background-color: #fff !important;
+  }
+ .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: thin dotted;
+    outline: none;
+    outline-offset: -2px;
+}
+     .navbar-inverse .navbar-toggle {
+    border-color:  #ffffff;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+
+  color: #999;
+}
+.nav .dropdown-toggle .caret {
+    margin-top: 6px;
+    border-top-color: #020202 !important;
+    border-bottom-color: #121213 !important;
+}
+.modal {
+   /* width: 100%;
+    margin-left: 0px;*/
+    background-color: rgba(92, 92, 92, 0.03);
+    border: 0px;
+}
+.modal-body {
+   
+     padding: 0px; 
+    overflow-y: inherit; 
+  }
+/*.dropdown-toggle ng-binding
+{
+background-color: #ffffff !important;
+}*/
+
+
+@media (min-width: 414px){
+ .navbar-brand{
+  font-size: 25px !important;
+ }
+   }
+
+   @media (min-width: 320px) and (max-width: 320px){
+ .navbar-brand{
+     font-size: 15px !important;
+    padding: 0px;
+        margin: 14px 0px 0px 25px !important;
+   }
+
+
+ </style>
+ 
+</body>
+<!-- END BODY -->
+</html>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.3.1/jquery.maphilight.min.js"></script>
+
+ 
+    <script src="/assets_home/js/slick.min.js"></script>
+    <script src="/assets_home/js/placeholdem.min.js"></script>
+    <script src="/assets_home/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>  
+    <script src="/assets_home/js/waypoints.min.js"></script>   
+    <script src="/assets_home/js/scripts.js"></script> 
+ 
+
+<!--     <script src="/assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+ -->
+    <!-- <script src="/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> -->
+ 
+  <!--  <script src="/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>  -->
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    
+    <script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>   
+    <script type="text/javascript" src="/assets/plugins/select2/select2.min.js"></script>
+  <script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+    <script src="/assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script> 
+ 
+
+  
+
+
+
+
+ <style type="text/css">
+      input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{ 
+ height: 30px;
+    width: 80%;
+}
+
+textarea{
+       width: 80%;
+ 
+}
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0;
+    filter: alpha(opacity=80);
+}
+
+
+ </style>
+
+
+    <%- include partials/footer_userdashboard %>
+
+
+                                      
+
+                               
+                                        

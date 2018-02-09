@@ -1,0 +1,369 @@
+    <%- include partials/header_product_login %>
+    
+<style>
+button.btn.btn-primary.nextBtn.btn-lg{
+  outline: 0 none;
+  }
+ button.datas-btn.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+     button.btn.btn-primary.btn-md{
+        outline: 0 none;
+     }
+
+.panel-heading .nav > li.active > a, .panel-heading .nav > li > a:hover{
+  background: #babf10;
+    color: #fff;
+}
+
+.panel-heading .nav > li > a{
+  background: #fff;
+    color: #babf10;
+}
+span.glyphicon.glyphicon-chevron-down,  span.glyphicon.glyphicon-chevron-up{
+      color: #babf10;
+}
+
+.glyphicon {
+margin-right: 4px !important; /*override*/
+}
+.pagination .glyphicon {
+margin-right: 0px !important; /*override*/
+}
+.pagination a {
+color: #555;
+}
+.panel ul {
+padding: 0px;
+margin: 0px;
+list-style: none;
+}
+.news-item {
+padding: 4px 4px;
+margin: 0px;
+border-bottom: 1px dotted #555;
+}
+
+/*.center {
+  display:inline-table;
+  margin: 0px;
+    margin-top: 5px;
+}
+
+b, strong{
+  color: rgba(51, 51, 51, 0.79);
+}*/
+</style>
+
+
+<!--<div class="container-fluid" id="parallax-order-detail">
+  <div class="row">
+     
+    </div>
+</div>-->
+ <div id="hpage">
+
+<div class="row-fluid">
+  <img src="/img/medicinal-herb-plants-banner.jpg" class="img-responsive">
+
+    
+ </div> 
+
+  <div class="container min-hight" style="padding-top: 10px;">
+       
+         <div class="row-fluid">
+        
+         <section class="wrapper">
+              <!-- page start-->
+               <div class="row">
+                  
+                   
+                  <div class="col-md-12">
+               
+
+             <section class="panel" style="padding-top:50px;">
+                <div class="panel-body">
+
+                    <!--<div class="col-md-4">
+                       <section>
+
+
+                        <div class="pro-img-details">
+                         <div class="col-md-12">
+                          <div class="price_header">
+                              <div class="list-group-item" style="text-align:center;color:#fff;background-color:#babf10;">Similar Products</div>
+                          </div>
+                              <ul class="list-group" style="height: 400px;overflow-y: scroll;border: 1px solid #ddd">
+                         
+
+                                 <% for (var i = 0; i < datas.length; i++) if(datas[i].productcategory == data.productcategory) { %> 
+                                      <li class="list-group-item">
+                                          <strong> <%= datas[i].productname %></strong><br>
+                                          <h6>  <%= datas[i].productcategory %></h6>
+                                          <h6> $ <%= datas[i].productprice %></h6>
+                                 <% } %>
+                                          
+                                      </li>
+                                     
+                                       
+                                </ul>
+                          </div>
+                        </div>
+                         
+                       </section>
+                                   
+                     </div>-->
+
+                             
+                    <div class="col-sm-4 col-md-8 col-md-push-4">
+                                  <h4 class="pro-d-title" style="font-size:23px;">
+                                      <a href="order-details?id=<%= data._id %>" class="" id="productname">
+                                           <%= data.productname %> 
+                                      </a>
+                                   </h4> 
+                                   <p style="color: #999999;"><%= data.productname_chineese %></p>
+                                  <p style="color: #999999;"><%= data.productdescr %></p>
+                          <div class="form-group">
+                          
+                             <div class="row">
+                             <div class="col-md-12"> 
+
+                               <!--  <% if(data.producttype === 'Practicioner') { %>  
+                                 <span class="posted_in">
+                                  <a rel="tag" href="#">* 90 CAPS IN A BOTTLE</a>    
+                                  </span>
+                                  <% } %> 
+
+
+                                  <% if(data.producttype != 'Practicioner') { %>  
+                                   <span class="posted_in">
+
+                                  <a rel="tag" href="#">* 5 days Dosage</a>    
+                                  </span>
+
+                                 
+                                  <% } %>     -->
+                              
+                             
+
+                       <!-- <span class="posted_in"> 
+                                  <div class="panel with-nav-tabs">
+                                      <div class="panel-heading">
+                                              <ul class="nav nav-tabs">
+                                                  <li class="active"><a href="#tab1success" data-toggle="tab">Select Your Dosage *</a></li>
+                                                  <li><a href="#tab2success" data-toggle="tab">Select Your Quantity *</a></li>
+                                                
+                                              </ul>
+                                      </div>
+                                      
+                                  </div>
+                                  <p>-->
+                                    
+                                   <!-- <div class="input-group spinner"> -->
+
+                                        <input type="hidden" class="form-control" min="1" max="100000" value="1" id="qty">
+                                       <!--  <div class="input-group-btn-vertical">
+                                          <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                                           <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                                       </div>
+                                     </div>  
+                                  </p>  </span>    -->
+
+                               
+
+                                                                 
+                                
+                              </div>
+
+
+                             </div>
+                                                                
+                          </div>
+                           
+
+                        <div class="product_meta" style="border-bottom: 1px solid #fff;">
+                                <p>
+                                    <button id="btnAdd" onclick="addToCart()" class="newbtn btn btn-primary btn-md" type="button" style="display: inline;font-size: 12px;line-height: 20px"><i class="icon-shopping-cart"></i> Add to Cart</button>
+                                </p>
+                                <span class="posted_in"><strong>Products Price:</strong> <a rel="tag" href="#">$</a><a rel="tag" href="#" id="productprice">9.99</a>
+                                  </span>
+
+                                <span class="posted_in"><strong>Products:</strong><a rel="tag" href="#" id="productcategory"> <%= data.productcategory %></a>
+                                 </span>
+
+                                <span class="posted_in"><strong>Pack Size:</strong> <a rel="tag" href="#" id="prosize">  5 days Dosage</a></span>
+
+                                <span class="posted_in"><strong>* 1 Dosage is 1 week of pills</strong>  </span>
+
+                              </div>
+
+                                 
+                    </div>
+
+                    <div class="col-sm-8 col-md-4 col-md-pull-8">
+<div class="panel panel-default">
+<div class="panel-heading" style="text-align:center;color:#fff;background-color:#babf10;">Similar Products</div>
+<div class="panel-body">
+<div class="row">
+<div class="col-xs-12">
+<ul class="demo1">
+<% for (var i = 0; i < datas.length; i++) if(datas[i].productcategory == data.productcategory) { %> 
+<li class="news-item">
+<strong><a href="order-details?id=<%= datas[i]._id %>"> <%= datas[i].productname %> <%= datas[i].productname_chineese %></a></strong><br>
+                                          <h6>  <%= datas[i].productcategory %></h6>
+                                          <h6> $9.99</h6>
+</li>
+
+ <% } %>
+</ul>
+</div>
+</div>
+</div>
+<div class="panel-footer"> </div>
+</div>
+</div>
+      
+
+                  
+
+
+
+
+
+                          
+                </div>
+                      </section>
+
+                        
+                      
+                  </div>
+              </div>
+              <!-- page end-->
+
+   
+
+         
+         </section>      
+
+         </div>
+ </div>
+ <script type="text/javascript">
+
+    $(function () {
+        $(".demo1").bootstrapNews({
+            newsPerPage: 3,
+            autoplay: true,
+      pauseOnHover:true,
+            direction: 'up',
+            newsTickerInterval: 4000,
+            onToDo: function () {
+                //console.log(this);
+            }
+        });
+
+       
+    });
+</script>
+ <script>
+        var cart = [];
+        $(function () {
+            if (localStorage.cart)
+            {
+                cart = JSON.parse(localStorage.cart);
+                showCart();
+            }
+        });
+
+        function addToCart() {
+          
+            var price = $("#productprice").text();
+           
+            var name = $("#productname").text();
+            var productcategory = $("#productcategory").text();
+            
+            var qty = $("#qty").val();
+            
+           // var total= price * qty;
+           var total=0;
+
+            // update qty if product is already present
+            for (var i in cart) {
+                if(cart[i].Product == name)
+                {
+                    cart[i].Price = price;
+                    cart[i].Qty = qty;
+                    cart[i].Total = total;
+                    showCart();
+                    saveCart();
+                    return;
+                }
+            }
+            // create JavaScript Object
+            var item = { Product: name,  Price: price, Qty: qty, Total : total }; 
+
+            cart.push(item);
+            saveCart();
+            showCart();
+        }
+
+        function deleteItem(index){
+            cart.splice(index,1); // delete item at index
+            showCart();
+            saveCart();
+        }
+
+        function saveCart() {
+            if ( window.localStorage)
+            {
+                localStorage.cart = JSON.stringify(cart);
+
+            }
+        }
+
+        function showCart() {
+            if (cart.length == 0) {
+                $("#cart").css("visibility", "hidden");
+              //  document.getElementById("totalitem").textContent= "0";
+                document.getElementById("totalprice").textContent= "0";
+                document.getElementById("totalprices").textContent= "0";
+                
+                return;
+            }
+            
+           
+
+            $("#cart").css("visibility", "visible");
+            $("#cartBody").empty();
+
+          //  document.getElementById("totalitem").textContent=cart.length;
+
+
+              var total= 0;
+            for (var i in cart) {
+                var item = cart[i];
+               
+                var total = total + item.Qty * item.Price;
+                //alert(total);
+                 document.getElementById("totalprice").textContent=parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                  document.getElementById("totalprices").textContent= parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                var row = "<tr><td>" + item.Product + "</td><td>" +
+                             item.Price + "</td><td>" + item.Qty + "</td><td>"
+                             + "$"+ item.Qty * item.Price + "</td><td>" +  total + "</td><td>"
+                             + "<button onclick='deleteItem(" + i + ")'>Delete</button></td></tr>";
+                $("#cartBody").append(row);
+            }
+        }
+    </script>
+
+
+ 
+
+   <!--<section class="panel">
+     
+
+  </section>-->
+
+                                                          
+</div>
+
+    <%- include partials/footer_product %>

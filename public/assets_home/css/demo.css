@@ -1,0 +1,73 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-attachment: fixed;
+	background-position: 50% 50%;
+	background-size: cover;
+}
+a {
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+.bg-red {
+	background-image: url(../img/bg-red.jpg);
+}
+.bg-orange {
+	background-image: url(../img/bg-orange.jpg);
+}
+.bg-yellow {
+	background-image: url(../img/bg-yellow.jpg);
+}
+.bg-green {
+	background-image: url(../img/bg-green.jpg);
+}
+.bg-cyan {
+	 height: 100%;
+	
+	 background:#81c86b;
+
+  background: -moz-linear-gradient(-45deg, #81c86b 0%, #336799 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #81c86b), color-stop(100%, #336799));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #81c86b 0%, #336799 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #81c86b 0%, #336799 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #81c86b 0%, #336799 100%);
+  /* IE10+ */
+  background: linear-gradient(-45deg, #81c86b 0%, #336799 100%);
+
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#81c86b, endColorstr=#336799, GradientType=1);
+
+
+}
+.bg-blue {
+	background-image: url(../img/bg-blue.jpg);
+}
+.bg-purple {
+	background-image: url(../img/bg-purple.jpg);
+}
+.bg-pink {
+	background-image: url(../img/bg-pink.jpg);
+}
+.bg-black {
+	background-image: url(../img/bg-black.jpg);
+}
+.body {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 40px;
+}
+.body-s {
+	max-width: 400px;
+}
+@media screen and (max-width: 600px) {
+	.body {
+		padding: 20px;
+	}
+}

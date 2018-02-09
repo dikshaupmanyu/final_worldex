@@ -1,0 +1,529 @@
+﻿    <%- include partials/header %>
+
+
+         <!--<div class="tp-banner-container">
+            <div class="tp-banner">
+            </div>
+</div>-->
+
+              <!--<div class="caption">
+                  <marquee>This is basic example of marquee</marquee>
+                     </div>-->
+
+
+
+       <!-- <div class="row">
+
+        <img src="/img/banner.jpg" class="img-responsive" style="width: 100%;">-->
+          <% if(locals.error) { %>
+              <div class="alert alert-danger" style="text-align: center;width: 400px;float: right;position: absolute;top: 540px;left: 930px;"><%= error %>
+                  <button type="button" class="close-data" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              </div>
+                     <% } %>
+                     <% if(locals.success) { %>
+              <div class="alert alert-success" style="text-align: center;width: 400px;float: right;position: absolute;top: 540px;left: 930px;"><%= success %>
+                  <button type="button" class="close-data" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              </div>
+                      <% } %> 
+
+            
+        
+                           
+ 
+    <!-- Page content -->
+    <!--<div id="page-content-wrapper" style="margin-left: 0px;">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="row" >
+                
+               <section class="parallax">
+                 
+               </section> 
+                 
+              <section class="banner-section">
+               <div class="container-fluid" style="text-align: center;">
+                 <div class="row">
+                 <ul class="nav nav-pills" style="display: inline-block;">
+                  
+                 <li class="newli"> <a href="#features" style="text-decoration: none;border-right: 1px solid rgba(129, 200, 107, 0.36);"><h5 class="orign-data">
+                           <i class="fa fa-user-md fa-1.5x"></i>
+                            <br><br>
+                               Consult online
+                          
+                        </h5>
+                        </a></li>
+                 <li> <a href="#reviews" style="text-decoration: none;border-right: 1px solid rgba(129, 200, 107, 0.36);"><h5 class="orign-data">
+                           <i class="fa fa-shopping-cart fa-1.5x"></i>
+                                <br><br>
+                                Order Online
+                           
+                        </h5></a></li>
+                 <li>   <a href="#" style="text-decoration: none;"><h5 class="orign-data">
+                            <i class="fa fa-users fa-1.5x"></i>
+                                  <br><br>
+                                For Providers
+                            
+                        </h5></a></li>
+                </ul>
+
+
+                     
+                   
+                       
+                                    
+                     
+                   
+                     
+                    
+                </div>
+                </div>
+                
+              </section>
+
+              
+              <section id="about">
+               <div class="container-fluid">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading orign" style="text-align: center;">
+                    <h1>Our Services</h1>
+                    <div class="divider"></div>
+                      <p>Services Divided</p>
+                   </div>
+
+                     </div>
+                      <div class="col-md-4">
+                        <div class="panel">
+                           
+                            <div class="panel-body orign">
+                            <div class="about-item">
+                            <i class="fa fa-user-md fa-2x"></i>
+                            <h3 class="orign">Consult online</h3>
+                            <p class="orign">Ask a doctor online, describe your symptoms, click a picture of your toungue and get your health queries answered, with prescribed medicines. Never wait in queue. Get faster response.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">                    
+                        <div class="panel">
+                             <div class="about-item">
+                            <div class="panel-body" orign>
+                            <i class="fa fa-mobile fa-2x"></i>
+                            <h3 style="orign">Get Medicine Online</h3>
+                            <p style="orign">We offers a wide variety of Chinese herbal products starting from instant granulated herbal tea, herbal drops, USDA herbal capsules to single herbs or traditional Chinese formula.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-md-4">
+                        <div class="panel">
+                            <div class="about-item">
+                            <div class="panel-body orign">
+                            <i class="fa fa-users fa-2x"></i>
+                            <h3 style="orign">For Healthcare Providers</h3>
+                            <p style="orign">Ordering in bulk made easy. For Licensed practioners only. Get special pricing and faster shipping on bulk orders. Schedule and repeat orders easliy with one-click. Delivery all over USA</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+               
+            </div>
+        </section>
+          <section id="reviews">
+               <div class="container-fluid">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading inverse sp-effect3">
+                    <h1 style="color: #fff">Get all your medicines</h1>
+                    <div class="divider"></div>
+                    <p>Medicines Are </p>
+                   </div>
+
+                     </div>
+                      <div class="col-lg-5 col-md-5 col-sm-5">
+                        <div class="newssss review-comment-data">
+                            <ul>
+                          <li class="newe-li-data"><i class="fa fa-check"></i> Guaranteed availability</li>
+                          <li class="newe-li-data"><i class="fa fa-check"></i> Home delivery in 24hrs</li>
+                          <li class="newe-li-data"><i class="fa fa-check"></i> Over 130,000+ medicines</li>
+                          <li class="newe-li-data"><i class="fa fa-check"></i> 100% Organic & Genuine</li>
+                             </ul>
+                          
+                            
+                            </div>
+                              <button data-toggle="modal" data-target="#myModal" type="submit" class="btn btn-primary btn-md" style="display: block;color:#fff;border-color: #fff;border-radius: 5px;margin-top: 34px;border: 1px solid #ffffff;margin-left: 80px;">
+                                            Order Online</button>
+                        </div>
+                   
+                   
+                      <div class="col-lg-7 col-md-7 col-sm-7">
+                        <div class="review-comment-data">
+                            <div class="about-item">
+                           
+                               <img src="img/13.jpg" alt="" class="img-responsive sp-effect5">
+                           
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+               
+            </div>
+        </section>
+          <section id="features">
+               <div class="container-fluid">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading sp-effect3">
+                    <h1>Consult online</h1>
+                    <div class="divider"></div>
+                    <p>Consult Here</p>
+                   </div>
+
+                     </div>
+                      <div class="col-md-7">
+                        <div class="">
+                           
+                        <div class="panel-body orign">
+                        <div class="about-item">
+                       <img src="assets_home/img/eVisit_newsroom.jpg" class="img-responsive sp-effect5" alt="">
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">                    
+                        <div class="">
+                             <div class="about-item">
+                            <div class="panel-body" orign>
+                            <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">Thousands of patients helped</h3>
+                               
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">Verified doctors respond in 20 minutes</h3>
+                           
+                            </div>
+                        </div>
+                        <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading">100% private and confidential</h3>
+                              
+                            </div>
+                        </div>
+
+                          <div class="media feature">
+                            <a class="pull-left" href="#">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <div class="media-body">
+                                <h3 class="media-heading"> Home delivery in 24hrs</h3>
+                              
+                            </div>
+                        </div>
+
+                                 <button data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-md" style="margin-top: 34px;    margin-left: 80px;border-radius: 5px;border: 1px solid #66cdcc;">Consult Now</button>
+                              
+                           
+
+                       
+
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     
+                     
+                  </div>
+               
+            </div>
+        </section>
+          <section id="getApp">
+               <div class="container-fluid">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading inverse sp-effect3">
+                    <h1 style="color: #fff">Get App</h1>
+                    <div class="divider"></div>
+                      <p>Choose your native platform and get started!</p>
+                       <p>Welcome <br> Our App</p>
+                   </div>
+                   </div>
+
+                  <br> 
+                    <br>
+                    <div class="col-md-12">
+                        <div class="hanging-phone sp-effect2 hidden-xs">
+                            <img src="assets_home/img/freeze/freeze-angled2.png" alt="">
+                        </div>
+                        <div class="platforms">
+                            <a href="#" class="btn btn-primary inverse sp-effect1">
+                                <i class="fa fa-android fa-3x pull-left"></i>
+                                <span>Download for</span><br>
+                                <b>Android</b>
+                            </a>
+                            
+                                <a href="#" class="btn btn-primary inverse sp-effect2">
+                                    <i class="fa fa-apple fa-3x pull-left"></i>
+                                    <span>Download for</span><br>
+                                    <b>Apple IOS</b>
+                                </a>
+                        </div>
+
+                    </div>
+               
+
+
+                     </div>
+                 
+                  
+               
+                </div>
+
+        </section>
+          <footer style="background: rgba(0, 0, 0, 0.28);">
+           
+                <div class="row">
+                <div class="col-md-12">
+                <div class="panel-body">
+                  <div class="col-md-4">
+
+                       
+                    <h2>About</h2>
+                    <p>Vivamus imperdiet felis consectetur onec eget orci adipiscing nunc. Pellentesque fermentum, ante ac interdum ullamcorper.</p>
+                      
+                    </div>
+                    <div class="col-md-4" >
+                       <h2>Contact Us</h2>
+                    
+                        Loop, Inc. <br />
+                        259, Meridian Ave, Suite 14 <br />
+                        San Jose, CA 95126 <br />
+                        P: (234) 145-1810 <br />
+                        Email: <a href="mailto:info@medical.com">info@worldex.com</a>                        
+                   
+                        
+                    </div>
+                    <div class="col-md-4" >
+                        
+                              <h2>Monthly Newsletter</h2>  
+                        <p>Subscribe to our newsletter and stay up to date with the latest news and deals!</p>
+                    <form action="#">
+                      
+                          <button class="btn success" type="button">SUBSCRIBE</button>
+                     
+                    </form>
+                       
+                    </div>
+                    
+                </div>
+                </div>
+          </div>
+                
+             
+        </footer>
+
+       </div>
+            </div>
+        </div>
+    </div>-->
+    <div id="hpage">
+ <section class="parallax-consult">
+                 
+               </section> 
+                 
+             
+
+              
+            
+          <section id="about">
+               <div class="container">
+                 <div class="row">
+                
+                <div class="col-md-12">
+                 <div class="section-heading orign" style="text-align: center;">
+                    <h1>Here’s how it works:</h1>
+                    
+
+                     </div>
+                      <div class="col-md-4">
+                        <div class="panel">
+                           
+                            <div class="panel-body orign">
+                            <div class="about-item">
+                            <p style="text-align: center;"> <a href="#" class="btn btn-sq-xs btn-primary" style="border-radius: 0px;"> 1<br/> </a></p>
+                            <h3 class="orign">Explain your health concern</h3>
+                            <p class="orign">Describe your medical issue. Don’t hold back.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">                    
+                        <div class="panel">
+                             <div class="about-item">
+                            <div class="panel-body orign">
+                            <p style="text-align: center;"> <a href="#" class="btn btn-sq-xs btn-primary" style="border-radius: 0px;"> 2<br/> </a></p>
+                            <h3 class="orign">Choose how you want an answer</h3>
+                            <p class="orign">You can ask a doctor for free, or chat about your problem in detail for under ₹300.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-md-4">
+                        <div class="panel">
+                            <div class="about-item">
+                            <div class="panel-body orign">
+                            <p style="text-align: center;"> <a href="#" class="btn btn-sq-xs btn-primary" style="border-radius: 0px;"> 3<br/> </a></p>
+                            <h3 class="orign">Get quick medical advice</h3>
+                            <p class="orign">Get personalized advice from verified doctors about your health concern.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <!-- <button data-toggle="modal" data-target="#myModals" class="datas-btn btn btn-primary btn-md" style="margin:0 auto;display:block;border-radius: 5px;border: 1px solid #babf10;outline: none;">Consult Now</button> -->
+
+                  <button data-toggle="modal" data-target="#myModal11" class="datas-btn btn btn-primary btn-md" style="border-radius: 5px;border: 1px solid #babf10;">Consult Now</button>
+
+               
+            </div>
+        </section>
+
+       
+      
+               
+
+
+
+
+    <!-- <div class="wrapper">
+
+
+       <div id="wrapperss">
+        <div class="overlay"></div>
+    
+       
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+          
+
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="index"><h3 style="color: #fff;float: right;margin-top: 12px;">WORLD<b style="color: #fff;">EX</b></h3></a>
+                </li>
+                  <li><a href="#about"><span> <i class="fa fa-users" aria-hidden="true"></i> </span>    Services</a> </li>
+                  <li><a href="#reviews"><span> <i class="fa fa-mobile" aria-hidden="true"></i> </span>     Shop</a></li>
+                  <li><a href="#features"><span><i class="fa fa-user-md" aria-hidden="true"></i> </span>    Consult</a></li>
+                  <li><a href="#getApp"><span><i class="fa fa-film" aria-hidden="true"></i></span>    Get App</a></li>
+                 
+ 
+            </ul>
+
+                
+           
+        </nav>
+       
+                    <div id="page-content-wrapper" style="z-index: 100000000;">
+                        <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                            <span class="hamb-top"></span>
+                            <span class="hamb-middle"></span>
+                            <span class="hamb-bottom"></span>
+                        </button>
+                        
+
+                    </div>
+                
+
+
+
+
+                  
+
+    </div>-->
+  </div>
+    <%- include partials/footer %>
+
+
+      
+      
+     
+
+
+<!-- Large modal -->
+<div class="modal fade" id="myModals" role="dialog"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+      
+      <form method="post" class="form-horizontal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="text-align: center;">Explain your Health Problem</h4>
+        </div>
+        <div class="modal-body">
+        
+           <div class="control-group">
+                        <label class="control-label">Briefly explain your problem</label>
+                        <div class="controls">
+                            <input type="text" class="form-control" name="problem" id="problem" />
+                        </div>
+            </div>
+            <div class="control-group">
+                        <label class="control-label" >Explain your problem in detail</label>
+                        <div class="controls">
+                            <textarea class="form-control" rows="2" name="problem_detail" id="problem_detail" style="border-radius: 5px;"></textarea>
+                        </div>
+            </div>  
+                 <div class="control-group">
+                        <label class="control-label">Select problem area that matches your description</label>
+                        <div class="controls">
+                         <select class="form-control" name="problem_descr" id="problem_descr">
+                          <option value="0">Select Problem</option>
+                               <option value="General Health">General Health</option>
+                                <option value="Child Health">Child Health</option>
+                                 <option value="Tooth and Mouth">Tooth and Mouth</option>
+                                  <option value="Skin,Hair and Nails">Skin,Hair and Nails</option>
+                                   <option value="Mental Health">Mental Health</option>
+                                    <option value="Eye and Vision">Eye and Vision</option>
+                           </select>                      
+                       </div>
+                </div>
+                      <div class="control-group">
+                        <label class="control-label">Upload Files of Image</label>
+                        <div class="controls">
+                            <input type="file" />
+                        </div>
+                    </div>
+            
+        </div>
+        <div class="modal-footer"> 
+         <a href="#" class="datas-btn btn btn-primary btn-sm" style="margin:0 auto;display:block;border-radius: 5px;border: 1px solid #babf10;"><i class="icon-ok"></i> Submit</a>     </div>
+         </form>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->

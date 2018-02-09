@@ -1,0 +1,50 @@
+﻿    <%- include partials/header_login %>
+
+
+  
+  <form method="post" class="form-horizontal" action="/consultonlinedata-insert">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="text-align: center;">Explain your Health Problem</h4>
+        </div>
+        <div class="modal-body">
+        
+           <div class="control-group">
+                        <label class="control-label">Briefly explain your problem</label>
+                        <div class="controls">
+                            <input type="text" class="form-control" name="problem" id="problem" />
+                        </div>
+            </div>
+            <div class="control-group">
+                        <label class="control-label" >Explain your problem in detail</label>
+                        <div class="controls">
+                            <textarea class="form-control" rows="2" name="problem_detail" id="problem_detail" style="border-radius: 5px;"></textarea>
+                        </div>
+            </div>  
+                 <div class="control-group">
+                        <label class="control-label">Select problem area that matches your description</label>
+                        <div class="controls">
+                         <select class="form-control" name="problem_descr" id="problem_descr">
+                          <option value="0">Select Problem</option>
+                               <option value="General Health">General Health</option>
+                                <option value="Child Health">Child Health</option>
+                                 <option value="Tooth and Mouth">Tooth and Mouth</option>
+                                  <option value="Skin,Hair and Nails">Skin,Hair and Nails</option>
+                                   <option value="Mental Health">Mental Health</option>
+                                    <option value="Eye and Vision">Eye and Vision</option>
+                           </select>                      
+                       </div>
+                </div>
+                      <div class="control-group">
+                        <label class="control-label">Upload Files of Image</label>
+                        <div class="controls">
+                            <input type="file" />
+                        </div>
+                    </div>
+            
+        </div>
+        <div class="modal-footer"> 
+         <a href="#" class="datas-btn btn btn-primary btn-sm" style="margin:0 auto;display:block;border-radius: 5px;border: 1px solid #babf10;"><i class="icon-ok"></i> Submit</a>     </div>
+         </form>
+
+             <%- include partials/footer %>

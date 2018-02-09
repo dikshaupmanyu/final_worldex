@@ -1,0 +1,909 @@
+<footer style="background: #262F36;color: rgba(255, 255, 255, .7) !important;">
+        <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+              <div class="panel-body">
+                  <div class="col-md-6">
+
+                       
+                    <h2 style="color: #fff;text-align: center;">About</h2>
+                    <p style="text-align: center;font-size:14px;font-family:'Open Sans', sans-serif !important;">Vivamus imperdiet felis consectetur onec eget orci adipiscing nunc. Pellentesque fermentum, ante ac interdum ullamcorper.</p>
+                      
+                    </div>
+                    <div class="col-md-6" >
+                       <h2 style="color: #fff;text-align: center;">Contact Us</h2>
+                       <h4 style="margin-top:0px;text-align: center;color: rgba(255, 255, 255, .7) !important;font-size:14px;line-height: 150%;font-family:'Open Sans', sans-serif !important;">Loop, Inc. <br />
+                        259, Meridian Ave, Suite 14 <br />
+                        San Jose, CA 95126 <br />
+                        P: (234) 145-1810 <br />
+                        Email: <a href="mailto:info@medical.com" style="color: rgba(255, 255, 255, .7) !important;;">info@grrenliving.com</a>                        
+                     </h4>
+                        
+                    </div>
+               
+                </div>
+            </div>
+        </div>
+      </div>     
+             
+    </footer>
+    <div class="front-copyright" style="height: 50px;background: #babf10;color: #fff;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                   
+           <span class="new-copyright">2013 © Green Living | ALL Rights Reserved. | <a href="#" style="color: #fff;">Privacy Policy</a> | <a href="#" style="color: #fff;">Terms of Service</a></span>   
+                </div>
+               
+            </div>
+        </div>
+    </div>       
+ 
+
+    <!-- END COPYRIGHT -->
+<div id="myModal11" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm" style="padding-top: 100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">
+                    Login/Sign Up</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                       
+                        <ul class="nav nav-tabs" style="padding-left: 45px;"> 
+                            <li class="active"><a href="#station" data-toggle="tab">Login</a></li>
+                            <li><a href="#play" data-toggle="tab">Registration</a></li>
+                        </ul>
+                       
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="station">
+                                 
+                        
+                              <form role="form"  action="/login" class="form-horizontal" method="post">
+
+                                    <% if(locals.errorlogin) { %>
+                     <div class="alert alert-danger">
+                  <%= errorlogin %> 
+
+                </div>
+                 
+                         <% } %>
+
+                       
+                         <% if(locals.successlogin) { %>
+                     <div class="alert alert-success"><%= successlogin %>
+                     </div>
+                          <% } %>
+
+
+
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <input type="email" name="email"  value="<%= locals.username || '' %>" class="form-control" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+
+                                        <!-- <input type="password" name="password" id="password" class="form-control" placeholder="Password" /> -->
+
+                                          <input type="text" name="fake_pass" id="fake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="password" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                
+                                    <div class="col-sm-12">
+                                        <button id="sendreqs" type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Submit</button>
+
+                                         <br>
+                                         <p id="demo"></p>
+                                          
+                                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#myModalforget" style="text-align: center;margin: 0 auto;display: block;">Forgot your password?</a>
+
+
+                                    </div>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="tab-pane" id="play">
+                                
+                            
+
+                                <form role="form" action="/registers" class="form-horizontal" method="post" id="emailForms">
+
+                             <!--          <% if(locals.error) { %>
+              <div class="alert alert-danger"><%= error %></div>
+                     <% } %>
+                     <% if(locals.success) { %>
+              <div class="alert alert-success"><%= success %></div>
+                      <% } %> -->
+                           
+                                  <% if(locals.errorregister) { %>
+                     <div class="alert alert-danger">
+                          <%= errorregister %>
+                      </div>
+                 
+                         <% } %>
+
+                            
+                     <% if(locals.successregister) { %>
+              <div class="alert alert-success"><%= successregister %></div>
+                      <% } %>
+
+
+
+
+                                <input type="hidden" name="consult_status" id="consult_status" class="m-wrap" placeholder="Consult Status" value="0" required />
+
+                                <div class="form-group">
+                                  
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+
+                                             <input type="hidden" name="user_role" id="user_roles" class="form-control" value="user" required />
+                                            
+                                                   <input type="text" name="firstName" id="firstNames" class="form-control" placeholder="First Name" value="<%= locals.firstName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+                                            
+                                                   <input type="text" name="lastName" id="lastNames" class="form-control" placeholder="Last Name" value="<%= locals.lastName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <div class="col-sm-12">
+                                      
+                                        <input type="email" name="email" id="usernames" class="form-control" value="<%= locals.username || '' %>" placeholder="Email" required />
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                  
+
+                                   <!--   <input type="password" name="password" id="password" class="form-control"  placeholder="Password" required /> -->
+
+                                      <input type="text" name="nfake_pass" id="nfake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="npassword" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                  
+                                    <!--  <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder=" Confirm Password" required /> -->
+
+                                      <input type="text" name="cfake_pass" id="cfake_pass" value="Enter Confirm Password" class="form-control" style="display:none"/>
+                               <input type="password" name="cpassword" id="cpassword" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+
+                                <div class="row"> 
+                                   
+                                    <div class="col-sm-12">
+                                        <button id="send" type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Register</button>
+                                     
+                                    </div>
+                                </div>
+                                </form>
+                                <br>
+ <div class="text-center" style="background-color: #fff;">
+    <a href="/auth/facebook" class="btn btn-primary" style="color: #fff;background-color: #336799;border-color: #fff;"><span class="fa fa-facebook"></span> Facebook</a>
+    <br> <br>
+<!-- <a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+ -->    <a href="/auth/google" class="btn btn-danger" style="color: #fff;"><span class="fa fa-google-plus"></span> Google+</a>
+</div>
+                            </div>
+                        </div>
+                      
+                   
+                   </div>
+
+           
+        
+               </div>
+        </div>
+    </div>
+</div>
+</div>
+  <div id="myModalforget" class="modal fade" tabindex="-1">
+    <div class="modal-dialog" style="padding-top: 100px;">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close-model-forget">
+                    ×</button>
+          <h4 class="modal-title">Please enter your registered email.</h4>
+        </div>
+        <form action="/forget" method="post" class="form-horizontal">
+            <% if(locals.errorforget) { %>
+                     <div class="alert alert-danger">
+                  <%= errorforget %> 
+
+                </div>
+                 
+                         <% } %>
+
+                       
+                         <% if(locals.successforget) { %>
+                     <div class="alert alert-success"><%= successforget %></div>
+                          <% } %>
+        <div class="modal-body">
+         <div class="form-group">
+             <div class="col-sm-12">
+             <input type="email" name="username" value="<%= locals.username || '' %>" class="form-control" placeholder="Enter Email" />
+             </div>
+        </div>
+              <div class="row">
+                 <div class="col-sm-12">
+                 <button type="submit" class="datas btn btn-primary btn-md" style="margin:0 auto;display: block;"> Submit</button>
+                  <br>
+                 </div>
+             </div>                     
+        </div>
+
+      </form>
+        
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+
+    <div id="myModal12" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm" style="padding-top: 100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">
+                    Login/Sign Up</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" style="padding-left: 45px;"> 
+                            <li class="active"><a href="#stations" data-toggle="tab">Login</a></li>
+                            <li><a href="#plays" data-toggle="tab">Registration</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="stations">
+                              <form role="form"  action="/login" class="form-horizontal" method="post">
+
+                                  <% if(locals.errorlogin) { %>
+                     <div class="alert alert-danger">
+                  <%= errorlogin %> 
+
+                </div>
+                 
+                         <% } %>
+
+                       
+                         <% if(locals.successlogin) { %>
+                     <div class="alert alert-success"><%= successlogin %>
+                     </div>
+                          <% } %>
+
+
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <input type="email" name="username" id="username" value="<%= locals.username || '' %>" class="form-control" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                       <!--  <input type="password" name="password" id="password" class="form-control" placeholder="Password" /> -->
+
+                                          <input type="text" name="pl-fake_pass" id="pl-fake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="pl-password" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Submit</button>
+                                         <br>
+                                         <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#myModalforget" style="text-align: center;margin: 0 auto;display: block;">Forgot your password?</a>
+                                    </div>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="tab-pane" id="plays">
+                                
+                            
+
+                                <form role="form" action="/registers" class="form-horizontal" method="post" id="emailForm" enctype="multipart/form-data">
+
+                                  
+                                  <% if(locals.errorregister) { %>
+                     <div class="alert alert-danger">
+                          <%= errorregister %>
+                      </div>
+                 
+                         <% } %>
+
+                            
+                     <% if(locals.successregister) { %>
+              <div class="alert alert-success"><%= successregister %></div>
+                      <% } %>
+
+                                <div class="form-group">
+                                  
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+
+                                             <input type="hidden" name="user_role" id="user_role" class="form-control" value="health-provider" required />
+                                            
+                                                   <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name" value="<%= locals.firstName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                   
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-12">
+                                            
+                                                   <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name" value="<%= locals.lastName || '' %>" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <div class="col-sm-12">
+                                      
+                                        <input type="email" name="username" class="form-control" value="<%= locals.username || '' %>" placeholder="Email" required />
+                                    </div>
+                                </div>
+                               
+                                  
+                                <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                   
+
+                                     <!-- <input type="password" name="password" id="password" class="form-control"  placeholder="Password" required /> -->
+
+                                       <input type="text" name="pn-fake_pass" id="pn-fake_pass" value="Enter Password" class="form-control" style="display:none"/>
+                               <input type="password" name="password" id="pn-password" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                  
+                                    <!--  <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder=" Confirm Password" required /> -->
+
+                                       <input type="text" name="pc-fake_pass" id="pc-fake_pass" value="Confirm Password" class="form-control" style="display:none"/>
+                               <input type="password" name="cpassword" id="pc-password" class="form-control"/>
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                
+                                    <div class="col-sm-12">
+                                     <input type="file" name="licenseimg" id="licenseimg" required />
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                   
+                                    <div class="col-sm-12">
+                                        <button id="sendreq" type="submit" class="btn btn-primary btn-md" style="margin:0 auto;border-radius: 5px;border: 1px solid #babf10;display: block;">
+                                            Register</button>
+                                     
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+   </div>
+</div>
+
+<script type="text/javascript">
+       $('#password').hide();
+
+$('#cpassword').hide();
+$('#npassword').hide();
+$('#pl-password').hide();
+$('#pn-password').hide();
+$('#pc-password').hide();
+
+
+
+// Show the fake pass (because JS is enabled)
+$('#fake_pass').show();
+$('#nfake_pass').show();
+
+$('#cfake_pass').show();
+
+$('#pl-fake_pass').show();
+$('#pn-fake_pass').show();
+$('#pc-fake_pass').show();
+
+
+
+// On focus of the fake password field
+$('#fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#password').show().focus(); // and show the real password input password
+});
+
+$('#nfake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#npassword').show().focus(); // and show the real password input password
+});
+
+$('#cfake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#cpassword').show().focus(); // and show the real password input password
+});
+
+$('#pl-fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#pl-password').show().focus(); // and show the real password input password
+});
+
+$('#pn-fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#pn-password').show().focus(); // and show the real password input password
+});
+
+$('#pc-fake_pass').focus(function(){
+    $(this).hide(); //  hide the fake password input text
+    $('#pc-password').show().focus(); // and show the real password input password
+});
+
+// On blur of the real pass
+$('#password').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#fake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+$('#npassword').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#nfake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+$('#cpassword').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#cfake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+$('#pl-password').blur(function(){
+    if($(this).val() == ""){ // if the value is empty, 
+        $(this).hide(); // hide the real password field
+        $('#pl-fake_pass').show(); // show the fake password
+    }
+    // otherwise, a password has been entered,
+    // so do nothing (leave the real password showing)
+});
+
+// ('#pn-password').blur(function(){
+//     if($(this).val() == ""){ // if the value is empty, 
+//         $(this).hide(); // hide the real password field
+//         $('#pn-fake_pass').show(); // show the fake password
+//     }
+//     // otherwise, a password has been entered,
+//     // so do nothing (leave the real password showing)
+// });
+
+// ('#pc-password').blur(function(){
+//     if($(this).val() == ""){ // if the value is empty, 
+//         $(this).hide(); // hide the real password field
+//         $('#pc-fake_pass').show(); // show the fake password
+//     }
+//     // otherwise, a password has been entered,
+//     // so do nothing (leave the real password showing)
+// });
+
+     </script>
+
+
+ <link rel="stylesheet" href="/assets/css/chosen.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="/js/chosen.jquery.min.js"></script>
+
+<!-- <script type="text/javascript">
+    $(".livesearch").chosen();
+</script> -->
+
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<script>
+$('#myCarousel').carousel({
+  interval: 10000
+})
+
+$('.carousel .item').each(function(){
+  var next = $(this).next();
+  if (!next.length) {
+    next = $(this).siblings(':first');
+  }
+  next.children(':first-child').clone().appendTo($(this));
+  
+  if (next.next().length>0) {
+    next.next().children(':first-child').clone().appendTo($(this));
+  }
+  else {
+    $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+  }
+});
+</script>
+<script>
+$(function(){
+
+    $('.spinner .btn:first-of-type').on('click', function() {
+      var btn = $(this);
+      var input = btn.closest('.spinner').find('input');
+      if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {    
+        input.val(parseInt(input.val(), 10) + 1);
+      } else {
+        btn.next("disabled", true);
+      }
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+      var btn = $(this);
+      var input = btn.closest('.spinner').find('input');
+      if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {    
+        input.val(parseInt(input.val(), 10) - 1);
+      } else {
+        btn.prev("disabled", true);
+      }
+    });
+
+})
+</script>
+
+<script>
+$(document).ready(function () {
+  var navListItems = $('div.setup-panel div a'),
+          allWells = $('.setup-content'),
+          allNextBtn = $('.nextBtn'),
+          allPrevBtn = $('.prevBtn');
+
+  allWells.hide();
+
+  navListItems.click(function (e) {
+      e.preventDefault();
+      var $target = $($(this).attr('href')),
+              $item = $(this);
+
+      if (!$item.hasClass('disabled')) {
+          navListItems.removeClass('btn-primary').addClass('btn-default');
+          $item.addClass('btn-primary');
+          allWells.hide();
+          $target.show();
+          $target.find('input:eq(0)').focus();
+      }
+  });
+  
+  allPrevBtn.click(function(){
+      var curStep = $(this).closest(".setup-content"),
+          curStepBtn = curStep.attr("id"),
+          prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
+
+          prevStepWizard.removeAttr('disabled').trigger('click');
+  });
+
+  allNextBtn.click(function(){
+      var curStep = $(this).closest(".setup-content"),
+          curStepBtn = curStep.attr("id"),
+          nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+          curInputs = curStep.find("input[type='text'],input[type='url']"),
+          isValid = true;
+
+      $(".form-group").removeClass("has-error");
+      for(var i=0; i<curInputs.length; i++){
+          if (!curInputs[i].validity.valid){
+              isValid = false;
+              $(curInputs[i]).closest(".form-group").addClass("has-error");
+          }
+      }
+
+      if (isValid)
+          nextStepWizard.removeAttr('disabled').trigger('click');
+  });
+
+  $('div.setup-panel div a.btn-primary').trigger('click');
+});
+</script>
+<script>
+
+//jQuery time
+var current_fs, next_fs, previous_fs; //fieldsets
+var left, opacity, scale; //fieldset properties which we will animate
+var animating; //flag to prevent quick multi-click glitches
+
+$(".next").click(function(){
+  if(animating) return false;
+  animating = true;
+  
+  current_fs = $(this).parent();
+  next_fs = $(this).parent().next();
+  
+  $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+  
+  next_fs.show(); 
+  current_fs.animate({opacity: 0}, {
+    step: function(now, mx) {
+      //as the opacity of current_fs reduces to 0 - stored in "now"
+      //1. scale current_fs down to 80%
+      scale = 1 - (1 - now) * 0.2;
+      //2. bring next_fs from the right(50%)
+      left = (now * 50)+"%";
+      //3. increase opacity of next_fs to 1 as it moves in
+      opacity = 1 - now;
+      current_fs.css({
+        'transform': 'scale('+scale+')',
+        'position': 'absolute'
+      });
+      next_fs.css({'left': left, 'opacity': opacity});
+    }, 
+    duration: 800, 
+    complete: function(){
+      current_fs.hide();
+      animating = false;
+    }, 
+    //this comes from the custom easing plugin
+    easing: 'easeInOutBack'
+  });
+});
+
+$(".previous").click(function(){
+  if(animating) return false;
+  animating = true;
+  
+  current_fs = $(this).parent();
+  previous_fs = $(this).parent().prev();
+  
+  //de-activate current step on progressbar
+  $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+  
+  //show the previous fieldset
+  previous_fs.show(); 
+  //hide the current fieldset with style
+  current_fs.animate({opacity: 0}, {
+    step: function(now, mx) {
+      //as the opacity of current_fs reduces to 0 - stored in "now"
+      //1. scale previous_fs from 80% to 100%
+      scale = 0.8 + (1 - now) * 0.2;
+      //2. take current_fs to the right(50%) - from 0%
+      left = ((1-now) * 50)+"%";
+      //3. increase opacity of previous_fs to 1 as it moves in
+      opacity = 1 - now;
+      current_fs.css({'left': left});
+      previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+    }, 
+    duration: 800, 
+    complete: function(){
+      current_fs.hide();
+      animating = false;
+    }, 
+    //this comes from the custom easing plugin
+    easing: 'easeInOutBack'
+  });
+});
+
+$(".submit").click(function(){
+  return false;
+})
+
+</script>
+    
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="/assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/assets/plugins/back-to-top.js"></script>    
+    <script type="text/javascript" src="/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script> 
+    <script src="/assets/plugins/jquery.mixitup.min.js"></script>      
+    <script type="text/javascript" src="/assets/plugins/hover-dropdown.js"></script>                
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/respond.min.js"></script>  
+    <![endif]-->   
+    <!-- END CORE PLUGINS -->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/js/jquery.customSelect.min.js" ></script>
+
+    <script src="/js/respond.min.js" ></script>
+
+
+    <!--common script for all pages-->
+<!-- <script type="text/javascript">
+     
+ /*Menu-toggle*/
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+  e.stopPropagation()
+        //  $(this).toggleClass('open');
+          $("i", this).toggleClass("fa fa-bars fa fa-close");
+
+        $("#wrapper").toggleClass("active");
+
+
+      
+        //alert(1);
+
+    });
+
+// added code
+
+// $('body,html').click(function(e){
+//         // alert('call'); 
+//         $(this).find($("#hambgr")).removeClass('fa fa-toggle-on').addClass('fa fa-toggle-off');
+
+//        $("#wrapper").removeClass("active");
+// });  
+// added code
+
+$('#hpage').click(function(e){
+       //  alert('call'); 
+
+
+       $("#hambgr").removeClass('fa fa-close').addClass('fa fa-bars');
+       $("#wrapper").removeClass("active");
+}); 
+
+
+
+</script> -->
+<script type="text/javascript">
+  $('ul li').click(function() {
+  $('.current').removeClass('current');
+  $(this).addClass('current');
+});
+</script>
+
+
+<script>
+$('.btn-number').click(function(e){
+    e.preventDefault();
+    
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+        if(type == 'minus') {
+            
+            if(currentVal > input.attr('min')) {
+                input.val(currentVal - 1).change();
+            } 
+            if(parseInt(input.val()) == input.attr('min')) {
+                $(this).attr('disabled', true);
+            }
+
+        } else if(type == 'plus') {
+
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('max')) {
+                $(this).attr('disabled', true);
+            }
+
+        }
+    } else {
+        input.val(0);
+    }
+});
+$('.input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
+$('.input-number').change(function() {
+    
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+    
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the minimum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the maximum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    
+    
+});
+$(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || 
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
+
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/scripts/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.3.1/jquery.maphilight.min.js"></script>
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>
