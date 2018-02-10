@@ -113,7 +113,7 @@
                                                    <!--    <th>Total Reply</th> -->
                                                       <th>Image</th>
 
-                                                      <th>Action</th>
+                                                      <!-- <th>Action</th> -->
                                                   </tr>
                                               </thead>
                                             
@@ -127,16 +127,22 @@
 
                                                       <td style="display: none;" id="updatedid">{{consult._id}}</td>
 
-                                                     <td>{{vm.user.firstName}}</td>
+                                                     <td><%= user.firstName %></td>
                                                       <td id="problemconsult{{$index}}"><%= data[i].problem %></td>
-                                                      <td id="problemconsultdetail{{$index}}"></td>
-                                                      <td id="problemconsultarea{{$index}}"></td>
-                                                      <td>{{consult.datetime}}</td>
-                                                       <td ng-if="consult.consult_status != 'Answered'"> Unanswered</td>
-                                                      <td ng-if="consult.consult_status == 'Answered'">{{consult.consult_status}}</td>
-                                                       <td ng-if="consult.read_status != '1'" style="color: red;"> Unread</td>
-                                                      <td ng-if="consult.read_status == '1'" style="color: green;">Read</td>
-                                                
+                                                      <td id="problemconsultdetail{{$index}}"><%= data[i].problemdetail %></td>
+                                                      <td id="problemconsultarea{{$index}}"><%= data[i].problemarea %></td>
+                                                      <td><%= data[i].datetime %></td>
+                                                       <% if (data[i].consult_status != 'Answered'){ %>
+                                                      <td> Unanswered</td>
+                                                      <% } else { %>
+                                                      <td><%= data[i].consult_status %></td>
+                                                       <% } %>
+
+                                                      <% if (data[i].read_status != '1'){ %>
+                                                       <td style="color: red;"> Unread</td>
+                                                       <% } else { %>
+                                                      <td style="color: green;">Read</td>
+                                                       <% } %>
                                                     
                                                       <td> 
                                                      
@@ -168,13 +174,13 @@
                                                     </td>
 
                                                
-                                                     <td><a href="/#/list-consult-reply?id={{consult._id}}"><i class="fa fa-reply" aria-hidden="true" style="font-size: 20px"></i></a>
-                                                    </td>
+                                                    <!--  <td><a href="/#/list-consult-reply?id={{consult._id}}"><i class="fa fa-reply" aria-hidden="true" style="font-size: 20px"></i></a>
+                                                    </td> -->
 
                                     
-                                                       <td><a onclick="return confirm('Are you sure want to dele');" ng-click="vm.deleteConsult(consult._id)"><i class="fa fa-fw fa-trash"></i></a>
+                                                      <!--  <td><a onclick="return confirm('Are you sure want to dele');" ng-click="vm.deleteConsult(consult._id)"><i class="fa fa-fw fa-trash"></i></a>
                                                         
-                                                       </td>
+                                                       </td> -->
                                                      
                                                   </tr>
                                                   

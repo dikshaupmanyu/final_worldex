@@ -236,7 +236,7 @@ module.exports = function(app, passport) {
 	    //     $(document).ready(function () {    
 	    //     $("#problemconsult"+i).val(base64.decode(consults[i].problem));    
 	    // });
-	      document.getElementById("problemconsult"+i).innerHTML = base64.decode(consults[i].problem);
+	      // document.getElementById("problemconsult"+i).innerHTML = base64.decode(consults[i].problem);
       //    document.getElementById("problemconsultdetail"+i).innerHTML = base64.decode(consults[i].problemdetail);
       //    document.getElementById("problemconsultarea"+i).innerHTML = base64.decode(consults[i].problemarea);
 
