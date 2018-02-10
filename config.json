@@ -1,5 +1,5 @@
 {
-    "connectionString": "mongodb://localhost:27017/mydb",
+    "connectionString": "mongodb://test:test@ec2-34-235-127-11.compute-1.amazonaws.com:27017/dummyDB",
     "apiUrl": "http://localhost:5555/api",
     "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
 }

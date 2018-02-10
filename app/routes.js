@@ -217,37 +217,64 @@ module.exports = function(app, passport) {
 
 	});
 
+	app.get('/consult', isLoggedIn, function(req, res , document) {
+		var base64 = require('base-64');
+
+	    var i = 0;
+		var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+	    var Consult       = require('../app/models/consults');
+
+   
+     	 Consult.find(function (err, consult) {
+	  		// docs is an array
+	  		  for(var i = 0; i < consult.length; i++){
+	            vm.allconsults[i] = consult[i];
+
+	    //     $(document).ready(function () {    
+	    //     $("#problemconsult"+i).val(base64.decode(consults[i].problem));    
+	    // });
+	      document.getElementById("problemconsult"+i).innerHTML = base64.decode(consults[i].problem);
+      //    document.getElementById("problemconsultdetail"+i).innerHTML = base64.decode(consults[i].problemdetail);
+      //    document.getElementById("problemconsultarea"+i).innerHTML = base64.decode(consults[i].problemarea);
+
+
+	        }
+	 
+	       var productvalue = JSON.stringify(consult);
+	       var jsonObject = JSON.parse(productvalue);
+	   
+	      res.render('consult.ejs', {data: jsonObject, user : req.user});
+
+      });
+
+	});
+
 	app.get('/list-orderitem', isLoggedIn, function(req, res) {
 		//	console.log(req.query.order_id);
 		var Order       = require('../app/models/orders');
 		var Orderitem       = require('../app/models/orderitem');
 
-
-		 Orderitem.find(function (err, orderitemnew) {
-  		  
-  		  console.log(orderitemnew);
-
-     
- 
-
        var orderid = req.query.order_id;
-            console.log(orderid);
+         //   console.log(orderid);
         
 
 
-       Orderitem.findById(orderid, function (err, orderitem) {
+       Orderitem.findOne({orderid : req.query.order_id}, function (err, orderitem) {
  
        var productvalue = JSON.stringify(orderitem);
+        var jsonObject = JSON.parse(productvalue);
 
-       console.log(jsonObject);
+       //console.log(jsonObject);
 
-       console.log(orderitem);
+       // console.log(jsonObject.productname);
    
       res.render('list-orderitem.ejs', {data: jsonObject, user : req.user , orderid : req.query.order_id});
 
       });
 
-      });  
 
          }); 
 		
@@ -662,29 +689,29 @@ module.exports = function(app, passport) {
 
 
 	app.post('/consultonlinedata-insert', function(req, res) {
-	    var express = require('express');
-		var router = express.Router();
-		var mongoose = require('mongoose');
-		var multer = require('multer');
-		var path = require('path');
-       	var storage = multer.diskStorage({
-		 destination: function(req, file, cb) {
-		 cb(null, 'public/uploads/consults/')
-		 },
-		 filename: function(req, file, cb) {
-		 cb(null, file.originalname);
-		 }
-		});
+	 //    var express = require('express');
+		// var router = express.Router();
+		// var mongoose = require('mongoose');
+		// var multer = require('multer');
+		// var path = require('path');
+  //      	var storage = multer.diskStorage({
+		//  destination: function(req, file, cb) {
+		//  cb(null, 'public/uploads/consults/')
+		//  },
+		//  filename: function(req, file, cb) {
+		//  cb(null, file.originalname);
+		//  }
+		// });
 		 
-		var upload = multer({
-		 storage: storage
-		});
-		console.log(req.files);
-		var path = req.files.path;
-        var imageName = req.files.originalname; 
-        var imagepath = {};
-        imagepath['path'] = path;
-        imagepath['originalname'] = imageName;
+		// var upload = multer({
+		//  storage: storage
+		// });
+		// console.log(req.files);
+		// var path = req.files.path;
+  //       var imageName = req.files.originalname; 
+  //       var imagepath = {};
+  //       imagepath['path'] = path;
+  //       imagepath['originalname'] = imageName;
 
 
 		var Consult  = require('../app/models/consults');
@@ -694,13 +721,13 @@ module.exports = function(app, passport) {
         var base64 = require('base-64');
           
 		var setencode = {    
-                userid : req.body.userid,
+               user_id : req.body.userid,
                problem: base64.encode(req.body.problem),
                problemdetail: base64.encode(req.body.problemdetail),
                problemarea : base64.encode(req.body.problemarea),
                datetime : strDate,
-               view_consult_status: "0",
-               myimage: imagepath      
+               view_consult_status: "0"
+              // myimage: imagepath      
         };	
 
 
@@ -715,9 +742,7 @@ module.exports = function(app, passport) {
 			  }
 		});
 
-		res.render('consult-onlines.ejs', {
-			user : req.user
-		});
+		return res.redirect('consult-onlines');
 	});
 
 	app.get('/account',isLoggedIn, function(req, res) {
