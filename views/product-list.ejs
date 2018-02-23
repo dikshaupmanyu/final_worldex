@@ -1,19 +1,7 @@
- 
-<body onload="myFunction()">
-
-<!-- <script>
-function myFunction() {
-    alert("Page is loaded");
-}
-</script> -->
-
-</body>
-
-
     <%- include partials/header_userdashboard %>
 
  
-    <div class="row-fluid" >
+    <div class="row-fluid">
  <div class="row" style="background: #f0f0f5;">
         <div class="container">
 
@@ -43,15 +31,15 @@ function myFunction() {
                     <li ng-class="{active: activeTab === 'manageorder'}"><a href="manageorder"><i class="fa fa-user"  aria-hidden="true"></i> Order Managment</a></li>
                     <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
                     <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
-                    <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
-                     <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                    <li ng-class="{active: activeTab === 'product-list'}" class="active"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}"><a href="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
                      <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
                      <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
                     <% } %>
 
                       
                      <% if (user.user_role === 'user') { %>
-                     <li ng-class="{active: activeTab === 'consult'}"  class="active"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
+                     <li ng-class="{active: activeTab === 'consult'}"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
                      <li ng-class="{active: activeTab === 'symptom-user'}"><a href="symptom-user" ><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                      <% } %>
 
@@ -71,230 +59,102 @@ function myFunction() {
                             <li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" ><i class="fa fa-first-order"  aria-hidden="true"></i> Order Management</a></li>-->
 
             
-                            <div class="span9 " style="height: 800px;">
-                                   
-                                   
-                     
-                            <!-- BEGIN PAGE HEADER-->   
-                            <div class="row-fluid" style="margin-top: 20px;">
-                                <div class="span12">
+                    
+                          <div class="span9" style="height: 800px;">
+                        <!-- BEGIN PAGE HEADER-->
+                        <div class="row-fluid">
+                            <div class="span12">
                             
                                 <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                             <h6 class="page-title" style="font-size: 18px;">
                                   <%= user.firstName %>'s Profile !!!!
                                 </h6>
                             </div>
-                               
+                        </div>
+                        <!-- END PAGE HEADER-->
+                       
+
+
+                           <div class="row-fluid">
+                      <div class="span12">
+                        <!-- BEGIN SAMPLE FORM PORTLET-->   
+                        
+                        <div class="portlet box blue tabbable">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="hidden-480">Product Managment</span>
+                                </div>
                             </div>
-                            <!-- END PAGE HEADER-->
-                            <!-- BEGIN PAGE CONTENT-->
-                            <div class="row-fluid">
-                                <div class="span12">
-                                    <!-- BEGIN SAMPLE FORM PORTLET-->   
+
+                            <div class="portlet-body form">
+                                <div class="tabbable portlet-tabs">
                                     
-                                    <div class="portlet box blue tabbable">
-                                        <div class="portlet-title">
-                                            <div class="caption">
-                                             
-                                                <span class="hidden-480">Consult Data Detail</span>
-                                            </div>
-                                        </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="portlet_tab1">
+                                      
+                                           <form class="form-horizontal" style="overflow: auto;">
 
-
-
-                                         <div class="portlet-body form">
-                                            <div class="tabbable portlet-tabs" id="portlet_tab1">
-                                           <form id="myform" style="overflow-x: auto;overflow-y: auto;" method="post">
-                                              <div class="form-control">
-                          <input type="text" class="search form-control" style="margin: 10px;height: 35px;width: 80%;" placeholder="Search By: Problem,Problem Detail,Problem Description,Id" />
+                                            <div class="form-control">
+                          <input type="text" class="search form-control col-md-9" style="margin: 10px;height: 35px;width: 60%;" placeholder="Search By: Problem,Problem Detail,Problem Description,Id" />
                           <i class="fa fa fa-search" aria-hidden="true"></i>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                           <a href="product" ng-class="{active: activeTab === 'product'}"><input type="button" class="btn theme-btn col-md-3" style="width: 30%;" value="Add Product" /></a>
+
                                                </div>
-
-                                              <table datatable="ng" id="example" class="table table-striped table-bordered" width="100%" ui-jq="datatable" ui-options="options" >
-                                             <thead>
-
-                                                  <tr>
-                                                      <!--<th onclick="SortTable(0);" href="javascript:;">Id  <i class="fa fa-fw fa-sort"></i></th>-->
-                                                      <th>User Name</th>
-                                                      <th onclick="SortTable(1);" href="javascript:;">Problem <i class="fa fa-fw fa-sort"></i></th>
-                                                      <th onclick="SortTable(2);" href="javascript:;">Problem Area  <i class="fa fa-fw fa-sort"></i></th>
-                                                      <th onclick="SortTable(3);" href="javascript:;">Problem Detail  <i class="fa fa-fw fa-sort"></i></th>
-                                                      <th onclick="SortTable(4);" href="javascript:;">Date <i class="fa fa-fw fa-sort"></i></th>
-                                                      <th>Reply Status</th>
-                                                       <th>Read/Unread</th>
-                                                   <!--    <th>Total Reply</th> -->
-                                                      <th>Image</th>
-
-                                                      <th>Action</th>
-                                                  </tr>
-                                              </thead>
+                                                <br>
+                                           <table datatable="ng" id="example" class="table table-striped table-bordered" width="100%" ui-jq="datatable" ui-options="options">
+                                            <thead>
+                                              <tr>
                                             
-                                              <tbody>
-
-
-          <% for (var i = 0; i < data.length; i++) if(data[i].user_id == user._id) { %>
-  
- 
-            <tr> 
-
-
-                                                      <td style="display: none;" id="updatedid"><%= data[i]._id %></td>
-
-                                                     <td><%= user.firstName %></td>
-                                                   
-
-                                                      <td><%= totalconsultproblems[i] %></td>
-
-                                                      
-                                                    
-                                                      <td><%= totalconsultproblemdetails[i] %></td>
-                                                      <td><%= totalconsultproblemareas[i] %></td>
-                                                      <td><%= data[i].datetime %></td>
-                                                       <% if (data[i].consult_status != 'Answered'){ %>
-                                                      <td> Unanswered</td>
-                                                      <% } else { %>
-                                                      <td><%= data[i].consult_status %></td>
-                                                       <% } %>
-
-                                                      <% if (data[i].read_status != '1'){ %>
-                                                       <td style="color: red;"> Unread</td>
-                                                       <% } else { %>
-                                                      <td style="color: green;">Read</td>
-                                                       <% } %>
-                                                    
-                                                      <td> 
-                                                     
-                                                         <div class="popup">
-                                                         <img src="/uploads/consults/<%= totalconsultfinalimages[i] %>" style="width: 10px; height: 14px;">
-                                                      </div>
-                                                      <div class="show">
-                                                          <div class="overlay"></div>
-                                                          <div class="img-show">
-                                                            <span style="color: #000;">X</span>
-                                                            <img src="">
-                                                          </div>
-                                                      </div>
-                                                   
-
-
-                                                    </td>
-
-                                               
-                                                     <td><a href="list-consult-reply?id=<%= data[i]._id %>"><i class="fa fa-reply" aria-hidden="true" style="font-size: 20px"></i></a>
-                                                    </td>
-
-                                    
-                                                       <td><a href="delete-consult?consultid=<%= data[i]._id %>"><i class="fa fa-fw fa-trash"></i></a>
-                                                        
-                                                       </td>
-                                                     
-                                                  </tr>
-                                                  
-                                             <% } %>     
- 
- 
-
-                                                  
-                                              </tbody>
+                                                <th onclick="SortTable(0);" href="javascript:;">Product Name <i class="fa fa-fw fa-sort"></i></th>
+                                                 <th onclick="SortTable(4);" href="javascript:;">Product Name (Chineese) <i class="fa fa-fw fa-sort"></i></th>
+                                                <th onclick="SortTable(1);" href="javascript:;">Product Price <i class="fa fa-fw fa-sort"></i></th>
+                                                <th onclick="SortTable(2);" href="javascript:;">Product Size <i class="fa fa-fw fa-sort"></i></th>
+                                                <th onclick="SortTable(3);" href="javascript:;">Product Description <i class="fa fa-fw fa-sort"></i></th>
+                                                <th>Action</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                          <% for (var i = 0; i < data.length; i++) { %>    
+                                              <tr>
+                                                <td><%= data[i].productname %></td>
+                                                <td><%= data[i].productname_chineese %> </td>
+                                                <td>$<%= data[i].productprice %></td>
+                                                <td><%= data[i].prosize %></td>
+                                                <td><%= data[i].productdescr.substring(0, 50) %></td>
+                                                <td><a href="deleteproduct?id=<%= data[i]._id %>"><i class="fa fa-trash-o" aria-hidden="true"
+                                                style="font-size: 20px"></i></a>
+                                                <a href="edit-product?id=<%= data[i]._id %>"><i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 20px"></i></a></td>
+                                              </tr>
+                                         <% } %>     
+                                            </tbody>
                                           </table>
 
 
-                            
-                                    
+                                           
+                                                </form>
+                                        
+                                      
 
-                                      </form>
-
-    
-
-
-                                          </div>
+                                          
                                         </div>
+                                       
                                     </div>
-                                   
-   
                                 </div>
                             </div>
-                                    <!-- END SAMPLE FORM PORTLET-->
-
-
-
                         </div>
-                </div>
-                <!-- END PAGE CONTENT-->         
-          
-                    
-            </div>
-    
-  
-</div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-<style type="text/css">
-   .popup{
-    margin: auto;
-   
-}
-.popup img{
-    width: 200px;
-    height: 200px;
-    cursor: pointer
-}
-.show{
-    z-index: 999;
-    display: none;
-}
-.show .overlay{
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.66);
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.show .img-show{
-    width: 600px;
-    height: 400px;
-    background: #FFF;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    overflow: hidden
-}
-.img-show span{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 99;
-    cursor: pointer;
-}
-.img-show img{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-/*End style*/
+                        <!-- END SAMPLE FORM PORTLET-->
 
- </style>   
- <script type="text/javascript">
-   $(function () {
-    "use strict";
-    
-    $(".popup img").click(function () {
-        var $src = $(this).attr("src");
-        $(".show").fadeIn();
-        $(".img-show img").attr("src", $src);
-    });
-    
-    $("span, .overlay").click(function () {
-        $(".show").fadeOut();
-    });
-    
-});
- </script>
+
+
+                    </div>
+                </div>
+                    
+                    </div>
+                </div>
+                </div>
+                </div>
+
  <style type="text/css">
   a.newlogocss{
       margin-left: 20px;
@@ -360,9 +220,7 @@ background-color: #ffffff !important;
 </body>
 <!-- END BODY -->
 </html>
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
- -->
-   <script type="text/javascript">
+  <script type="text/javascript">
 
 
 $('.search').keyup(function(){
@@ -424,6 +282,9 @@ return (aVal - bVal);
 }
 
  </script>
+
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ -->
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

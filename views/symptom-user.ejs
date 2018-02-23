@@ -1,0 +1,582 @@
+    <%- include partials/header_userdashboard %>
+
+ 
+    <div class="row-fluid">
+ <div class="row" style="background: #f0f0f5;">
+        <div class="container">
+
+                <div class="row-fluid" style="background-color: #f0f0f5;">
+                    <div class="span3 sidebar-content ">
+                    <ul class="ver-inline-menu tabbable margin-bottom-25">
+                         <li ng-class="{active: activeTab === 'home'}">
+                                <a href="home">
+                                <i class="fa fa-home" aria-hidden="true"></i> 
+                                Home
+                                </a> 
+                                <span class="after"></span>                                    
+                            </li>
+                            
+                            
+                 <li ng-class="{active: activeTab === 'account'}"><a href="account"><i class="fa fa-user"  aria-hidden="true"></i> My Account</a></li>
+
+                 
+                  <li ng-class="{active: activeTab === 'subscription'}"><a href="subscription" ><i class="fa fa-user"  aria-hidden="true"></i> My Subscription</a></li>
+
+
+
+                    <li ng-class="{active: activeTab === 'order'}"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
+
+
+                     <% if (user.user_role === 'admin') { %>
+                    <li ng-class="{active: activeTab === 'manageorder'}"><a href="manageorder"><i class="fa fa-user"  aria-hidden="true"></i> Order Managment</a></li>
+                    <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
+                    <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                    <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}"><a href="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                     <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
+                     <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
+                    <% } %>
+
+                      
+                     <% if (user.user_role === 'user') { %>
+                     <li ng-class="{active: activeTab === 'consult'}" ><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
+                     <li ng-class="{active: activeTab === 'symptom-user'}"  class="active"><a href="symptom-user" ><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                     <% } %>
+
+                     <% if (user.user_role === 'doctor') { %>
+                      <li ng-class="{active: activeTab === 'review-consult'}"><a href="review-consult"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Review Consultations</a></li>
+                      <li ng-class="{active: activeTab === 'symptom-all'}"><a href="symptom-all"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                      <% } %>
+					  <li><a href="/logout"><i class="fa fa-sign-out"  aria-hidden="true"></i> Logout</a></li>
+                        
+                            
+                    </ul>
+                        
+                    </div>
+
+                            <!--<li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin" ><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+
+                            <li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" ><i class="fa fa-first-order"  aria-hidden="true"></i> Order Management</a></li>-->
+
+            
+                            <div class="span9" style="height: 800px;">
+                        <!-- BEGIN PAGE HEADER-->
+                        <div class="row-fluid">
+                            <div class="span12">
+                            
+                                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                            <h6 class="page-title" style="font-size: 18px;">
+                                  <%= user.firstName %>'s Profile !!!!
+                                </h6>
+                            </div>
+                        </div>
+                        <!-- END PAGE HEADER-->
+                       
+
+
+                           <div class="row-fluid">
+                      <div class="span12">
+                        <!-- BEGIN SAMPLE FORM PORTLET-->   
+                        
+                        <div class="portlet box blue tabbable">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="hidden-480">Symptoms History</span>
+                                </div>
+                            </div>
+
+                            <div class="portlet-body form">
+                                <div class="tabbable portlet-tabs">
+                                    
+                                    <div class="tab-content">
+                                    <div class="tab-pane active" id="portlet_tab1">
+                        
+<% for (var i = 0; i < data.length; i++) if(data[i].userid == user._id ) { %>
+        <form class="form-horizontal" style="overflow-y: auto;">
+ 
+        
+<input type="hidden" id="userid" name="userid" value="<%= user._id %>"/>
+
+<!-- ////////////////SECTION no 1 and 2-->
+  <div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+        <h4>Temperature - Do you:</h4>
+          <li><%= data[i].temperatures.split(',') %></li>
+      </div>
+  </div>
+  <div class="span6">
+    <div class="control-group">
+        <h4>Sleep - Do you:</h4>
+        <li><%= data[i].sleep.split(',') %></li>
+    </div>
+  </div>
+</div>
+
+<!-- ////////////////End SECTION no 1 and 2-->
+
+<!-- ////////////////SECTION no 3 and 4-->
+  <div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+        <h4>Exercise and Energy</h4>
+          <li><%= data[i].exercise.split(',') %></li>
+       
+       <h5>How is your general energy level?</h5>
+        <li><%= data[i].general_energy_level.split(',') %></li>
+ 
+
+        <h5>How is your energy level after eating?</h5>
+        <li><%= data[i].energy_level_after_eating.split(',') %></li>
+    </div>
+  </div>
+   <div class="span6">
+      <div class="control-group">
+        <h4>Appetite - Do you:</h4>
+        <label>Have a</label>
+          <li><%= data[i].Appetite.split(',') %></li>
+ 
+        <h5>Crave these tastes</h5>
+        <li><%= data[i].Crave_Taste.split(',') %></li>
+  
+    
+        <h5>Avoid these tastes</h5>
+        <li><%= data[i].Avoid_Taste.split(',') %></li>
+    </div>
+  </div>
+</div>
+
+<!-- ////////////////End SECTION no 3 and 4-->
+
+
+
+<!-- Begin section 4 and 5 -->
+ <div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+        <h4>Digestion  - Do you:</h4>
+          <li ng-repeat="Digestion in symptoms.Digestion.split(',')"><%= data[i].Digestion.split(',') %></li>
+      </div>
+  </div>
+  <div class="span6">
+    <div class="control-group">
+        <h4>Stools - Do you:</h4>
+        <li><%= data[i].Stools.split(',') %></li>
+    
+        <h5>What color are your stools</h5>
+        <li><%= data[i].What_color_are_your_stool %></li> 
+  
+        <h5>Number of daily bowel movements</h5>
+
+         <li><%= data[i].Number_of_daily_bowel_movements %></li> 
+
+       
+    </div>
+  </div>
+</div>
+
+<!-- End Section 4 and 5 -->
+
+<!-- Begin section 6 and 7-->
+
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+        
+        <h4>Urine - Do You:</h4>
+          <li><%= data[i].Urine.split(',') %></li>
+     
+        <h5>What color is your urine (w/o vitamins)</h5>
+
+        <li><%= data[i].What_color_is_your_urine %></li> 
+
+        <h5>How often do you urinate in a day</h5>
+
+        <li><%= data[i].How_often_do_you_urinate_in_a_day %></li> 
+
+     
+    </div>
+  </div>
+
+  <div class="span6">
+      <div class="control-group">
+        <h4>Reproduction</h4>
+        <li><%= data[i].ReproductionMen.split(',') %></li>
+    
+        <h5>Have a genital discharge? What color?</h5>
+
+        <li><%= data[i].Have_a_genital_discharge_What_color %></li> 
+
+        <h5>How often do you engage in sex</h5>
+
+        <li><%= data[i].How_often_do_you_engage_in_sex %></li> 
+
+        
+   
+  </div>
+
+</div>
+</div>
+<!-- End Section 6 and 7 -->
+
+<!-- Begin section 8 and 9 -->
+
+<div class="newspansymptom span12">
+    <div class="span6">
+
+      <div class="control-group">
+      
+          <h4>Reproduction - Women</h4>
+          <li><%= data[i].ReproductionWomen.split(',') %></li>
+          
+          <h5>Are there clots in your menstrual flow</h5>
+          <li><%= data[i].Clots.split(',') %></li>
+  
+          <h5>How long is your menstrual cycle days</h5>
+          <li><%= data[i].How_long_is_your_menstrual_cycle_days %></li> 
+
+          <h5>Is it regular</h5>
+          <li><%= data[i].Is_it_regular %></li>
+
+          <h5>Have a genital discharge? What color?</h5>
+          <li><%= data[i].Have_a_genital_discharge_What_color %></li>
+
+          <h5>How long is your menstrual flow</h5>
+          <li><%= data[i].How_long_is_your_menstrual_flow %></li>
+
+          <h5>What color is your menstrual flow</h5>
+          <li><%= data[i].What_color_is_your_menstrual_flow %></li>
+
+          <h5>Do You use birth control pills? How long?</h5>
+          <li><%= data[i].Do_You_use_birth_control_pills_How_long %></li>
+
+          <h5>How many pregnancies have you had</h5>
+          <li><%= data[i].How_many_pregnancies_have_you_had %></li>
+
+          <h5>How many children have you borne</h5>
+
+          <li><%= data[i].How_many_children_have_you_borne %></li>
+
+          <h5>How many miscarriages</h5>
+
+          <li><%= data[i].How_many_miscarriages %></li>
+
+          <h5>How many abortions</h5>
+
+          <li><%= data[i].How_many_abortions %></li>
+
+      </div>
+
+  </div>
+
+  <div class="span6">
+
+      <div class="control-group">
+
+          <h4>Respiration Do You have:</h4>
+          <li><%= data[i].Respiration.split(',') %></li>
+          
+          <h5>A cough </h5>
+          <li><%= data[i].cough.split(',') %></li>
+  
+
+      </div>
+    </div>
+
+
+</div>
+
+
+<!-- End Section 8 and 9 -->
+
+<!-- Begin section 10 and 11 -->
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+          <h4>Pain - Do You Have:</h4>
+          <li><%= data[i].Pain.split(',') %></li>
+          </div>
+        </div>  
+
+          <div class="span6">
+            <div class="control-group">
+          <h4>Headaches</h4>
+          <li><%= data[i].Headaches.split(',') %></li>
+          </div>
+        </div>
+      </div>
+
+<!-- End Section 10 and 11 -->
+
+<!-- Begin Section 12 and 13 -->
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+       <h4>Head to Toes</h4>
+       <h4>Eyes - Do you have:</h4>
+
+          <li><%= data[i].Eyes.split(',') %></li>
+          </div>
+        </div>  
+
+          <div class="span6">
+            <div class="control-group">
+          <h4>Ears - Do you:</h4>
+          <li><%= data[i].Ears.split(',') %></li>
+
+          <h5>Have noise in your ears</h5>
+          <li><%= data[i].noise_in_ears.split(',') %></li>
+
+          </div>
+        </div>
+      </div>
+<!-- End Section 12 and 13 -->
+
+<!-- Begin Sectiion 14 and 15 -->
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+       <h4>Mouth - Do you have:</h4>
+       
+
+          <li><%= data[i].Mouth.split(',') %></li>
+          </div>
+        </div>  
+
+          <div class="span6">
+            <div class="control-group">
+          <h4>Teeth</h4>
+          <h5>What is the condition of your teeth.</h5>
+          <li><%= data[i].Teeth.split(',') %></li>
+          </div>
+        </div>
+      </div>
+<!-- End Section 14 and 15 -->
+
+<!-- Begin Sectiion 15 and 16 -->
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+       <h4>Throat - Do you have:</h4>
+       
+
+          <li><%= data[i].Throat.split(',') %></li>
+          </div>
+        </div>  
+
+          <div class="span6">
+            <div class="control-group">
+          <h4>Nose - Do you have:</h4>
+          
+          <li><%= data[i].Nose.split(',') %></li>
+          </div>
+        </div>
+      </div>
+<!-- End Section 15 and 16 -->
+
+<!-- Begin Sectiion 16 and 17 -->
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+       <h4>Muscles - Do you have:</h4>
+       <li><%= data[i].Muscles.split(',') %></li>
+        
+      <h5>Muscle weakness Where</h5>
+      <li><%= data[i].Muscle_weakness_Where.split(',') %></li>
+
+       <h5>Muscle tension Where</h5>
+      <li><%= data[i].Muscle_tension_Where.split(',') %></li>
+        </div>
+        </div>
+
+
+        <div class="span6">
+      <div class="control-group">
+       <h4>Emotional/Mental/Thinking - Do you have:</h4>
+       <li><%= data[i].Emotional_Mental_Thinking.split(',') %></li>
+        
+      <h5>Are any of these emotions predominant</h5>
+           <li><%= data[i].emotions_predominant.split(',') %></li>
+        </div>
+        </div>
+
+      </div>
+<!-- End Section 16 and 17 -->
+
+<!-- Section 18 and 19 -->
+<div class="newspansymptom span12">
+    <div class="span6">
+      <div class="control-group">
+       <h4>Miscellaneous - Do you:</h4>
+       <li><%= data[i].Miscellaneous.split(',') %></li>
+        
+     
+      <h5>Have a feeling of heaviness</h5>
+
+      <li><%= data[i].feeling_of_heaviness %></li>
+
+     
+        </div>
+        </div>
+    </div>
+
+<!-- End Section 18 and 19 -->
+
+
+  <!-- ////////////////////// -->
+
+
+
+      </div>
+
+      </form>
+<% } %>
+
+       </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SAMPLE FORM PORTLET-->
+
+ 
+                    </div>
+                </div>
+                    
+                    </div>
+                </div>
+                </div>
+                </div>
+
+ <style type="text/css">
+  a.newlogocss{
+      margin-left: 20px;
+}
+
+ .navbar-brand{
+ padding: 15px !important;
+ }
+  
+  .dropdown.open .dropdown-toggle{
+    background-color: #fff !important;
+  }
+ .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: thin dotted;
+    outline: none;
+    outline-offset: -2px;
+}
+     .navbar-inverse .navbar-toggle {
+    border-color:  #ffffff;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+
+  color: #999;
+}
+.nav .dropdown-toggle .caret {
+    margin-top: 6px;
+    border-top-color: #020202 !important;
+    border-bottom-color: #121213 !important;
+}
+.modal {
+   /* width: 100%;
+    margin-left: 0px;*/
+    background-color: rgba(92, 92, 92, 0.03);
+    border: 0px;
+}
+.modal-body {
+   
+     padding: 0px; 
+    overflow-y: inherit; 
+  }
+/*.dropdown-toggle ng-binding
+{
+background-color: #ffffff !important;
+}*/
+
+
+@media (min-width: 414px){
+ .navbar-brand{
+  font-size: 25px !important;
+ }
+   }
+
+   @media (min-width: 320px) and (max-width: 320px){
+ .navbar-brand{
+     font-size: 15px !important;
+    padding: 0px;
+        margin: 14px 0px 0px 25px !important;
+   }
+
+
+ </style>
+ 
+</body>
+<!-- END BODY -->
+</html>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.3.1/jquery.maphilight.min.js"></script>
+
+ 
+    <script src="/assets_home/js/slick.min.js"></script>
+    <script src="/assets_home/js/placeholdem.min.js"></script>
+    <script src="/assets_home/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>  
+    <script src="/assets_home/js/waypoints.min.js"></script>   
+    <script src="/assets_home/js/scripts.js"></script> 
+ 
+
+<!--     <script src="/assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+ -->
+    <!-- <script src="/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> -->
+ 
+  <!--  <script src="/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>  -->
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    
+    <script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>   
+    <script type="text/javascript" src="/assets/plugins/select2/select2.min.js"></script>
+  <script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+    <script src="/assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script> 
+ 
+
+  
+
+
+
+
+ <style type="text/css">
+      input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{ 
+ height: 30px;
+    width: 80%;
+}
+
+textarea{
+       width: 80%;
+ 
+}
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0;
+    filter: alpha(opacity=80);
+}
+
+
+ </style>
+
+
+    <%- include partials/footer_userdashboard %>
+
+                                      
+
+                               
+                                        

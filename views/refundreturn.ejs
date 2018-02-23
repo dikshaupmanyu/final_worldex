@@ -1,4 +1,4 @@
-    <%- include partials/header_userdashboard %>
+﻿  <%- include partials/header_userdashboard %>
 
  
     <div class="row-fluid">
@@ -9,7 +9,7 @@
                     <div class="span3 sidebar-content ">
                     <ul class="ver-inline-menu tabbable margin-bottom-25">
                          <li ng-class="{active: activeTab === 'home'}">
-                                <a ui-sref="home">
+                                <a href="home">
                                 <i class="fa fa-home" aria-hidden="true"></i> 
                                 Home
                                 </a> 
@@ -24,12 +24,12 @@
 
 
 
-                    <li ng-class="{active: activeTab === 'order'}" class="active"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
+                    <li ng-class="{active: activeTab === 'order'}"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
 
 
                      <% if (user.user_role === 'admin') { %>
                     <li ng-class="{active: activeTab === 'manageorder'}"><a href="manageorder"><i class="fa fa-user"  aria-hidden="true"></i> Order Managment</a></li>
-                    <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
+                    <li ng-class="{active: activeTab === 'managetransaction'}" class="active"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
                     <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                     <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
                      <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
@@ -47,40 +47,31 @@
                       <li ng-class="{active: activeTab === 'review-consult'}"><a href="review-consult"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Review Consultations</a></li>
                       <li ng-class="{active: activeTab === 'symptom-all'}"><a href="symptom-all"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                       <% } %>
-					  <li><a href="/logout"><i class="fa fa-sign-out"  aria-hidden="true"></i> Logout</a></li>
+            <li><a href="/logout"><i class="fa fa-sign-out"  aria-hidden="true"></i> Logout</a></li>
                         
                             
                     </ul>
                         
                     </div>
-
-                            <!--<li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin" ><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
-
-                            <li ng-class="{active: activeTab === 'order'}"><a ui-sref="order" ><i class="fa fa-first-order"  aria-hidden="true"></i> Order Management</a></li>-->
-
-            
-                    
-                         <div class="span9 " style="height: 750px;">
-                              
+                        <div class="span9 " style="height: 750px;">
+                                   
+                                   
+                     
                             <!-- BEGIN PAGE HEADER-->   
                             <div class="row-fluid" style="margin-top: 20px;">
-                              <div class="span12">
-                            
-                                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-                            <h6 class="page-title" style="font-size: 18px;">
-                                  <%= user.firstName %>'s Profile !!!!
-                                </h6>
-                            </div>
                                
                             </div>
                             <!-- END PAGE HEADER-->
                             <!-- BEGIN PAGE CONTENT-->
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <!-- BEGIN SAMPLE FORM PORTLET-->   
-                                    <div class="flash-message" ng-if="flash">
+                                    <!-- BEGIN SAMPLE FORM PORTLET-->  
+
+                                      
+                                <div class="flash-message" ng-if="flash">
                                                 <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
-                                     </div>
+                                     </div> 
+                                    
                                     <div class="portlet box blue tabbable">
                                         <div class="portlet-title">
                                             <div class="caption">
@@ -94,15 +85,11 @@
 
                                             
                                                         <div class="control-group" style="text-align: center;">
-                                                         <h4><b> Your Order Id - <%= orderid %> </b></h4>
+                                                         <h4><b> Your Order Id - <%= orderid %></b></h4>                                                        </div>         
+              <input type="hidden" class="form-control"  ng-model="total = 0 " readonly />
+              <input type="hidden" class="form-control"  ng-model="grandtotal = 0 " readonly />
 
-                                                        </div>         
-
-
-                                <form method="post" class="form-horizontal" style="height: 300px;">
-
-
-                                 <table datatable="ng" id="example" class="table table-striped table-bordered" width="100%" ui-jq="datatable" ui-options="options">
+          <table datatable="ng" id="example" class="table table-striped table-bordered" width="100%" ui-jq="datatable" ui-options="options">
                                             <thead>
                                               <tr>
                                             
@@ -113,59 +100,68 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              
+                                           <% for (var i = 0; i < data.length; i++) { %>
+
                                               <tr>
-                                                <td><%= data.productname %></td>
-                                                <td>$ <%= data.productprice %></td>
-                                                <td><%= data.productqty %></td>
+                                                <td><%= data[i].productname %></td>
+                                                <td>$<%= data[i].productprice %></td>
+                                                <td><%= data[i].productqty %></td>
                                                
                                               </tr>
-                                              
+                                              <% } %>
+                                             
                                             </tbody>
                                           </table>
-                                                                  
-                                                 
-                                 </form>        
-
-
-                             <% if(user.user_role == 'admin') { %>    
-                                  <div>
-                                  
-                                    <hr>
-
-                      <% for (var i = 0; i < datas.length; i++) if(datas[i]._id == orderid) { %>
-          
-                                  <form method="post" action="/updateorder" style="height: 200px;">
+                                            <hr>
                                           <table>
-                                            <tbody>
-                                            
-                                              <td>&nbsp;Update Order Status : &nbsp;</td>
-                                                <input type="text" name="orderid" value="<%= orderid %>" style="display: none;">
-
-                                              <td><select class="form-control" id="o_status" name="o_status">
-                                           
-                                               <option value="" "<%= (datas[i].orderstatus == '')?'selected':'' %>">Select Order Status</option>
-                                                <option value="Pending" "<%= (datas[i].orderstatus == 'Pending')?'selected':'' %>">Pending</option>
-                                                <option value="Processing" "<%= (datas[i].orderstatus == 'Processing')?'selected':'' %>">Processing</option>
-                                                <option value="On Hold" "<%= (datas[i].orderstatus == 'On Hold')?'selected':'' %>">On Hold</option>
-                                                <option value="Completed" "<%= (datas[i].orderstatus == 'Completed')?'selected':'' %>">Completed</option>
-                                                <option value="Cancelled" "<%= (datas[i].orderstatus == 'Cancelled')?'selected':'' %>">Cancelled</option>
-                                                <option value="Refunded" "<%= (datas[i].orderstatus == 'Refunded')?'selected':'' %>">Refunded</option>
-                                                <option value="Failed" "<%=(datas[i].orderstatus == 'Failed')?'selected':'' %>">Failed</option>
-                                              </select> &nbsp;&nbsp;
-
-                                              <input type="submit" class="btn theme-btn" value="Update">
-
-                                              </td>
-                                            
-                                            </tbody>
+                                          <tbody>
+                                             <% for (var i = 0; i < datatransaction.length; i++) { if(datatransaction[i].orderid == orderid) %>
+                                             <tr>
+                                              <td style="display: block;margin-right: 150px;">Total Amount Refund :</td>
+                                              <td>$<%= datatransaction[i].amount * 0.01 %></td>
+                                              </tr>
+                                                <% } %>
+                                               </tbody>
                                           </table>
-                                            </form>
-                                     <% } %>       
+                                          <hr>
+                                                 
 
-                                        </div>
 
-                                        <% } %>
+                                   <% for (var i = 0; i < datatransaction.length; i++) { if(datatransaction[i].orderid == orderid) %>
+                                       <form action="/refundreturn" method="POST"  style="height: 400px;"> 
+
+
+                                        <% if(!datatransaction[i].refundId) { %>
+                                         <h4 style="text-align: center;">Click for Refund</h4>
+                                         <% } %>
+
+                                          <input type="text" id="orderid" name="orderid" class="form-control" value="<%= datatransaction[i].orderid %>" required style="display: block;" />
+
+                                          <input type="text" id="_id" name="_id" class="form-control" value="<%= datatransaction[i]._id %>"  placeholder="Email" style="display: block;" required/>
+
+
+                                           <input type="text" id="userid" name="userid" class="form-control" value="<%= datatransaction[i].userid %>"  placeholder="Email" style="display: block;" required/>
+
+                                           <input type="text" id="paymentId" name="paymentId" class="form-control" value="<%= datatransaction[i].paymentId %>"  style="display: block;"  placeholder="Email" required/>
+
+
+                                    <div class="control-group" style="text-align: center;">
+                                   
+                                       <input class="btn theme-btn" type="submit" value="Create Refund" id="refund" name="refund" style="text-align: center;">
+                                      
+
+                                       <% if(!datatransaction[i].refundId == '') { %>
+
+                                       <h4>You Already Applied For Refund !!!!</h4>
+
+                                      <% } %>
+                    
+                                 </div>           
+
+                                         </form>
+                                       <% } %>   
+
+                                       
 <!--<script type="text/javascript">
 
    var total = 0;
@@ -203,8 +199,7 @@
     
   
 </div>
-
- <style type="text/css">
+  <style type="text/css">
   a.newlogocss{
       margin-left: 20px;
 }
@@ -330,9 +325,3 @@ textarea{
 
 
     <%- include partials/footer_userdashboard %>
-
-
-                                      
-
-                               
-                                        

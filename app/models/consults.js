@@ -11,17 +11,14 @@ var consultsSchema = mongoose.Schema({
     problemarea : String,
     datetime : String,
     view_consult_status : String,
-  //   myimage: {
-  //   	     path: {
-		// 	 type: String,
-		// 	 required: true,
-		// 	 trim: true
-		// 	 },
-		// 	 originalname: {
-		// 	 type: String,
-		// 	 required: true
-		// 	 }
-	 // }
+    consult_status : String,
+    read_status :String,
+    myimage: {
+			 originalname: {
+			 type: String,
+			 required: true
+			 }
+	 }
     		
 
 });

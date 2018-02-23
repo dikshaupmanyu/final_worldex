@@ -1,19 +1,7 @@
- 
-<body onload="myFunction()">
-
-<!-- <script>
-function myFunction() {
-    alert("Page is loaded");
-}
-</script> -->
-
-</body>
-
-
     <%- include partials/header_userdashboard %>
 
  
-    <div class="row-fluid" >
+    <div class="row-fluid">
  <div class="row" style="background: #f0f0f5;">
         <div class="container">
 
@@ -131,24 +119,18 @@ function myFunction() {
                                             
                                               <tbody>
 
-
           <% for (var i = 0; i < data.length; i++) if(data[i].user_id == user._id) { %>
-  
- 
+   
             <tr> 
 
+              
 
                                                       <td style="display: none;" id="updatedid"><%= data[i]._id %></td>
 
                                                      <td><%= user.firstName %></td>
-                                                   
-
-                                                      <td><%= totalconsultproblems[i] %></td>
-
-                                                      
-                                                    
-                                                      <td><%= totalconsultproblemdetails[i] %></td>
-                                                      <td><%= totalconsultproblemareas[i] %></td>
+                                                      <td id="problemconsult{{$index}}"><%= data[i].problem %></td>
+                                                      <td id="problemconsultdetail{{$index}}"><%= data[i].problemdetail %></td>
+                                                      <td id="problemconsultarea{{$index}}"><%= data[i].problemarea %></td>
                                                       <td><%= data[i].datetime %></td>
                                                        <% if (data[i].consult_status != 'Answered'){ %>
                                                       <td> Unanswered</td>
@@ -164,18 +146,30 @@ function myFunction() {
                                                     
                                                       <td> 
                                                      
-                                                         <div class="popup">
-                                                         <img src="/uploads/consults/<%= totalconsultfinalimages[i] %>" style="width: 10px; height: 14px;">
-                                                      </div>
-                                                      <div class="show">
-                                                          <div class="overlay"></div>
-                                                          <div class="img-show">
-                                                            <span style="color: #000;">X</span>
-                                                            <img src="">
-                                                          </div>
-                                                      </div>
-                                                   
 
+                                                    <a href="#/consult" class="pop">
+                                                        <img ng-src="/uploads/consults/{{consult.myimage.originalname}}" style="width: 10px; height: 14px;">
+                                                    </a>
+
+                                                    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                      <div class="modal-dialog">
+                                                        <div class="modal-content">              
+                                                          <div class="modal-body">
+                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+                                                            <img ng-src="" class="imagepreview" style="width: 100%;" >
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <script type="text/javascript">
+                                                      $(function() {
+                                                        $('.pop').on('click', function() {
+                                                          $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+                                                          $('#imagemodal').modal('show');   
+                                                        });   
+                                                    });
+                                                    </script>
+                               
 
                                                     </td>
 
@@ -184,15 +178,15 @@ function myFunction() {
                                                     </td>
 
                                     
-                                                       <td><a href="delete-consult?consultid=<%= data[i]._id %>"><i class="fa fa-fw fa-trash"></i></a>
+                                                       <td><a href="deleteConsult?consultid=<%= data[i]._id %>"><i class="fa fa-fw fa-trash"></i></a>
                                                         
                                                        </td>
                                                      
                                                   </tr>
                                                   
                                              <% } %>     
- 
- 
+
+
 
                                                   
                                               </tbody>
@@ -228,73 +222,8 @@ function myFunction() {
   
 </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-<style type="text/css">
-   .popup{
-    margin: auto;
-   
-}
-.popup img{
-    width: 200px;
-    height: 200px;
-    cursor: pointer
-}
-.show{
-    z-index: 999;
-    display: none;
-}
-.show .overlay{
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.66);
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.show .img-show{
-    width: 600px;
-    height: 400px;
-    background: #FFF;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    overflow: hidden
-}
-.img-show span{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 99;
-    cursor: pointer;
-}
-.img-show img{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-/*End style*/
 
- </style>   
- <script type="text/javascript">
-   $(function () {
-    "use strict";
-    
-    $(".popup img").click(function () {
-        var $src = $(this).attr("src");
-        $(".show").fadeIn();
-        $(".img-show img").attr("src", $src);
-    });
-    
-    $("span, .overlay").click(function () {
-        $(".show").fadeOut();
-    });
-    
-});
- </script>
+
  <style type="text/css">
   a.newlogocss{
       margin-left: 20px;
@@ -362,68 +291,6 @@ background-color: #ffffff !important;
 </html>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
  -->
-   <script type="text/javascript">
-
-
-$('.search').keyup(function(){
- var val=$(this).val();    
-        $('table tbody tr').hide();
-         var trs=$('table tbody tr').filter(function(d){
-         return $(this).text().toLowerCase().indexOf(val)!=-1;
-         });
-         trs.show();   
-});
-  </script>
- <script type="text/javascript">
-
-var sortedOn = 0;
-function SortTable(sortOn) {
-var table = document.getElementById('example');
-var tbody = table.getElementsByTagName('tbody')[0];
-var rows = tbody.getElementsByTagName('tr');
-var rowArray = new Array();
-for (var i=0, length=rows.length; i<length; i++) {
-rowArray[i] = new Object;
-rowArray[i].oldIndex = i;
-rowArray[i].value = rows[i].getElementsByTagName('td')[sortOn].firstChild.nodeValue;
-}
-if (sortOn == sortedOn) { rowArray.reverse(); }
-else {
-sortedOn = sortOn;
-
-if (sortedOn == 0) {
-rowArray.sort(RowCompareNumbers);
-}
-else {
-rowArray.sort(RowCompare);
-}
-}
-var newTbody = document.createElement('tbody');
-for (var i=0, length=rowArray.length ; i<length; i++) {
-newTbody.appendChild(rows[rowArray[i].oldIndex].cloneNode(true));
-}
-table.replaceChild(newTbody, tbody);
-}
-function RowCompare(a, b) {
-var aVal = a.value;
-var bVal = b.value;
-//return (aVal == bVal ? 0 : (aVal < bVal ? -1 : 1));
-return aVal.localeCompare(bVal);
-}
-// Compare number
-function RowCompareNumbers(a, b) {
-var aVal = parseInt( a.value);
-var bVal = parseInt(b.value);
-return (aVal - bVal);
-}
-// compare currency
-function RowCompareDollars(a, b) {
-var aVal = parseFloat(a.value.substr(1));
-var bVal = parseFloat(b.value.substr(1));
-return (aVal - bVal);
-}
-
- </script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

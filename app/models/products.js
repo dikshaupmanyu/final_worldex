@@ -6,9 +6,15 @@ var bcrypt   = require('bcrypt-nodejs');
 var productSchema = mongoose.Schema({
 
      productname        : String,
-     productprice     : String
-    
-
+     productprice     : String,
+     productdescr     : String,
+     productcategory     : String,
+     prosize     : String,
+     datetime     : String,
+     productfulldescr     : String,
+     addInfo     : String,
+     productname_chineese     : String,
+     producttype     : String
 });
 
 

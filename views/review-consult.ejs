@@ -1,19 +1,7 @@
- 
-<body onload="myFunction()">
-
-<!-- <script>
-function myFunction() {
-    alert("Page is loaded");
-}
-</script> -->
-
-</body>
-
-
     <%- include partials/header_userdashboard %>
 
  
-    <div class="row-fluid" >
+    <div class="row-fluid">
  <div class="row" style="background: #f0f0f5;">
         <div class="container">
 
@@ -44,20 +32,20 @@ function myFunction() {
                     <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
                     <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                     <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
-                     <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}"><a href="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
                      <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
                      <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
                     <% } %>
 
                       
                      <% if (user.user_role === 'user') { %>
-                     <li ng-class="{active: activeTab === 'consult'}"  class="active"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
+                     <li ng-class="{active: activeTab === 'consult'}" ><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
                      <li ng-class="{active: activeTab === 'symptom-user'}"><a href="symptom-user" ><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                      <% } %>
 
                      <% if (user.user_role === 'doctor') { %>
-                      <li ng-class="{active: activeTab === 'review-consult'}"><a href="review-consult"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Review Consultations</a></li>
-                      <li ng-class="{active: activeTab === 'symptom-all'}"><a href="symptom-all"  ng-if="vm.user.user_role === 'doctor'"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
+                      <li ng-class="{active: activeTab === 'review-consult'}"  class="active"><a href="review-consult"><i class="fa fa-user-md"  aria-hidden="true"></i> Review Consultations</a></li>
+                      <li ng-class="{active: activeTab === 'symptom-all'}"><a href="symptom-all"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                       <% } %>
 					  <li><a href="/logout"><i class="fa fa-sign-out"  aria-hidden="true"></i> Logout</a></li>
                         
@@ -131,25 +119,23 @@ function myFunction() {
                                             
                                               <tbody>
 
-
           <% for (var i = 0; i < data.length; i++) if(data[i].user_id == user._id) { %>
-  
- 
+   
             <tr> 
 
+              
 
                                                       <td style="display: none;" id="updatedid"><%= data[i]._id %></td>
 
                                                      <td><%= user.firstName %></td>
-                                                   
-
                                                       <td><%= totalconsultproblems[i] %></td>
-
-                                                      
-                                                    
                                                       <td><%= totalconsultproblemdetails[i] %></td>
                                                       <td><%= totalconsultproblemareas[i] %></td>
-                                                      <td><%= data[i].datetime %></td>
+                                                      <td><%= data[i].datetime %>
+                                                         
+                                                        
+                                                    
+                                                      </td>
                                                        <% if (data[i].consult_status != 'Answered'){ %>
                                                       <td> Unanswered</td>
                                                       <% } else { %>
@@ -161,11 +147,11 @@ function myFunction() {
                                                        <% } else { %>
                                                       <td style="color: green;">Read</td>
                                                        <% } %>
-                                                    
+                                                  
                                                       <td> 
-                                                     
-                                                         <div class="popup">
-                                                         <img src="/uploads/consults/<%= totalconsultfinalimages[i] %>" style="width: 10px; height: 14px;">
+                                                      
+                                                      <div class="popup">
+                                                         <img src="/uploads/consults/<%= totalconsultimages[i] %>" style="width: 10px; height: 14px;">
                                                       </div>
                                                       <div class="show">
                                                           <div class="overlay"></div>
@@ -174,13 +160,11 @@ function myFunction() {
                                                             <img src="">
                                                           </div>
                                                       </div>
-                                                   
-
+                                                  
 
                                                     </td>
-
-                                               
-                                                     <td><a href="list-consult-reply?id=<%= data[i]._id %>"><i class="fa fa-reply" aria-hidden="true" style="font-size: 20px"></i></a>
+                                                 
+                                                     <td><a href="reply-consult?id=<%= data[i]._id %>"><i class="fa fa-reply" aria-hidden="true" style="font-size: 20px"></i></a>
                                                     </td>
 
                                     
@@ -191,10 +175,10 @@ function myFunction() {
                                                   </tr>
                                                   
                                              <% } %>     
- 
- 
 
-                                                  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>                                              
+                              
                                               </tbody>
                                           </table>
 
@@ -204,33 +188,9 @@ function myFunction() {
 
                                       </form>
 
-    
 
-
-                                          </div>
-                                        </div>
-                                    </div>
-                                   
-   
-                                </div>
-                            </div>
-                                    <!-- END SAMPLE FORM PORTLET-->
-
-
-
-                        </div>
-                </div>
-                <!-- END PAGE CONTENT-->         
-          
-                    
-            </div>
-    
-  
-</div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-<style type="text/css">
+<!--End image popup-->
+ <style type="text/css">
    .popup{
     margin: auto;
    
@@ -295,6 +255,31 @@ function myFunction() {
     
 });
  </script>
+
+
+                                          </div>
+                                        </div>
+                                    </div>
+                                   
+   
+                                </div>
+                            </div>
+                                    <!-- END SAMPLE FORM PORTLET-->
+
+
+
+                        </div>
+                </div>
+                <!-- END PAGE CONTENT-->         
+          
+                    
+            </div>
+    
+  
+</div>
+</div>
+
+
  <style type="text/css">
   a.newlogocss{
       margin-left: 20px;
@@ -360,9 +345,7 @@ background-color: #ffffff !important;
 </body>
 <!-- END BODY -->
 </html>
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
- -->
-   <script type="text/javascript">
+  <script type="text/javascript">
 
 
 $('.search').keyup(function(){
@@ -424,6 +407,8 @@ return (aVal - bVal);
 }
 
  </script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ -->
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

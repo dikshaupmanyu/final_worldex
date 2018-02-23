@@ -14,10 +14,58 @@ module.exports = function(app, passport) {
 		});
 	});
 
+  // PROFILE SECTION =========================
+
+
+
 	app.get('/home', isLoggedIn, function(req, res) {
-		res.render('home.ejs', {
-			user : req.user
-		});
+      var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('home.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+		
 	});
 
 	app.get('/order-medicine', function(req, res) {
@@ -50,33 +98,76 @@ module.exports = function(app, passport) {
 
 	app.get('/order-medicines', isLoggedIn, function(req, res) {
 
-		var i = 0;
-		var vm = this;
+		    var i = 0;
+        var vm = this;
         vm.product = null;
         vm.allProducts = [];
+        var a = 0;
+        vm.consult = null;
+        vm.allconsults = [];
 
-	  var Product       = require('../app/models/products');
+      var Consult       = require('../app/models/consults');
+      var Product       = require('../app/models/products');
+
 
    
-      Product.find(function (err, product) {
-  		// docs is an array
-  		  for(var i = 0; i < product.length; i++){
-            vm.allProducts[i] = product[i];
+       var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
 
 
-        }
- 
-       var productvalue = JSON.stringify(product);
-       var jsonObject = JSON.parse(productvalue);
+              }
+
+          }
+
+      //     console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+     //     console.log(finalstatusconsult);
    
-      res.render('order-medicines.ejs', {data: jsonObject, user : req.user});
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
+   
+        Product.find(function (err, product) {
+    		// docs is an array
+    		  for(var i = 0; i < product.length; i++){
+              vm.allProducts[i] = product[i];
+
+
+          }
+   
+         var productvalue = JSON.stringify(product);
+         var jsonObject = JSON.parse(productvalue);
+   
+      res.render('order-medicines.ejs', {data: jsonObject, user : req.user , loadconsultdata: jsonObjectconsult, totalreadconsultstatus : finalstatusconsult,});
 
       });
 
-
 	});
+    
 
-
+ });      
 
 	app.get('/order-detail', function(req, res) {
 
@@ -133,8 +224,47 @@ module.exports = function(app, passport) {
         vm.product = null;
         vm.allProducts = [];
         vm.products = null;
+        var a = 0;
+        vm.consult = null;
+        vm.allconsults = [];
+         var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
 
 	  var Product       = require('../app/models/products');
+    var Consult       = require('../app/models/consults');
+
+
+     Consult.find(function (err, consult) {
+        // docs is an array
+          for(var a = 0; a < consult.length; a++){
+              vm.allconsults[a] = consult[a];
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[a].user_id){
+
+                      var totalreadstatusc = consult[a].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+          }
+        //  console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+        //  console.log(finalstatusconsult);
+   
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
 
    
       Product.find(function (err, product) {
@@ -163,7 +293,7 @@ module.exports = function(app, passport) {
 
   
 
-  	 res.render('order-details.ejs', {data: jsonObject,datas:jsonObjects,id:req.query.id,user : req.user});
+  	 res.render('order-details.ejs', {data: jsonObject,datas:jsonObjects,loadconsultdata: jsonObjectconsult,id:req.query.id,user : req.user,totalreadconsultstatus : finalstatusconsult,});
 
 
 
@@ -173,6 +303,8 @@ module.exports = function(app, passport) {
 
 
 	});
+
+  });   
 
 	app.get('/cart', function(req, res) {
 		res.render('cart.ejs', {
@@ -185,9 +317,52 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/carts', isLoggedIn, function(req, res) {
-		res.render('carts.ejs', {
-			user : req.user
-		});
+		  var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           //console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          //console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('carts.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
 	});
 
 	app.get('/order', isLoggedIn, function(req, res) {
@@ -196,8 +371,87 @@ module.exports = function(app, passport) {
 		var vm = this;
         vm.order = null;
         vm.allorders = [];
+        var a = 0;
+        vm.consult = null;
+        vm.allconsults = [];
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+
+      var Consult       = require('../app/models/consults');
+     	var Order       = require('../app/models/orders');
+
+   
+      Order.find(function (err, order) {
+  		// docs is an array
+  		  for(var i = 0; i < order.length; i++){
+            vm.allorders[i] = order[i];
+
+
+        }
+ 
+       var productvalue = JSON.stringify(order);
+       var jsonObject = JSON.parse(productvalue);
+
+         Consult.find(function (err, consult) {
+        // docs is an array
+          for(var a = 0; a < consult.length; a++){
+              vm.allconsults[a] = consult[a];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[a].user_id){
+
+                      var totalreadstatusc = consult[a].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+          }
+         var finalstatusconsult = readstatuscount ; 
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
+   
+      res.render('order.ejs', {data: jsonObject, user : req.user,loadconsultdata: jsonObjectconsult,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+
+	});
+
+});
+
+	app.get('/manageorder', isLoggedIn, function(req, res) {
+
+	    var i = 0;
+		var vm = this;
+        vm.order = null;
+        vm.allorders = [];
+        vm.user = null;
+        vm.allusers = [];
 
 		var Order       = require('../app/models/orders');
+		var User       = require('../app/models/user');
+
+		 User.find(function (err, user) {
+  		// docs is an array
+  		  for(var i = 0; i < user.length; i++){
+            vm.allusers[i] = user[i];
+
+
+        }
+ 
+       var uservalue = JSON.stringify(user);
+       var jsonObjectuser = JSON.parse(uservalue);
+
 
    
       Order.find(function (err, order) {
@@ -211,57 +465,432 @@ module.exports = function(app, passport) {
        var productvalue = JSON.stringify(order);
        var jsonObject = JSON.parse(productvalue);
    
-      res.render('order.ejs', {data: jsonObject, user : req.user});
+      res.render('manageorder.ejs', {data: jsonObject, datauser: jsonObjectuser, user : req.user});
 
       });
 
 	});
 
+    });		
+
+    	app.get('/admin', isLoggedIn, function(req, res) {
+
+	    var i = 0;
+		var vm = this;
+        vm.order = null;
+        vm.allorders = [];
+        vm.user = null;
+        vm.allusers = [];
+
+		var Order       = require('../app/models/orders');
+		var User       = require('../app/models/user');
+
+		 User.find(function (err, user) {
+  		// docs is an array
+  		  for(var i = 0; i < user.length; i++){
+            vm.allusers[i] = user[i];
+
+
+        }
+ 
+       var uservalue = JSON.stringify(user);
+       var jsonObjectuser = JSON.parse(uservalue);
+
+
+   
+   
+      res.render('admin.ejs', { datauser: jsonObjectuser, user : req.user});
+
+      });
+
+	});
+
+
+    app.get('/managetransaction', isLoggedIn, function(req, res) {
+
+	    var i = 0;
+		var vm = this;
+        vm.transaction = null;
+        vm.alltransactions = [];
+        vm.user = null;
+        vm.allusers = [];
+
+		var Transaction       = require('../app/models/transaction');
+		var User       = require('../app/models/user');
+
+		 User.find(function (err, user) {
+  		// docs is an array
+  		  for(var i = 0; i < user.length; i++){
+            vm.allusers[i] = user[i];
+
+
+        }
+ 
+       var uservalue = JSON.stringify(user);
+       var jsonObjectuser = JSON.parse(uservalue);
+
+
+   
+      Transaction.find(function (err, transaction) {
+  		// docs is an array
+  		  for(var i = 0; i < transaction.length; i++){
+            vm.alltransactions[i] = transaction[i];
+
+
+        }
+ 
+       var productvaluetransaction = JSON.stringify(transaction);
+       var jsonObjecttransaction = JSON.parse(productvaluetransaction);
+   
+      res.render('managetransaction.ejs', {data: jsonObjecttransaction, datauser: jsonObjectuser, user : req.user});
+
+      });
+
+	});
+
+    });		 
+
+
 	app.get('/consult', isLoggedIn, function(req, res , document) {
-		var base64 = require('base-64');
+		
 
 	    var i = 0;
 		var vm = this;
         vm.consult = null;
         vm.allconsults = [];
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+
 
 	    var Consult       = require('../app/models/consults');
+      var base64 = require('base-64');
 
    
      	 Consult.find(function (err, consult) {
 	  		// docs is an array
+        var consultproblemall = [];
+        var consultproblemdetailall = [];
+         var consultproblemareaall = [];
+         var consultfinalimage = [];
 	  		  for(var i = 0; i < consult.length; i++){
 	            vm.allconsults[i] = consult[i];
+               if(req.user.user_role == 'user'){
 
-	    //     $(document).ready(function () {    
-	    //     $("#problemconsult"+i).val(base64.decode(consults[i].problem));    
-	    // });
-	      // document.getElementById("problemconsult"+i).innerHTML = base64.decode(consults[i].problem);
-      //    document.getElementById("problemconsultdetail"+i).innerHTML = base64.decode(consults[i].problemdetail);
-      //    document.getElementById("problemconsultarea"+i).innerHTML = base64.decode(consults[i].problemarea);
+                if(req.user._id == consult[i].user_id){
 
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+          consultproblemall[i] = base64.decode(consult[i].problem);  
+          consultproblemdetailall[i] = base64.decode(consult[i].problemdetail);
+         // console.log(consultproblemdetailall[i]);
+          consultproblemareaall[i] = base64.decode(consult[i].problemarea);
+
+           consultfinalimage[i] =  consult[i].myimage.originalname;        
 
 	        }
+
+       var totalconsultproblem = consultproblemall;
+       var totalconsultproblemdetail = consultproblemdetailall;
+       var totalconsultproblemarea = consultproblemareaall;
+        var totalconsultfinalimage = consultfinalimage;
+
+
+        var finalstatusconsult = readstatuscount ; 
 	 
 	       var productvalue = JSON.stringify(consult);
 	       var jsonObject = JSON.parse(productvalue);
+
+        // console.log(jsonObject);
+        
 	   
-	      res.render('consult.ejs', {data: jsonObject, user : req.user});
+	      res.render('consult.ejs', {data: jsonObject,  user : req.user , totalreadconsultstatus : finalstatusconsult, totalconsultproblems : consultproblemall, totalconsultproblemdetails : consultproblemdetailall, totalconsultproblemareas : consultproblemareaall, totalconsultfinalimages : consultfinalimage});
 
       });
 
 	});
+
+
+  app.get('/list-consult-reply', isLoggedIn, function(req, res , document) {
+    var consultid = req.query.id;
+    var base64 = require('base-64');
+
+        var i = 0;
+        var j = 0;
+        var k = 0;
+        var l = 0;
+        var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+        vm.user = null;
+        vm.allusers = [];
+        vm.consultreply = null;
+        vm.allconsultreplys = [];
+        vm.product = null ;
+        vm.allproducts = [];
+        var answerstatuscount = 0 ;
+        var readstatuscount = 0;
+        var totalreadconsultstatus = 0;
+
+      var Consult       = require('../app/models/consults');
+      var Product       = require('../app/models/products');
+      var User       = require('../app/models/user');
+      var Consultreplys       = require('../app/models/consultreply');
+
+       Product.find(function (err, product) {
+        // docs is an array
+          for(var l = 0; l < product.length; l++){
+              vm.allproducts[l] = product[l];
+          }
+   
+         var productvalueproduct = JSON.stringify(product);
+         var jsonObjectproduct = JSON.parse(productvalueproduct);
+
+       Consultreplys.find(function (err, consultreply) {
+        // docs is an array
+          for(var k = 0; k < consultreply.length; k++){
+              vm.allconsultreplys[k] = consultreply[k];
+          }
+   
+         var productvalueconsultreply = JSON.stringify(consultreply);
+         var jsonObjectconsultreply = JSON.parse(productvalueconsultreply);
+
+      User.find(function (err, user) {
+        // docs is an array
+          for(var j = 0; j < user.length; j++){
+              vm.allusers[j] = user[j];
+          }
+   
+         var productvalueuser = JSON.stringify(user);
+         var jsonObjectuser = JSON.parse(productvalueuser);
+
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+               if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+          }
+          var finalstatusconsult = readstatuscount ;
+   
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('list-consult-reply.ejs', {dataproduct : jsonObjectproduct , data: jsonObject, datauser : jsonObjectuser , dataconsultreply :jsonObjectconsultreply , user : req.user , consultid : req.query.id , totalreadconsultstatus : finalstatusconsult,});
+
+      });
+
+  });
+
+  });
+
+  });
+
+   });    
+
+  app.get('/reply-consult', isLoggedIn, function(req, res , document) {
+  var consultid = req.query.id;
+    var base64 = require('base-64');
+
+        var i = 0;
+        var j = 0;
+        var k = 0;
+        var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+        vm.user = null;
+        vm.allusers = [];
+        vm.product = null;
+        vm.allproducts = [];
+
+      var Consult       = require('../app/models/consults');
+      var User       = require('../app/models/user');
+      var Product       = require('../app/models/products');
+
+      Product.find(function (err, product) {
+        // docs is an array
+          for(var k = 0; k < product.length; k++){
+              vm.allproducts[k] = product[k];
+          }
+   
+         var productvalueproduct = JSON.stringify(product);
+         var jsonObjectproduct = JSON.parse(productvalueproduct);
+
+      User.find(function (err, user) {
+        // docs is an array
+          for(var j = 0; j < user.length; j++){
+              vm.allusers[j] = user[j];
+          }
+   
+         var productvalueuser = JSON.stringify(user);
+         var jsonObjectuser = JSON.parse(productvalueuser);
+
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+          }
+   
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+         var jsonObjectconsult =JSON.parse(productvalue);
+     
+        res.render('reply-consult.ejs', {data: jsonObject, datauser : jsonObjectuser , loadconsultdata : jsonObjectconsult , dataproduct : jsonObjectproduct , user : req.user , consultid : req.query.id});
+
+      });
+
+  });
+
+
+  });
+
+  });    
+
+    app.get('/review-consult', isLoggedIn, function(req, res , document) {
+    var base64 = require('base-64');
+
+      var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+      var Consult       = require('../app/models/consults');
+      var consultproblemall = [];
+        var consultproblemdetailall = [];
+         var consultproblemareaall = [];
+         var consultfinalimage =[];
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+      //     $(document).ready(function () {    
+      //     $("#problemconsult"+i).val(base64.decode(consults[i].problem));    
+      // });
+        // document.getElementById("problemconsult"+i).innerHTML = base64.decode(consults[i].problem);
+      //    document.getElementById("problemconsultdetail"+i).innerHTML = base64.decode(consults[i].problemdetail);
+      //    document.getElementById("problemconsultarea"+i).innerHTML = base64.decode(consults[i].problemarea);
+
+          consultproblemall[i] = base64.decode(consult[i].problem);  
+          consultproblemdetailall[i] = base64.decode(consult[i].problemdetail);
+         // console.log(consultproblemdetailall[i]);
+          consultproblemareaall[i] = base64.decode(consult[i].problemarea);        
+            // console.log(consult[i].myimage);
+           consultfinalimage[i] = consult[i].myimage.originalname;
+
+            console.log(consult[i].myimage.originalname);
+          }
+
+       var totalconsultproblem = consultproblemall;
+       var totalconsultproblemdetail = consultproblemdetailall;
+       var totalconsultproblemarea = consultproblemareaall;
+       var totalconsultimage = consultfinalimage;
+
+   
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+         //console.log(jsonObject.myimage);
+         var jsonObjectconsult = JSON.parse(productvalue);
+     
+        res.render('review-consult.ejs', {data: jsonObject, loadconsultdata : jsonObjectconsult, user : req.user , totalconsultproblems : totalconsultproblem , totalconsultproblemdetails : totalconsultproblemdetail , totalconsultproblemareas : totalconsultproblemarea, totalconsultimages : totalconsultimage,});
+
+      });
+
+  });
 
 	app.get('/list-orderitem', isLoggedIn, function(req, res) {
 		//	console.log(req.query.order_id);
 		var Order       = require('../app/models/orders');
 		var Orderitem       = require('../app/models/orderitem');
 
+
+	    var i = 0;
+		var vm = this;
+        vm.order = null;
+        vm.allorders = [];
+          var a = 0;
+        vm.consult = null;
+        vm.allconsults = [];
+        var answerstatuscount = 0;
+        var readstatuscount = 0;
+        var totalreadconsultstatus = 0;
+
+
+      var Consult       = require('../app/models/consults');
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var a = 0; a < consult.length; a++){
+              vm.allconsults[a] = consult[a];
+            if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[a].user_id){
+
+                      var totalreadstatusc = consult[a].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+          }
+          var finalstatusconsult = readstatuscount ;
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
+       
+   
+        Order.find(function (err, order) {
+  		// docs is an array
+  		  for(var i = 0; i < order.length; i++){
+            vm.allorders[i] = order[i];
+
+
+        }
+ 
+       var productvalues = JSON.stringify(order);
+       var jsonObjects = JSON.parse(productvalues);
+
        var orderid = req.query.order_id;
          //   console.log(orderid);
-        
-
-
        Orderitem.findOne({orderid : req.query.order_id}, function (err, orderitem) {
  
        var productvalue = JSON.stringify(orderitem);
@@ -271,23 +900,1257 @@ module.exports = function(app, passport) {
 
        // console.log(jsonObject.productname);
    
-      res.render('list-orderitem.ejs', {data: jsonObject, user : req.user , orderid : req.query.order_id});
+      res.render('list-orderitem.ejs', {data: jsonObject, datas: jsonObjects, loadconsultdata : jsonObjectconsult , user : req.user , orderid : req.query.order_id , totalreadconsultstatus : finalstatusconsult,});
 
       });
 
 
+         });
+
          }); 
+
+     });
 		
 	app.get('/res-herbal', function(req, res) {
 		res.render('res-herbal.ejs', {
 		});
 	});
 
-	app.get('/res-herbals', isLoggedIn, function(req, res) {
-		res.render('res-herbals.ejs', {
-			user : req.user
-		});
+	app.get('/delete-consult',isLoggedIn, function(req, res) {
+	   var Consult       = require('../app/models/consults');
+       Consult.remove({_id : req.query.consultid}, function (err, consults) {
+         console.log(consults);    
+      });
+   return res.redirect('consult');
+
 	});
+
+	app.post('/symptom_insert',isLoggedIn, function(req, res) {
+	   var Symptom       = require('../app/models/symptoms');
+	   var User       = require('../app/models/user');
+
+
+	   var userid =  req.body.userid;
+	   console.log(userid);
+
+	   var sets = {    
+		              userid : req.body.userid,
+		              temperatures:req.body.temperatures,
+		              // stoolcolor:req.body.stoolcolor,
+		               sleep : req.body.sleep,
+		               exercise :req.body.exercise,
+		               general_energy_level : req.body.general_energy_level,
+		               energy_level_after_eating : req.body.energy_level_after_eating,
+		               Appetite : req.body.Appetite,
+		               Crave_Taste : req.body.Crave_Taste,
+		               Avoid_Taste :req.body.Avoid_Taste,
+		               Digestion :req.body.Digestion,
+		               Stools :req.body.Stools,
+		              What_color_are_your_stool :req.body.What_color_are_your_stool,
+		               Number_of_daily_bowel_movements :req.body.Number_of_daily_bowel_movements,
+		               Urine :req.body.Urine,
+		                What_color_is_your_urine :req.body.What_color_is_your_urine,
+		                How_often_do_you_urinate_in_a_day :req.body.How_often_do_you_urinate_in_a_day,
+		               ReproductionMen :req.body.ReproductionMen,
+		               Have_a_genital_discharge_What_color :req.body.Have_a_genital_discharge_What_color,
+		               How_often_do_you_engage_in_sex :req.body.How_often_do_you_engage_in_sex,
+		                ReproductionWomen :req.body.ReproductionWomen,
+		                Clots :req.body.Clots,
+		                How_long_is_your_menstrual_cycle_days:req.body.How_long_is_your_menstrual_cycle_days,
+		                Is_it_regular:req.body.Is_it_regular,
+		                How_long_is_your_menstrual_flow:req.body.How_long_is_your_menstrual_flow,
+		                What_color_is_your_menstrual_flow:req.body.What_color_is_your_menstrual_flow,
+		                Do_You_use_birth_control_pills_How_long:req.body.Do_You_use_birth_control_pills_How_long,
+		                How_many_pregnancies_have_you_had:req.body.How_many_pregnancies_have_you_had,
+		                How_many_children_have_you_borne:req.body.How_many_children_have_you_borne,
+		                How_many_miscarriages:req.body.How_many_miscarriages,
+		                How_many_abortions:req.body.How_many_abortions,
+		                Respiration:req.body.Respiration,
+		                cough:req.body.cough,
+		                Pain:req.body.Pain,
+		                Headaches:req.body.Headaches,
+		                Eyes:req.body.Eyes,
+		                noise_in_ears:req.body.noise_in_ears,
+		                Ears:req.body.Ears,
+		                Mouth:req.body.Mouth,
+		                Teeth:req.body.Teeth,
+		                Throat:req.body.Throat,
+		                Nose:req.body.Nose,
+		                Muscles:req.body.Muscles,
+		                Muscle_weakness_Where:req.body.Muscle_weakness_Where,
+		                Muscle_tension_Where:req.body.Muscle_tension_Where,
+		                Emotional_Mental_Thinking:req.body.Emotional_Mental_Thinking,
+		                emotions_predominant:req.body.emotions_predominant,
+		                Miscellaneous:req.body.Miscellaneous,
+		                feeling_of_heaviness:req.body.feeling_of_heaviness
+
+		        };
+
+
+				var symptoms = new Symptom(sets);
+				symptoms.save(function(error, datas){
+			    if(error){
+			        res.json(error);
+			    }
+			    else{
+			    	console.log(datas);
+
+			    	//res.json(datas);
+				    var _id = req.body.userid;
+	               
+	                var set = {consult_status:"1"};
+
+			       User.update(
+		            { _id: _id },
+		            { $set: set },
+		            function (err, doc) {
+		              
+		                 console.log(doc);
+		            });
+
+
+			     }
+
+
+			    });     
+
+       
+		return res.redirect('consult-onlines');
+     
+	});
+
+
+  app.post('/reply-consult-insert',isLoggedIn, function(req, res) {
+     var Consult       = require('../app/models/consults');
+     var Consultreplys       = require('../app/models/consultreply');
+     var dates=  new Date();
+     var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
+
+     var base64 = require('base-64');
+
+     var consultid =  req.body.consult_id;
+     console.log(consultid);
+
+     var set = {
+             product_id: req.body.product_id,
+             consult_id: req.body.consult_id,
+             consult_status: "Answered",
+             comment: base64.encode(req.body.comment),
+            datetime: strDate
+          };
+
+
+        var consultreply = new Consultreplys(set);
+        consultreply.save(function(error, datas){
+          if(error){
+              res.json(error);
+          }
+          else{
+          //  console.log(datas);
+
+            //res.json(datas);
+            var _id = req.body.consult_id;
+                 
+            var setss = {consult_status:"Answered",view_consult_status: "1"};
+
+             Consult.update(
+                { _id: req.body.consult_id },
+                { $set: setss },
+                function (err, doc) {
+                  
+                     console.log(doc);
+                });
+
+
+           }
+
+
+          });     
+
+       
+    return res.redirect('review-consult');
+     
+  });
+
+	app.get('/symptom-user', isLoggedIn, function(req, res) {
+      
+		var Symptom       = require('../app/models/symptoms');
+    var Consult       = require('../app/models/consults');
+    var readstatuscount = 0; 
+    var answerstatuscount = 0;  
+    var totalreadconsultstatus = 0 ;
+    var i = 0;
+		var vm = this;
+        vm.symptoms = null;
+        vm.allsymptoms = [];
+        vm.consult = null;
+        vm.allconsults = [];
+
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+      //console.log(readstatuscount);       
+      var finalstatusconsult = readstatuscount ;
+      //console.log(finalstatusconsult);
+
+      Symptom.find(function (err, symptoms) {
+  		// docs is an array
+  		  for(var i = 0; i < symptoms.length; i++){
+            vm.allsymptoms[i] = symptoms[i];
+       }
+       var productvalue = JSON.stringify(symptoms);
+        var jsonObject = JSON.parse(productvalue);
+
+       console.log(jsonObject);
+
+   
+      res.render('symptom-user.ejs', {data: jsonObject, user : req.user , totalreadconsultstatus : finalstatusconsult,});
+
+      });
+
+
+	});
+
+  });       
+
+	app.get('/symptom-admin', isLoggedIn, function(req, res) {
+		var Symptom       = require('../app/models/symptoms');
+		var User       = require('../app/models/user');
+
+         var i = 0;
+		var vm = this;
+		vm.users = null;
+        vm.allusers = [];
+        vm.symptoms = null;
+        vm.allsymptoms = [];
+
+
+		User.find(function (err, users) {
+  		// docs is an array
+  		  for(var i = 0; i < users.length; i++){
+            vm.allusers[i] = users[i];
+       }
+       var productvalueusers = JSON.stringify(users);
+        var jsonObjectusers = JSON.parse(productvalueusers);
+
+       console.log(jsonObjectusers);
+
+      Symptom.find(function (err, symptoms) {
+  		// docs is an array
+  		  for(var i = 0; i < symptoms.length; i++){
+            vm.allsymptoms[i] = symptoms[i];
+       }
+       var productvalue = JSON.stringify(symptoms);
+        var jsonObject = JSON.parse(productvalue);
+
+      // console.log(jsonObject);
+
+   
+      res.render('symptom-admin.ejs', {data: jsonObject, datauser: jsonObjectusers, user : req.user});
+
+      });
+
+
+	});
+
+	 });	
+
+  app.get('/symptom-all', isLoggedIn, function(req, res) {
+    var Symptom       = require('../app/models/symptoms');
+    var User       = require('../app/models/user');
+       var i = 0;
+   var vm = this;
+        vm.order = null;
+        vm.allorders = [];
+       
+        vm.users = null;
+        vm.allusers = [];
+        vm.symptoms = null;
+        vm.allsymptoms = [];
+         var a = 0;
+        vm.consult = null;
+        vm.allconsults = [];
+
+
+      var Consult       = require('../app/models/consults');
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var a = 0; a < consult.length; a++){
+              vm.allconsults[a] = consult[a];
+          }
+   
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
+   
+
+    
+
+    User.find(function (err, users) {
+      // docs is an array
+        for(var i = 0; i < users.length; i++){
+            vm.allusers[i] = users[i];
+       }
+       var productvalueusers = JSON.stringify(users);
+        var jsonObjectusers = JSON.parse(productvalueusers);
+
+       console.log(jsonObjectusers);
+
+      Symptom.find(function (err, symptoms) {
+      // docs is an array
+        for(var i = 0; i < symptoms.length; i++){
+            vm.allsymptoms[i] = symptoms[i];
+       }
+       var productvalue = JSON.stringify(symptoms);
+        var jsonObject = JSON.parse(productvalue);
+
+      // console.log(jsonObject);
+
+   
+      res.render('symptom-all.ejs', {data: jsonObject, datauser: jsonObjectusers, loadconsultdata: jsonObjectconsult, user : req.user});
+
+      });
+
+
+  });
+
+   });  
+
+   });       
+
+	app.get('/symptom-detail', isLoggedIn, function(req, res) {
+		var Symptom       = require('../app/models/symptoms');
+		var User       = require('../app/models/user');
+
+         var i = 0;
+		var vm = this;
+		vm.users = null;
+        vm.allusers = [];
+        vm.symptoms = null;
+        vm.allsymptoms = [];
+          var a = 0;
+        vm.consult = null;
+        vm.allconsults = [];
+
+
+      var Consult       = require('../app/models/consults');
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var a = 0; a < consult.length; a++){
+              vm.allconsults[a] = consult[a];
+          }
+   
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
+   
+
+
+		User.find(function (err, users) {
+  		// docs is an array
+  		  for(var i = 0; i < users.length; i++){
+            vm.allusers[i] = users[i];
+       }
+       var productvalueusers = JSON.stringify(users);
+        var jsonObjectusers = JSON.parse(productvalueusers);
+
+       console.log(jsonObjectusers);
+
+      Symptom.find(function (err, symptoms) {
+  		// docs is an array
+  		  for(var i = 0; i < symptoms.length; i++){
+            vm.allsymptoms[i] = symptoms[i];
+       }
+       var productvalue = JSON.stringify(symptoms);
+        var jsonObject = JSON.parse(productvalue);
+
+      // console.log(jsonObject);
+
+   
+      res.render('symptom-detail.ejs', {data: jsonObject, datauser: jsonObjectusers, loadconsultdata:jsonObjectconsult , user : req.user});
+
+      });
+
+
+	});
+
+	 });
+
+     });
+
+	app.get('/product-list', isLoggedIn, function(req, res) {
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+
+         var i = 0;
+		var vm = this;
+		vm.users = null;
+        vm.allusers = [];
+        vm.products = null;
+        vm.allproducts = [];
+
+
+		User.find(function (err, users) {
+  		// docs is an array
+  		  for(var i = 0; i < users.length; i++){
+            vm.allusers[i] = users[i];
+       }
+       var productvalueusers = JSON.stringify(users);
+        var jsonObjectusers = JSON.parse(productvalueusers);
+
+       console.log(jsonObjectusers);
+
+      Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+
+      // console.log(jsonObject);
+
+   
+      res.render('product-list.ejs', {data: jsonObject, datauser: jsonObjectusers, user : req.user});
+
+      });
+
+
+	});
+
+ });
+
+	app.get('/edit-product', isLoggedIn, function(req, res) {
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+
+         var i = 0;
+		var vm = this;
+		vm.users = null;
+        vm.allusers = [];
+        vm.products = null;
+        vm.allproducts = [];
+
+        var productid = req.query.id;
+
+
+		User.find(function (err, users) {
+  		// docs is an array
+  		  for(var i = 0; i < users.length; i++){
+            vm.allusers[i] = users[i];
+       }
+       var productvalueusers = JSON.stringify(users);
+        var jsonObjectusers = JSON.parse(productvalueusers);
+
+      // console.log(jsonObjectusers);
+
+      Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+
+      // console.log(jsonObject);
+
+   
+      res.render('edit-product.ejs', {data: jsonObject, datauser: jsonObjectusers, user : req.user, productid : req.query.id});
+
+      });
+
+
+	});
+
+	 });
+
+
+   
+
+	app.get('/deleteproduct',isLoggedIn, function(req, res) {
+	   var Product       = require('../app/models/products');
+       Product.remove({_id : req.query.id}, function (err, products) {
+         console.log(products);    
+		return res.redirect('product-list');
+      });
+	});
+
+  app.post('/notification-query-update', isLoggedIn, function(req, res) {
+    var Consultreplys = require('../app/models/consultreply');
+    var Consult       = require('../app/models/consults');
+    var base64 = require('base-64');
+    var set = {query : base64.encode(req.body.query) };
+    var _id = req.body.consultreply_id;
+    console.log(_id);
+    Consultreplys.update(
+         { _id: _id },
+         { $set: set },
+         function (err, docs) {
+                var set = {read_status: "1"};
+
+                var _id= req.body.current_id;
+
+                Consult.update(
+                            { _id: _id },
+                            { $set: set },
+                            function (err, doc) {
+
+                              console.log(doc);
+
+                            });
+
+                           console.log(docs);
+
+      return res.redirect('list-consult-reply?id='+_id);
+                       
+
+            });
+
+
+      });
+
+	app.post('/product-insert', isLoggedIn, function(req, res) {
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var dates=  new Date();
+        var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
+
+        var set = {
+	          productname: req.body.productname,
+	          productname_chineese:req.body.productname_chineese,
+	          productprice: req.body.productprice,
+	          productdescr: req.body.productdescr,
+	          productfulldescr: req.body.productfulldescr,
+	          productcategory: req.body.productcategory,
+	          prosize:req.body.prosize,
+	          addInfo:req.body.addInfo,
+	          producttype: req.body.producttype,
+	          datetime: dates
+       
+        };
+
+          var products = new Product(set);
+          products.save(set,
+            function (err, doc) {
+            	console.log(doc);
+            });
+        
+      return res.redirect('product-list');
+
+      });
+
+	app.get('/product', isLoggedIn, function(req, res) {
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+
+        res.render('product.ejs', {
+			user : req.user 
+		 });
+
+      });
+
+
+	app.get('/add-symptoms', isLoggedIn, function(req, res) {
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Symptom       = require('../app/models/symptoms');
+        var i = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+        
+        Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+
+        //console.log(jsonObject);
+     
+      res.render('add-symptoms.ejs', {
+			user : req.user , data: jsonObject
+		});
+
+      });
+
+     });   
+
+	app.get('/deletesymptom',isLoggedIn, function(req, res) {
+	  var Addsymptoms       = require('../app/models/addsymptom');
+	  var Addsymptomsfemales       = require('../app/models/addsymptomfemale');  
+       Addsymptoms.remove({_id : req.query.id}, function (err, addsymptoms) {
+         console.log(addsymptoms);    
+      });
+        Addsymptomsfemales.remove({_id : req.query.id}, function (err, addsymptomsfemales) {
+         console.log(addsymptomsfemales);   		
+      });
+        return res.redirect('manage-symptoms');
+	});
+
+	app.get('/edit-symptommale', isLoggedIn, function(req, res) {
+		
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Symptom       = require('../app/models/symptoms');
+		var Addsymptoms       = require('../app/models/addsymptom');
+		var Addsymptomsfemales       = require('../app/models/addsymptomfemale');   
+        var i = 0;
+        var j = 0;
+        var k = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+        vm.addsymptom = null;
+        vm.alladdsymptom = [];
+        vm.addsymptomfemale = null;
+        vm.alladdsymptomfemale = [];
+        var _id = req.query.id;
+        Addsymptoms.find({_id : req.query.id},function (err, addsymptom) {
+  		// docs is an array
+  		  for(var j = 0; j < addsymptom.length; j++){
+            vm.alladdsymptom[j] = addsymptom[j];
+       }
+       var productvalueaddsymptom = JSON.stringify(addsymptom);
+        var jsonObjectaddsymptom = JSON.parse(productvalueaddsymptom);
+
+        //console.log(jsonObject);
+
+        Addsymptomsfemales.find({_id : req.query.id}, function (err, addsymptomfemale) {
+  		// docs is an array
+  		  for(var k = 0; k < addsymptomfemale.length; k++){
+            vm.alladdsymptomfemale[k] = addsymptomfemale[k];
+       }
+       var productvalueaddsymptomfemale = JSON.stringify(addsymptomfemale);
+        var jsonObjectaddsymptomfemale = JSON.parse(productvalueaddsymptomfemale);
+
+        Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+     
+      res.render('edit-symptommale.ejs', {
+			user : req.user , data: jsonObject , dataaddsymptom : jsonObjectaddsymptom , dataaddsymptomfemale :jsonObjectaddsymptomfemale , symptomid : req.query.id
+		});
+
+      });
+
+     });   
+   
+    });
+
+  });
+
+	app.get('/edit-symptomfemale', isLoggedIn, function(req, res) {
+		
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Symptom       = require('../app/models/symptoms');
+		var Addsymptoms       = require('../app/models/addsymptom');
+		var Addsymptomsfemales       = require('../app/models/addsymptomfemale');   
+        var i = 0;
+        var j = 0;
+        var k = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+        vm.addsymptom = null;
+        vm.alladdsymptom = [];
+        vm.addsymptomfemale = null;
+        vm.alladdsymptomfemale = [];
+        var _id = req.query.id;
+        Addsymptoms.find({_id : req.query.id},function (err, addsymptom) {
+  		// docs is an array
+  		  for(var j = 0; j < addsymptom.length; j++){
+            vm.alladdsymptom[j] = addsymptom[j];
+       }
+       var productvalueaddsymptom = JSON.stringify(addsymptom);
+        var jsonObjectaddsymptom = JSON.parse(productvalueaddsymptom);
+
+        //console.log(jsonObject);
+
+        Addsymptomsfemales.find({_id : req.query.id}, function (err, addsymptomfemale) {
+  		// docs is an array
+  		  for(var k = 0; k < addsymptomfemale.length; k++){
+            vm.alladdsymptomfemale[k] = addsymptomfemale[k];
+       }
+       var productvalueaddsymptomfemale = JSON.stringify(addsymptomfemale);
+        var jsonObjectaddsymptomfemale = JSON.parse(productvalueaddsymptomfemale);
+
+        Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+     
+      res.render('edit-symptomfemale.ejs', {
+			user : req.user , data: jsonObject , dataaddsymptom : jsonObjectaddsymptom , dataaddsymptomfemale :jsonObjectaddsymptomfemale , symptomid : req.query.id
+		});
+
+      });
+
+     });   
+   
+    });
+
+  });
+
+  app.get('/manage-symptoms', isLoggedIn, function(req, res) {
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Symptom       = require('../app/models/symptoms');
+		var Addsymptoms       = require('../app/models/addsymptom');
+		var Addsymptomsfemales       = require('../app/models/addsymptomfemale');   
+        var i = 0;
+        var j = 0;
+        var k = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+        vm.addsymptom = null;
+        vm.alladdsymptom = [];
+        vm.addsymptomfemale = null;
+        vm.alladdsymptomfemale = [];
+        
+        Addsymptoms.find(function (err, addsymptom) {
+  		// docs is an array
+  		  for(var j = 0; j < addsymptom.length; j++){
+            vm.alladdsymptom[j] = addsymptom[j];
+       }
+       var productvalueaddsymptom = JSON.stringify(addsymptom);
+        var jsonObjectaddsymptom = JSON.parse(productvalueaddsymptom);
+
+        //console.log(jsonObject);
+
+        Addsymptomsfemales.find(function (err, addsymptomfemale) {
+  		// docs is an array
+  		  for(var k = 0; k < addsymptomfemale.length; k++){
+            vm.alladdsymptomfemale[k] = addsymptomfemale[k];
+       }
+       var productvalueaddsymptomfemale = JSON.stringify(addsymptomfemale);
+        var jsonObjectaddsymptomfemale = JSON.parse(productvalueaddsymptomfemale);
+
+        Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+     
+      res.render('manage-symptoms.ejs', {
+			user : req.user , data: jsonObject , dataaddsymptom : jsonObjectaddsymptom , dataaddsymptomfemale :jsonObjectaddsymptomfemale
+		});
+
+      });
+
+     });   
+   
+    });
+
+  });     
+
+	app.post('/symptoms-insert', isLoggedIn, function(req, res) {
+		//console.log(res);
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Addsymptoms       = require('../app/models/addsymptom');
+		var Addsymptomsfemales       = require('../app/models/addsymptomfemale');   
+		var i = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+        
+        Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+       var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+
+        if (req.body.gender == 'male'){
+
+        	var set = {
+             gender : req.body.gender,
+             bodypartname : req.body.bodypartname,
+             affectedareaname : req.body.affectedareaname,
+             symptomname :req.body.symptomname,
+             symptomdescription :req.body.symptomdescription,
+             medincinename : req.body.medincinename
+            
+            };
+
+           var addsymptom = new Addsymptoms(set);
+           addsymptom.save(set,
+            function (err, doc) {
+            	//console.log(doc);
+            });
+
+        }else{
+
+        	var set = {
+             gender : req.body.gender,
+             bodypartfemale : req.body.bodypartfemale,
+             affectedareafemale : req.body.affectedareafemale,
+             symptomfemale :req.body.symptomfemale,
+             symptomdescriptionfemale :req.body.symptomdescriptionfemale,
+             medincinenamefemale : req.body.medincinenamefemale
+            
+            };
+
+           var addsymptomfemale = new Addsymptomsfemales(set);
+           addsymptomfemale.save(set,
+            function (err, doc) {
+            	//console.log(doc);
+            });
+
+        }
+
+        
+        
+     return res.redirect('add-symptoms');
+
+      });
+
+   });   
+
+
+	app.post('/symptoms-update', isLoggedIn, function(req, res) {
+		//console.log(res);
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Addsymptoms       = require('../app/models/addsymptom');
+		var Addsymptomsfemales       = require('../app/models/addsymptomfemale');   
+   
+        if (req.body.gender == 'male'){
+
+        	var _id = req.body.symptomid;
+
+        	//console.log(_id);
+
+        	var set = {
+             gender : req.body.gender,
+             bodypartname : req.body.bodypartname,
+             affectedareaname : req.body.affectedareaname,
+             symptomname :req.body.symptomname,
+             symptomdescription :req.body.symptomdescription,
+             medincinename : req.body.medincinename
+            
+            };
+				Addsymptoms.update(
+		            { _id: _id },
+		            { $set: set},
+
+		            function (err, docs) {
+		            //	console.log(err);
+		              
+		               //  console.log(docs);
+		            });
+         }else{
+
+         	console.log("female");
+
+         	var _id = req.body.symptomid;
+
+        	var set = {
+             gender : req.body.gender,
+             bodypartfemale : req.body.bodypartfemale,
+             affectedareafemale : req.body.affectedareafemale,
+             symptomfemale :req.body.symptomfemale,
+             symptomdescriptionfemale :req.body.symptomdescriptionfemale,
+             medincinenamefemale : req.body.medincinenamefemale
+            
+            };
+
+                Addsymptomsfemales.update(
+		            { _id: req.body.symptomid},
+		            { $set: set },
+		            function (err, doc) {
+		              
+		                 //console.log(doc);
+		            });
+
+        }
+
+        
+        
+     return res.redirect('manage-symptoms');
+
+      });
+
+	app.post('/symptoms-update', isLoggedIn, function(req, res) {
+		//console.log(res);
+		var Product       = require('../app/models/products');
+		var User       = require('../app/models/user');
+		var Addsymptoms       = require('../app/models/addsymptom');
+		var Addsymptomsfemales       = require('../app/models/addsymptomfemale');   
+		var i = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+        
+        Addsymptoms.find(function (err, addsymptom) {
+  		// docs is an array
+  		  for(var i = 0; i < addsymptom.length; i++){
+            vm.alladdsymptom[i] = addsymptom[i];
+       }
+       var productvalue = JSON.stringify(addsymptom);
+        var jsonObject = JSON.parse(productvalue);
+
+        	//console.log(jsonObject);
+        
+       		//console.log(req.body.gender);
+
+        if (req.body.gender == 'male'){
+
+        	var _id = req.body.symptomid;
+
+        	//console.log(_id);
+
+        	//console.log(req.body.gender);
+
+        	var set = {
+             gender : req.body.gender,
+             bodypartname : req.body.bodypartname,
+             affectedareaname : req.body.affectedareaname,
+             symptomname :req.body.symptomname,
+             symptomdescription :req.body.symptomdescription,
+             medincinename : req.body.medincinename
+            
+            };
+
+            Addsymptoms.findById(_id, function (err, addsymptom){
+				Addsymptoms.update(
+		            { _id: _id },
+		            { $set: set},
+
+		            function (err, docs) {
+		              
+		                // console.log(docs);
+		            });
+            });
+
+         }else{
+
+         	//console.log("female");
+
+         	var _id = req.body.symptomid;
+
+        	var set = {
+             gender : req.body.gender,
+             bodypartfemale : req.body.bodypartfemale,
+             affectedareafemale : req.body.affectedareafemale,
+             symptomfemale :req.body.symptomfemale,
+             symptomdescriptionfemale :req.body.symptomdescriptionfemale,
+             medincinenamefemale : req.body.medincinenamefemale
+            
+            };
+
+            Addsymptomsfemales.findById(_id, function (err, addsymptomfemale){
+
+                Addsymptomsfemales.update(
+		            { _id: req.body.symptomid},
+		            { $set: set },
+		            function (err, doc) {
+		              
+		                // console.log(doc);
+		            });
+           });     
+        }
+
+        
+        
+     return res.redirect('manage-symptoms');
+
+      });
+
+   });   
+
+
+
+	app.post('/updateproduct', isLoggedIn, function(req, res) {
+
+		var Product       = require('../app/models/products');
+		var dates=  new Date();
+        var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
+
+		var _id = req.body._id;
+		console.log(_id);
+		 var i = 0;
+		var vm = this;
+        vm.products = null;
+        vm.allproducts = [];
+		Product.find(function (err, products) {
+  		// docs is an array
+  		  for(var i = 0; i < products.length; i++){
+            vm.allproducts[i] = products[i];
+       }
+        var productvalue = JSON.stringify(products);
+        var jsonObject = JSON.parse(productvalue);
+
+         Product.findById(_id, function (err, product) {
+			        
+			  //      console.log(user._id);
+
+			          Product.update(
+			            { _id: _id },
+			            { $set: { 
+			              productname: req.body.productname,
+				          productname_chineese:req.body.productname_chineese,
+				          productprice: req.body.productprice,
+				          productdescr: req.body.productdescr,
+				          productfulldescr: req.body.productfulldescr,
+				          productcategory: req.body.productcategory,
+				          prosize:req.body.prosize,
+				          addInfo:req.body.addInfo,
+				          producttype: req.body.producttype,
+				          datetime: dates} 
+					     },
+			            function (err, doc) {
+			               console.log(doc);        
+			            });  
+
+			    });
+
+		 return res.redirect('product-list');
+	});
+
+	});	
+
+
+	app.post('/updateorder', isLoggedIn, function(req, res) {
+
+		var i = 0;
+		var vm = this;
+        vm.order = null;
+        vm.allorders = [];
+
+		var Order       = require('../app/models/orders');
+		var _id = req.body.orderid;
+		//console.log(_id);
+
+	    var set = {orderstatus : req.body.o_status};
+
+	    //console.log(set);
+
+	       Order.update(
+	        { _id: _id },
+	        { $set: set },
+	        function (err, doc) {
+	          
+	             console.log(doc);
+	        });
+
+
+        return res.redirect('list-orderitem?order_id=' + req.body.orderid);
+
+      });
+
+	app.get('/deleteorder',isLoggedIn, function(req, res) {
+	   var Order       = require('../app/models/orders');
+       Order.remove({_id : req.query.order_id}, function (err, orders) {
+         console.log(orders);    
+		return res.redirect('manageorder');
+      });
+	});
+
+	app.get('/refund',isLoggedIn, function(req, res) {
+			//	console.log(req.query.order_id);
+		var Order       = require('../app/models/orders');
+		var Orderitem       = require('../app/models/orderitem');
+		var Transactions       = require('../app/models/transaction');
+
+
+	    var i = 0;
+	    var j = 0;
+		var vm = this;
+        vm.order = null;
+        vm.allorders = [];
+        vm.transaction = null;
+        vm.alltransactions = [];
+        Transactions.find(function (err, transaction) {
+  		// docs is an array
+  		  for(var i = 0; i < transaction.length; i++){
+            vm.allorders[i] = transaction[i];
+
+
+        }
+ 
+       var productvaluestransaction = JSON.stringify(transaction);
+       var jsonObjectstransaction = JSON.parse(productvaluestransaction);
+
+        Order.find(function (err, order) {
+  		// docs is an array
+  		  for(var i = 0; i < order.length; i++){
+            vm.allorders[i] = order[i];
+
+
+        }
+ 
+       var productvalues = JSON.stringify(order);
+       var jsonObjects = JSON.parse(productvalues);
+       Orderitem.find({orderid : req.query.order_id}, function (err, orderitem) {
+       var productvalue = JSON.stringify(orderitem);
+       var jsonObject = JSON.parse(productvalue);
+
+        console.log(jsonObject);
+
+       // console.log(jsonObject[0].productname);
+
+   
+      res.render('refund.ejs', {data: jsonObject, datas: jsonObjects, datatransaction: jsonObjectstransaction, user : req.user , orderid : req.query.order_id});
+
+      });
+
+
+     });
+
+	});
+
+    });    
+
+    app.post('/refundreturn',isLoggedIn, function(req, res) {
+				//console.log(res);
+		var Order       = require('../app/models/orders');
+		var Orderitem       = require('../app/models/orderitem');
+		var Transactions       = require('../app/models/transaction');
+		var Refund       = require('../app/models/refunds');
+
+		var orderid = req.body.orderid;
+		var _id = req.body._id;
+		var userid = req.body.userid;
+		var chargeId = req.body.paymentId;
+
+		var stripe = require("stripe")("sk_test_beRNx3hBDckaj2C0eLZYgrqP");
+
+		var token = req.body.stripeToken; 
+		var email = req.body.stripeEmail;
+
+
+		var refund = stripe.refunds.create({
+		  charge: chargeId,
+		}, function(err, refund) {
+		  // asynchronously called
+		  console.log(refund);
+		    var dates=  new Date();
+		      var sets = {
+		      	 refund_id: refund.id,
+		      	 userid : userid,
+		      	 orderid:orderid,
+		      	 amount:refund.amount*0.01,
+		      	 balance_transaction:refund.balance_transaction,
+		      	 chargeId:refund.charge,
+		      	 refundcreate:refund.created,
+		      	 status:refund.status,
+		      };
+		      	var refunds = new Refund(sets);
+		         refunds.save(sets,function (err, docs) {
+		                    var subiidd = sets._id;
+		         Transactions.update(
+		         	{ _id: req.body._id },
+		         	{ $set: {refundId:docs.refund_id,refundstataus:refund.status,} },
+		            function (err, doc) {
+		               console.log(doc);
+		            });   
+		                console.log(docs);
+		            }); 
+		});
+		return res.redirect('managetransaction');
+
+    });    
+
+	app.get('/deletetransaction',isLoggedIn, function(req, res) {
+	var Transactions       = require('../app/models/transaction');
+       Transactions.remove({_id : req.query.transaction_id}, function (err, transaction) {
+         console.log(transaction);    
+		return res.redirect('managetransaction');
+      });
+	});
+
+	app.get('/res-herbals', isLoggedIn, function(req, res) {
+
+     var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('res-herbals.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+	
+	});
+
+
+
+
 
 	app.get('/res-hplc', function(req, res) {
 		res.render('res-hplc.ejs', {
@@ -295,9 +2158,52 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/res-hplcs', isLoggedIn, function(req, res) {
-		res.render('res-hplcs.ejs', {
-			user : req.user
-		});
+     var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('res-hplcs.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
 	});
 
 	app.get('/res-organic', function(req, res) {
@@ -306,9 +2212,52 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/res-organics', isLoggedIn, function(req, res) {
-		res.render('res-organics.ejs', {
-			user : req.user
-		});
+      var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('res-organics.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
 	});
 
 	app.get('/res-philosophy', function(req, res) {
@@ -317,9 +2266,52 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/res-philosophys', isLoggedIn, function(req, res) {
-		res.render('res-philosophys.ejs', {
-			user : req.user
-		});
+   var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('res-philosophys.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
 	});
 
 	app.get('/peo-comprofile', function(req, res) {
@@ -328,9 +2320,27 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/peo-comprofiles', isLoggedIn, function(req, res) {
-		res.render('peo-comprofiles.ejs', {
-			user : req.user
-		});
+    var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+      var Consult       = require('../app/models/consults');
+
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+          }
+   
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('peo-comprofiles.ejs', {loadconsultdata: jsonObject, user : req.user});
+
+      });
+
 	});
 
 	app.get('/peo-fourgps', function(req, res) {
@@ -339,9 +2349,26 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/peo-fourgpss', isLoggedIn, function(req, res) {
-		res.render('peo-fourgpss.ejs', {
-			user : req.user
-		});
+    var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+      var Consult       = require('../app/models/consults');
+
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+          }
+   
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('peo-fourgpss.ejs', {loadconsultdata: jsonObject, user : req.user});
+
+      });
 	});
 
 
@@ -353,9 +2380,53 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/consult-onlines',isLoggedIn, function(req, res) {
-		res.render('consult-onlines.ejs', {
-			user : req.user
-		});
+		var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('consult-onlines.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+    
 	});
 
     app.post('/charge', function(req, res) {
@@ -687,68 +2758,128 @@ module.exports = function(app, passport) {
 	});
 
 
-
+      var fs =  require('fs');
+      var express = require('express');
+      var multer = require('multer');
+      var uploads = multer({ dest: 'public/uploads/consults/'});
 	app.post('/consultonlinedata-insert', function(req, res) {
-	 //    var express = require('express');
-		// var router = express.Router();
-		// var mongoose = require('mongoose');
-		// var multer = require('multer');
-		// var path = require('path');
-  //      	var storage = multer.diskStorage({
-		//  destination: function(req, file, cb) {
-		//  cb(null, 'public/uploads/consults/')
-		//  },
-		//  filename: function(req, file, cb) {
-		//  cb(null, file.originalname);
-		//  }
-		// });
-		 
-		// var upload = multer({
-		//  storage: storage
-		// });
-		// console.log(req.files);
-		// var path = req.files.path;
-  //       var imageName = req.files.originalname; 
-  //       var imagepath = {};
-  //       imagepath['path'] = path;
-  //       imagepath['originalname'] = imageName;
-
-
-		var Consult  = require('../app/models/consults');
-
-		var dates=  new Date();
-        var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
-        var base64 = require('base-64');
-          
-		var setencode = {    
-               user_id : req.body.userid,
+      var User       = require('../app/models/user');
+      var file = 'public/uploads/consults/' + req.files.myimage.originalFilename;
+      console.log(req.files.myimage.path);
+      var dates=  new Date();
+      var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
+      var base64 = require('base-64');
+      fs.rename(req.files.myimage.path, file, function(err) {
+        if (err) {
+          console.log(file);
+          //console.log(err);
+          res.send(500);
+        } else {
+          var imageName = req.files.myimage.originalFilename;
+          var imagepath = {};
+          imagepath['originalname'] = imageName;
+          var setencode = {    
+               user_id : req.user._id,
                problem: base64.encode(req.body.problem),
                problemdetail: base64.encode(req.body.problemdetail),
                problemarea : base64.encode(req.body.problemarea),
                datetime : strDate,
-               view_consult_status: "0"
-              // myimage: imagepath      
-        };	
+               view_consult_status: "0",
+               myimage: imagepath      
+        };  
 
-
-		var consults = new Consult (setencode);
-		consults.save(function(error, dataconsult){
-			    if(error){
-			        res.json(error);
-			    }
-			    else{
-			       // res.json(data);
-			      console.log(dataconsult); 
-			  }
-		});
-
+    // console.log(setencode);
+    var Consult  = require('../app/models/consults');
+    var consults = new Consult(setencode);
+    consults.save(function(error, dataconsult){
+          if(error){
+              res.json(error);
+              //console.log(error); 
+          }
+          else{
+             // res.json(data);
+           // console.log(dataconsult); 
+        }
+    });
+  
+  }
+  
 		return res.redirect('consult-onlines');
 	});
 
+  app.get('/review-consult', function (req, res) {
+   res.sendFile( "public/uploads/consults/" + "/" + "review-consult" );
+})
+
+  });       
+
+
+ //      var fss =  require('fs');
+ //      var multer = require('multer');
+ //      var uploads = multer({ dest: 'public/uploads/consults'});
+ //  app.post('/consultimageupload', uploads.single('myimage'), function(req, res) {
+ //      console.log(req);
+ //      var file = 'public/uploads/consults' + req.files.myimage.originalFilename;
+ //      console.log(req.files.myimage.path);
+ //      fss.rename(req.files.myimage.path, file, function(err) {
+ //        if (err) {
+ //          console.log(err);
+ //          res.send(500);
+ //        } else {
+ //         console.log("Image Uploaded Sucessfully"); 
+ //  }
+ // });
+
+ //  });       
+
 	app.get('/account',isLoggedIn, function(req, res) {
-		res.render('account.ejs',  {
-			user : req.user
-		});
+     var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('account.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+	
 	});
 
 	app.post('/profile-update', isLoggedIn, function(req, res) {
@@ -759,6 +2890,45 @@ module.exports = function(app, passport) {
 
 		var _id = req.body.userid;
 		console.log(_id);
+      var a = 0;
+      var vm = this ;
+        vm.consult = null;
+        vm.allconsults = [];
+        var answerstatuscount = 0;
+        var readstatuscount = 0;
+        var totalreadconsultstatus = 0;
+
+
+      var Consult       = require('../app/models/consults');
+   
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var a = 0; a < consult.length; a++){
+              vm.allconsults[a] = consult[a];
+               if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[a].user_id){
+
+                      var totalreadstatusc = consult[a].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+          }
+          var finalstatusconsult = readstatuscount ;
+   
+         var productvalueconsult = JSON.stringify(consult);
+         var jsonObjectconsult = JSON.parse(productvalueconsult);
+   
 
 		var user_role = req.body.user_role;
 
@@ -782,61 +2952,201 @@ module.exports = function(app, passport) {
 			    });
 
 		res.render('account.ejs', {
-			user : req.user
+			user : req.user , loadconsultdata : jsonObjectconsult, totalreadconsultstatus : finalstatusconsult,
+		});
+	});
+ });      
+
+	app.get('/edit-user', isLoggedIn, function(req, res) {
+
+		var User       = require('../app/models/user');
+		var dates=  new Date();
+        var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
+
+		var userid = req.query.id;
+		//console.log(userid);
+
+		var i = 0;
+		var vm = this;
+        vm.user = null;
+        vm.allusers = [];
+
+		var user_role = req.body.user_role;
+
+		 User.find(function (err, user) {
+  		// docs is an array
+  		  for(var i = 0; i < user.length; i++){
+            vm.allusers[i] = user[i];
+
+
+        }
+ 
+       var uservalue = JSON.stringify(user);
+       var jsonObjectuser = JSON.parse(uservalue);
+
+		res.render('edit-user.ejs', {
+			user : req.user , data :jsonObjectuser , userid : req.query.id ,
 		});
 	});
 
+	});	 
 
-		app.post('/image-upload', isLoggedIn, function(req, res) {
-		  var multer = require('multer');
-		  var storage = multer.diskStorage({
-			 destination: function(req, file, cb) {
-			 cb(null, 'public/uploads/')
-			 },
-			 filename: function(req, file, cb) {
-			 cb(null, file.originalname);
-			 }
-			});
-			 
-		 var upload = multer({
-			 storage: storage
-			});
+	app.post('/updateuser', isLoggedIn, function(req, res) {
 
-		 var User       = require('../app/models/user');
+		var User       = require('../app/models/user');
+		var dates=  new Date();
+        var strDate = (dates.getMonth()+1)+ "-" + dates.getDate() + "-" + dates.getFullYear();
 
-		 var _id = req.body.userid;
-	     console.log(_id);
-	     console.log(req.files);
-         //console.log(req.files.avatar.originalname);
-		 var imageName = req.files.avatar.originalFilename;
-		 
-		 var imagepath = {};
-		 imagepath['originalname'] = imageName;
+		var _id = req.body.userid;
+		console.log(_id);
+		var i = 0;
+		var vm = this;
+		vm.user = null;
+        vm.allusers = [];
 
-		 var set = {img:imagepath};
+	     User.find(function (err, user) {
+  		// docs is an array
+  		  for(var i = 0; i < user.length; i++){
+            vm.allusers[i] = user[i];
 
-         User.findById(_id, function (err, user) {
+
+        }
+ 
+       var uservalue = JSON.stringify(user);
+       var jsonObjectuser = JSON.parse(uservalue);
+
+
+         User.findById({_id : req.body.userid}, function (err, user) {
 			        
-			           User.update(
+			     console.log(user);
+			     console.log(_id);
+			          User.update(
 			            { _id: _id },
-			            { $set: {img:imagepath} 
+			            { $set: {  firstName: req.body.firstName,
+					               lastName: req.body.lastName,
+					               phone :req.body.phone,
+					               user_role : req.body.user_role,
+					               address : req.body.address,
+					               datetime : strDate} 
 					     },
 			            function (err, doc) {
-			               console.log(doc); 
-        
+			               console.log(doc);        
 			            });  
 
-		   res.render('account.ejs', {
-				user : req.user
-			});
+			    });
 
-	    });
-
-		res.render('account.ejs', {
-			user : req.user
+		res.render('admin.ejs', {
+			user : req.user , datauser : jsonObjectuser ,
 		});
 	});
+   
+   });
+
+
+    var fs =  require('fs');
+    var express = require('express');
+    var multer = require('multer');
+    var upload = multer({ dest: 'public/uploads'});
+		app.post('/image-upload', upload.single('avatar'), function(req, res) {
+      var _id = req.user._id;
+     // console.log(_id);
+      var file = 'public/uploads/' + req.files.avatar.originalFilename;
+        var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+    var User       = require('../app/models/user');
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+         //  console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+        //  console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+      fs.rename(req.files.avatar.path, file, function(err) {
+        if (err) {
+          console.log(err);
+          res.send(500);
+        } else {
+     var imageName = req.files.avatar.originalFilename;
+     
+     var imagepath = {};
+     imagepath['originalname'] = imageName;
+
+     var set = {img:imagepath};
+
+         User.findById(_id, function (err, user) {
+              
+                 User.update(
+                  { _id: _id },
+                  { $set: {img:imagepath} 
+               },
+                  function (err, doc) {
+                     console.log(doc); 
+        
+                  });  
+
+      //  res.render('account.ejs', {
+      //   loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,
+      // });
+
+      
+
+
+      });
+
+
+        }
+
+      });
+   
+
+   app.get('/account', function (req, res) {
+   // console.log("logggg");
+   res.sendFile( "public/uploads/" + "/" + "account" );
+});
+
+		// res.render('account.ejs', {
+		// 	loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,
+		// });
+
+          return res.redirect("account");
+
+	});
+
 	
+   });
+
 
 	app.get('/about-worldex', function(req, res) {
 		res.render('about-worldex.ejs', {
@@ -844,10 +3154,106 @@ module.exports = function(app, passport) {
 	});
 
 
+  app.get('/about-worldexs',isLoggedIn, function(req, res) {
+      var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('about-worldexs.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+  
+  });
+
+
 	app.get('/subscription',isLoggedIn, function(req, res) {
-		res.render('subscription.ejs',  {
-			user : req.user
-		});
+      var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('subscription.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+  
+	
 	});
 
 	app.post('/subscribe',isLoggedIn, function(req, res) {
@@ -1026,15 +3432,111 @@ module.exports = function(app, passport) {
 		});
 	});
 
+  app.get('/download-apps',isLoggedIn, function(req, res) {
+    var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('download-apps.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+    
+  });
+
+
 	app.get('/checkout', function(req, res) {
 		res.render('checkout.ejs', {
 		});
 	});
 
 	app.get('/checkouts', function(req, res) {
-		res.render('checkouts.ejs',  {
-			user : req.user
-		});
+	
+     var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('checkouts.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+    
 	});
 
 	app.get('/thankyou', function(req, res) {
@@ -1043,10 +3545,54 @@ module.exports = function(app, passport) {
 	
 	});
 
-	app.get('/paypal_thankyou', function(req, res) {
-		res.render('paypal_thankyou.ejs', {
-			user : req.user
-		});
+	app.get('/paypal_thankyou',isLoggedIn, function(req, res) {
+   var i = 0;
+       var vm = this;
+        vm.consult = null;
+        vm.allconsults = [];
+
+    var Consult       = require('../app/models/consults');
+        var readstatuscount = 0; 
+        var answerstatuscount = 0;  
+        var totalreadconsultstatus = 0 ;
+     
+       Consult.find(function (err, consult) {
+        // docs is an array
+          for(var i = 0; i < consult.length; i++){
+              vm.allconsults[i] = consult[i];
+
+              if(req.user.user_role == 'user'){
+
+                if(req.user._id == consult[i].user_id){
+
+                      var totalreadstatusc = consult[i].read_status;
+
+                      //console.log(totalreadstatusc);
+
+                      if(totalreadstatusc != '1')
+                         {
+                        readstatuscount += 1;
+
+                      
+                         }
+                    }
+
+
+              }
+
+          }
+
+           console.log(readstatuscount);       
+
+          var finalstatusconsult = readstatuscount ;
+          console.log(finalstatusconsult);
+         var productvalue = JSON.stringify(consult);
+         var jsonObject = JSON.parse(productvalue);
+     
+        res.render('paypal_thankyou.ejs', {loadconsultdata: jsonObject, user : req.user ,totalreadconsultstatus : finalstatusconsult,});
+
+      });
+    
 	
 	});
 

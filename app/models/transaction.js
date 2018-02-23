@@ -22,7 +22,9 @@ var transactionSchema = mongoose.Schema({
      sourceFunding              : String,
      sourceLast4                : String,
      sourceName                 : String,
-     datetime                   : String
+     datetime                   : String,
+     refundId                   : String,
+     refundstataus              : String
 
 });
 

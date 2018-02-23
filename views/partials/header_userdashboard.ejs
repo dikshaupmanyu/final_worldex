@@ -558,30 +558,35 @@ background-color: #fff !important;
                          </i>
 
                     </a> -->
-
+                      <% if (user.user_role === 'doctor') { %> 
                     
-                  <!--   <div class="nav-collapse collapse" ng-if = "vm.user.user_role === 'doctor'">
+                    <div class="nav-collapse collapse">
                         <ul class="nav">
                       
                             <li class="dropdown active">
-                                <a class="brand logo-v1" ui-sref="review-consult" style="padding-top:30px;font-size: 15px;color: #999;float: right;margin-left: 0px;background: #fff!important;border-top: solid 2px #fff;">
-                                   <i class="fa fa-bell"> <span class="num" id="totalconsultuser" style="color: #babf10"></span></i>
+                            
+
+                                <a class="brand logo-v1" href="review-consult" style="padding-top:30px;font-size: 15px;color: #999;float: right;margin-left: 0px;background: #fff!important;border-top: solid 2px #fff;">
+                                   <i class="fa fa-bell"> <span class="num" id="totalconsultuser" style="color: #babf10"><%= loadconsultdata.length %></span></i>
 
                               </a>
+                             
                             </li>             
 
                 
                         </ul>
                         
                                                    
-                    </div> -->  
-<!-- 
-                    <div class="nav-collapse collapse" ng-if = "vm.user.user_role === 'user'">
+                    </div>  
+                    <% } %>
+
+                     <% if (user.user_role === 'user') { %>
+                    <div class="nav-collapse collapse">
                         <ul class="nav">
                       
                            <li class="dropdown active">
                                 <a class="brand logo-v1" ui-sref="consult" style="padding-top:30px;font-size: 15px;color: #999;float: right;margin-left: 0px;background: #fff!important;border-top: solid 2px #fff;">
-                                     <i class="fa fa-bell"> <span class="num" id="unread" style="color: #babf10"></span></i>
+                                     <i class="fa fa-bell"> <span class="num" id="unread" style="color: #babf10"><%= totalreadconsultstatus %></span></i>
 
                                 </a>
                             </li>             
@@ -590,7 +595,7 @@ background-color: #fff !important;
                         </ul>
                         
                     </div> 
- -->
+                      <% } %>
                    
                 </div>
             </div>

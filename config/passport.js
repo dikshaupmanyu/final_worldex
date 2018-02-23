@@ -7,6 +7,10 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 // load up the user model
 var User       = require('../app/models/user');
 
+var Addsymptoms       = require('../app/models/addsymptom');
+
+var Addsymptomsfemales       = require('../app/models/addsymptomfemale');
+
 var Product       = require('../app/models/products');
 
 var Order       = require('../app/models/orders');
@@ -18,6 +22,13 @@ var Consult       = require('../app/models/consults');
 var Transactions       = require('../app/models/transaction');
 
 var UserSubscription       = require('../app/models/usersubscription');
+
+var Symptom       = require('../app/models/symptoms');
+
+var Refund       = require('../app/models/refunds');
+
+var Consultreplys       = require('../app/models/consultreply');
+
 
 
 

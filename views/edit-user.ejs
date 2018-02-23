@@ -17,7 +17,7 @@
                             </li>
                             
                             
-                 <li ng-class="{active: activeTab === 'account'}" class="active"><a href="account"><i class="fa fa-user"  aria-hidden="true"></i> My Account</a></li>
+                 <li ng-class="{active: activeTab === 'account'}"><a href="account"><i class="fa fa-user"  aria-hidden="true"></i> My Account</a></li>
 
                  
                   <li ng-class="{active: activeTab === 'subscription'}"><a href="subscription" ><i class="fa fa-user"  aria-hidden="true"></i> My Subscription</a></li>
@@ -32,7 +32,7 @@
                     <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
                     <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                     <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
-                     <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}" class="active"><a href="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
                      <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
                      <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
                     <% } %>
@@ -91,50 +91,51 @@
                                 <div class="row-fluid">
                                     <div class="span12">
                                         <div class="span9">
-                                             <form action="/profile-update" method="post" class="form-horizontal" enctype="multipart/form-data">
 
-                                             	 <input type="hidden" name="userid" class="form-control" value="<%= user._id %>" required />
+                                    <% for (var i = 0; i < data.length; i++) if(data[i]._id == userid ){ %>          
+                                             <form action="updateuser" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+                                             	 <input type="hidden" name="userid" class="form-control" value="<%= data[i]._id %>" required />
 
                                                                  <div class="control-group">
                                                                     <label class="control-label">First Name</label>
                                                                     <div class="controls">
-                                                                       <input type="text"  name="firstName" class="form-control" value="<%= user.firstName || ''  %>"  placeholder="First Name" required />
+                                                                       <input type="text"  name="firstName" class="form-control" value="<%= data[i].firstName %>"  placeholder="First Name" required />
                                                                     </div>
                                                                    
                                                                 </div>
                                                                 <div class="control-group">
                                                                     <label class="control-label">Last Name</label>
                                                                     <div class="controls">
-                                                                        <input type="text" id="lastName" name="lastName" class="form-control" value="<%= user.lastName || ''  %>"  placeholder="Last Name" required />
+                                                                        <input type="text" name="lastName" class="form-control" value="<%= data[i].lastName %>"  placeholder="Last Name" required />
                                                                     </div>
                                                                 </div>
                                                                 <div class="control-group">
                                                                     <label class="control-label">Email</label>
                                                                     <div class="controls">
-                                                                         <input type="email" name="username" class="form-control" value="<% if (user.local.email) { %>
-									                                      <%= user.local.email %>
-									                                   <% } %>"   placeholder="Email" required />
+                                                                         <input type="email" name="username" class="form-control" value="<%= data[i].local.email %>"
+                                                                          placeholder="Email" required />
 									                                </div>
                                                                 </div>
-
+<!-- 
                                                                   <div class="control-group">
                                                                     <label class="control-label">Password</label>
                                                                     <div class="controls">
                                                                          <input type="password"  placeholder="Password" name="password" class="form-control" />
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
 
                                                                  <div class="control-group">
                                                                     <label class="control-label">Mobile Number</label>
                                                                     <div class="controls">
-                                                                         <input type="text" name="phone" id="phone" class="form-control" value="<%= user.phone || ''  %>"  placeholder="Mobile Number" required />
+                                                                         <input type="text" name="phone" id="phone" class="form-control" value="<%= data[i].phone %>"  placeholder="Mobile Number" required />
                                                                     </div>
                                                                 </div>
 
                                                                <div class="control-group">
                                                                     <label class="control-label">User Role</label>
                                                                     <div class="controls">
-                                                                        <select name="user_role" class="form-control"  value="<%= user.user_role || '' %>">
+                                                                        <select name="user_role" class="form-control"  value="<%= data[i].user_role %>">
                                                                         <option>Select User Role </option>
                                                                           <option value="admin">Admin</option>
 	                                                                      <option value="doctor" >Doctor</option>
@@ -148,39 +149,25 @@
                                                                 <div class="control-group">
                                                                     <label class="control-label">Address</label>
                                                                     <div class="controls">
-                                                                    <textarea id="address" name="address" class="form-control" rows="3" required="required"><%= user.address || ''  %></textarea>
+                                                                    <textarea id="address" name="address" class="form-control" rows="3" required="required"><%= data[i].address %></textarea>
                                                                     </div>
                                                                 </div>
-
-                                                           <!--       <div class="control-group" ng-if= "vm.user.user_role === 'health-provider' ">
-                                                                    <label class="control-label">License Image</label>
-                                                                    <div class="controls">
-                                                                   <img ng-src="/uploads/license/{{vm.user.licenseimg.originalname}}" class="img-responsive" id="originalname" name="originalname" ng-model="vm.user.licenseimg.originalname" style="height: 150px;width: 300px;">
-                                                                   <input type="file" name="avatar"> 
-                                                                    <input type="text" id="_id" name="_id" class="m-wrap large" ng-model="vm.user._id"  style="display: none;" />
-
-                                                                     <input type="text" id="user_role" name="user_role" class="m-wrap large" value="health-provider"  style="display: none;" />
-
-                                                                    </div>
-                                                                </div> -->
-
-
 
                                                              <div class="row-fluid">
                                                              <div class="span4"></div>
                                                              <div class="span3">
-                                                             <button style="display: block;margin: 0 auto;" class="btn theme-btn"> <i class="fa fa-check"></i> Update Your Info</button>
+                                                             <button type="submit" style="display: block;margin: 0 auto;" class="btn theme-btn"> <i class="fa fa-check"></i> Update Your Info
+                                                             </button>
                                                              </div>
                                                              <div class="span3">
-                                                             <a ui-sref="account"><button style="text-decoration: none;outline: 0 none;" class="btn theme-btn"><i class="fa fa-arrow"></i> Cancel</button></a>
+                                                             <a href="account"><button style="text-decoration: none;outline: 0 none;" class="btn theme-btn"><i class="fa fa-arrow"></i> Cancel</button></a>
                                                                 </div>
                                                               <div class="span2"></div>  
                                                                 </div>
-                                                                
            
                             </form>
 
-
+                            <% } %>
                                         </div>
                                         <div class="span3">
                                              
@@ -189,60 +176,19 @@
                                    
                                             <div class="control-group">
                                           
-                                                <img id="blah" src="#" >
-
-                                                  <img src="/uploads/<%= user.img.originalname %>" name="originalname" class="img-responsive finalimageeee">
-
+                                                <img src="/uploads/<%= user.img.originalname %>" name="originalname" class="img-responsive">
+                                                 <input type="text" name="originalname" value="<%= user.img.originalname %>">
                                                </div>
 
 
-                                             <input id="imgInp" type="file"  name="avatar" required="required" onchange="previewFile()">
-                                              <input type="hidden" name="userid" class="m-wrap large" value="<%= user._id || ''  %>"  />
+                                             <input type="file"  name="avatar" required="required" onchange="previewFile()">
+                                              <input type="text" name="userid" class="m-wrap large" value="<%= user._id || ''  %>"  />
 
                                          <!-- <img src="" alt="Image preview...">-->
 
-
-
-										 <input class="btn theme-btn" type="submit"  value="Upload Image">
+										 <input class="btn theme-btn" type="submit"  value="Upload Image" ng-click="vm.imgupload();">
                                          </form>
-                                  
-                                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<!-- <form id="form1" runat="server">
-  <input type='file' id="imgInp" />
-  <img id="blah" src="#" alt="your image" />
-</form> -->       
-<script type="text/javascript">
-    function readURL(input) {
-
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-
-    reader.onload = function(e) {
-
-      $('#blah').attr('src', e.target.result);
-
-      if($('#blah').attr('src', e.target.result)){
-           // alert("not null");
-           $("#blah").show(); 
-            $(".finalimageeee").hide(); 
-        }else{
-          $("#blah").hide(); 
-          $(".finalimageeee").show(); 
-
-        }
-     }
-
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-$("#imgInp").change(function() {
-  readURL(this);
-});
-
-
-
-</script>
+                                         
 
                                          
 

@@ -37,7 +37,8 @@ var orderSchema = mongoose.Schema({
      datetime     : String,
      paymentId :String,
      token : String,
-     PayerID : String
+     PayerID : String,
+     orderstatus : String
 
 
 });

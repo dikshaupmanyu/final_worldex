@@ -11,6 +11,7 @@ var userSchema = mongoose.Schema({
     datetime : String,
     user_role    : String,
     stripeChargeCustomerId : String,
+    consult_status :String,
     customerData : [ 
         {
             id : String,

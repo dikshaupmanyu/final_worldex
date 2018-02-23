@@ -468,11 +468,7 @@
 
     </div>-->
   </div>
-<!--  <script type="text/javascript" src="/intjs/app.js"></script>
- -->
-
     <%- include partials/footer %>
-
 
 
       
@@ -501,19 +497,19 @@
            <div class="control-group">
                         <label class="control-label">Briefly explain your problem</label>
                         <div class="controls">
-                            <input type="text" class="form-control" name="problem"/>
+                            <input type="text" class="form-control" name="problem" id="problem" />
                         </div>
             </div>
             <div class="control-group">
                         <label class="control-label" >Explain your problem in detail</label>
                         <div class="controls">
-                            <textarea class="form-control" rows="2" name="problemdetail" style="border-radius: 5px;"></textarea>
+                            <textarea class="form-control" rows="2" name="problem_detail" id="problem_detail" style="border-radius: 5px;"></textarea>
                         </div>
             </div>  
                  <div class="control-group">
                         <label class="control-label">Select problem area that matches your description</label>
                         <div class="controls">
-                         <select class="form-control" name="problemarea">
+                         <select class="form-control" name="problem_descr" id="problem_descr">
                           <option value="0">Select Problem</option>
                                <option value="General Health">General Health</option>
                                 <option value="Child Health">Child Health</option>
@@ -535,7 +531,7 @@
         <div class="modal-footer"> 
 <!--          <a href="#" class="datas-btn btn btn-primary btn-sm" ><i class="icon-ok"></i> Submit</a> 
  -->
- <button type="submit" class="datas-btn btn btn-primary btn-sm" id="finalconsultsubmit" style="margin:0 auto;display:block;border-radius: 5px;border: 1px solid #babf10;"><i class="icon-ok"></i> Submit</button>
+ <button type="submit" class="datas-btn btn btn-primary btn-sm" style="margin:0 auto;display:block;border-radius: 5px;border: 1px solid #babf10;"><i class="icon-ok"></i> Submit</button>
 
 
              </div>
@@ -547,25 +543,7 @@
   
 </div>
 
- <script type="text/javascript">
-            jQuery(document).ready(function($){
-             // alert("image call");
-                $("#finalconsultsubmit").on("click",function(){
-                    $.ajax({
-                        url: "/consultimageupload",
-                        type: "POST",
-                        data:  data,
-                        success: function(response){
-                              //do action  
-                              console.log(response);
-                        },
-                        error: function(){
-                              // do action
-                        }
-                    });
-                });
-            });
-        </script>
+
 
 <div class="container">
 
@@ -575,7 +553,7 @@
     <div class="modal-dialog modal-lg">
      <div class="modal-content">
       <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
-      <form action="/symptom_insert" method="post" class="form-horizontal" style="height : 100% !important">
+      <form action="/symptom_insert" method="post" class="form-horizontal">
          <div class="flash-message" ng-if="flash">
           <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
          </div>
@@ -585,77 +563,53 @@
       </div>
       <!-- /////////////////////// -->
        <!-- Script for section 1 -->
-
-        <script type="text/javascript">
-
-        function updateTextArea() {
-
-            var allVals = [];
-
-            $('#mydiv :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#temperatures').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv input').click(updateTextArea);
-
-            updateTextArea();
-
-        });
-
-    </script>
-    
-
-      <!-- <script type="text/javascript">
+      <script type="text/javascript">
         $("input[name=answer1]").change(function() {
-          updateAllChecked1();
+  updateAllChecked1();
 
-        });
+});
 
-        $("input[name=addall]").change(function() {
-          if (this.checked) {
-           $("input[name=answer1]").prop('checked', true).change();
-          } else {
-            $("input[name=answer1]").prop('checked', false).change();
-          }
-        });
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+   $("input[name=answer1]").prop('checked', true).change();
+  } else {
+    $("input[name=answer1]").prop('checked', false).change();
+  }
+});
 
-        function updateAllChecked1() {
-        //  alert("hii");
-          $('#temperatures').text('');
-          $("input[name=answer1]").each(function() {
-            if (this.checked) {
-              let old_text = $('#temperatures').text() ? $('#temperatures').text() + ', ' : '';
-              $('#temperatures').text(old_text + $(this).val());
-            //   alert(old_text);
-              
-            }
+function updateAllChecked1() {
+  $('#temperatures').text('');
+  $("input[name=answer1]").each(function() {
+    if (this.checked) {
+      let old_text = $('#temperatures').text() ? $('#temperatures').text() + ', ' : '';
+      $('#temperatures').text(old_text + $(this).val());
+      // alert(old_text);
+      
+    }
 
-          })
-        }
-      </script> -->
+  })
+}
+
+
+
+
+
+
+      </script>
       <!-- End Script for section 1 -->
 <div class="modal-body" style="overflow-y: auto;height: 450px;">
         
-<input type="text" id="userid" name="userid" value="<%= user._id %>"/>
+<input type="hidden" id="userid" name="userid" value="{{vm.user._id}}"/>
 
 
- 
+
+
 
 
              <!-- ////////////////SECTION no 1-->
   <div class="col-md-12 col-sm-12 col-lg-12" >
-
-
     <div class="col-md-6 col-sm-6 col-lg-6">
-    <div class="control-group" id="mydiv">
+    <div class="control-group">
         <label>Temperature - Do you:</label><br>
 
   <input type="checkbox" name="answer1" value="Tend to feel hot/warm">&nbsp;Tend to feel hot/warm<br>
@@ -682,7 +636,7 @@
 
 <div class="col-md-6 col-sm-6 col-lg-6">
     
-      <div class="form controls" id="mydivs"><br>
+      <div class="form controls"><br>
 <input type="checkbox" name="answer1" value="Have deep heat in your body">&nbsp;Have deep heat in your body<br>
 <input type="checkbox" name="answer1" value="Have recurrent fevers">&nbsp;Have recurrent fevers<br>
 <input type="checkbox" name="answer1" value="Have recurrent chills">&nbsp;Have recurrent chills<br>
@@ -691,7 +645,7 @@
 <input type="checkbox" name="answer1" value="Have chilly arms">&nbsp;Have chilly arms<br>
 <input type="checkbox" name="answer1" value="Have chilly legs">&nbsp;Have chilly legs<br>
 <input type="checkbox" name="answer1"  value="Have cold in your lower back">&nbsp;Have cold in your lower back<br>
-<textarea id="temperatures" name="temperatures" style="display: none;"></textarea>
+<textarea id="temperatures" name="temperatures" style="display:none;"></textarea>
 </div>
 
   </div>
@@ -700,36 +654,41 @@
 <!-- ////////////////End SECTION no 1-->
 
 <!-- Script for section 2 -->
-     <script type="text/javascript">
+      <script type="text/javascript">
+        $("input[name=answer2]").change(function() {
+  updateAllChecked2();
+});
 
-        function updateTextArea1() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer2]").prop('checked', true).change();
+  } else {
+    $("input[name=answer2]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
+function updateAllChecked2() {
+  $('#sleep').text('');
+  $("input[name=answer2]").each(function() {
+    if (this.checked) {
+      let old_text = $('#sleep').text() ? $('#sleep').text() + ', ' : '';
+      $('#sleep').text(old_text + $(this).val());
+      
+    }
+  })
+}
 
-            $('#mydiv1 :checked').each(function () {
 
-                allVals.push($(this).val());
 
-            });
 
-            $('#sleep').val(allVals)
 
-        }
 
-        $(function () {
-
-            $('#mydiv1 input').click(updateTextArea1);
-
-            updateTextArea1();
-
-        });
-
-    </script>
+      </script>
       <!-- End Script for section 2 -->
 
 
 <!-- /////////////// Begin Section 2 -->
-<div class="col-md-12 col-sm-12 col-lg-12" align="left" id="mydiv1">
+<div class="col-md-12 col-sm-12 col-lg-12" align="left">
   <div class="col-md-6 col-sm-6 col-lg-6">
     
       <div class="form controls">
@@ -751,7 +710,7 @@
 <input type="checkbox" name="answer2" value="Need to take naps">&nbsp;Need to take naps<br>
 <input type="checkbox" name="answer2" value="Feel wired and tired"">&nbsp;Feel "wired and tired"<br>
 <input type="checkbox" name="answer2" value="Get a second wind at night">&nbsp;Get a "second wind" at night<br>
-<textarea id="sleep" name="sleep" style="display: none;"></textarea>
+<textarea id="sleep" name="sleep" style="display:none;"></textarea>
 </div>
 
   </div>
@@ -759,120 +718,123 @@
 <!-- ////////////End Section 2 -->
 
 <!-- Script for section 3 -->
-       <script type="text/javascript">
+      <script type="text/javascript">
+        $("input[name=answer3]").change(function() {
+  updateAllChecked3();
+});
 
-        function updateTextArea2a() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer3]").prop('checked', true).change();
+  } else {
+    $("input[name=answer3]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv2a :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#exercise').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv2a input').click(updateTextArea2a);
-
-            updateTextArea2a();
-
-        });
-
-    </script>
-<!-- /////////// -->
-  <script type="text/javascript">
-
-        function updateTextArea2b() {
-
-            var allVals = [];
-
-            $('#mydiv2b :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#general_energy_level').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv2b input').click(updateTextArea2b);
-
-            updateTextArea2b();
-
-        });
-
-    </script>
+function updateAllChecked3() {
+  $('#exercise').text('');
+  $("input[name=answer3]").each(function() {
+    if (this.checked) {
+      let old_text = $('#exercise').text() ? $('#exercise').text() + ', ' : '';
+      $('#exercise').text(old_text + $(this).val());
       
+    }
+  })
+}
+</script>
+<!-- /////////// -->
+
+      <script type="text/javascript">
+        $("input[name=answer3a]").change(function() {
+  updateAllChecked3a();
+});
+
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer3a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer3a]").prop('checked', false).change();
+  }
+});
+
+function updateAllChecked3a() {
+  $('#general_energy_level').text('');
+  $("input[name=answer3a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#general_energy_level').text() ? $('#general_energy_level').text() + ', ' : '';
+      $('#general_energy_level').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- /////////////////// -->
 
-  <script type="text/javascript">
 
-        function updateTextArea2c() {
+      <script type="text/javascript">
+        $("input[name=answer3b]").change(function() {
+  updateAllChecked3b();
+});
 
-            var allVals = [];
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer3b]").prop('checked', true).change();
+  } else {
+    $("input[name=answer3b]").prop('checked', false).change();
+  }
+});
 
-            $('#mydiv2c :checked').each(function () {
+function updateAllChecked3b() {
+  $('#energy_level_after_eating').text('');
+  $("input[name=answer3b]").each(function() {
+    if (this.checked) {
+      let old_text = $('#energy_level_after_eating').text() ? $('#energy_level_after_eating').text() + ', ' : '';
+      $('#energy_level_after_eating').text(old_text + $(this).val());
+      
+    }
+  })
+}
+// ////////////////////////////
 
-                allVals.push($(this).val());
 
-            });
 
-            $('#energy_level_after_eating').val(allVals)
 
-        }
 
-        $(function () {
-
-            $('#mydiv2c input').click(updateTextArea2c);
-
-            updateTextArea2c();
-
-        });
-
-    </script>
-   
+      </script>
       <!-- End Script for section 3 -->
 
 <!-- /////////////////Begin Section 3 -->
 <div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
    
-      <div class="form controls" >
+      <div class="form controls">
         <label>Exercise & Energy</label><br>
   <label>How much exercise do you get weekly?</label><br>
   <label>Are your symptoms and signs?</label><br>
-<div id="mydiv2a">
+
 <input type="checkbox"  name="answer3" value="better with exercise">&nbsp;better with exercise<br>
 <input type="checkbox" name="answer3" value="worse with exercise">&nbsp;worse with exercise<br>
 <input type="checkbox" name="answer3" value="the same">&nbsp;the same<br>
 
-<textarea id="exercise" name="exercise" style="display: none;"></textarea><br>
-</div>
-<div id="mydiv2b">
+<textarea id="exercise" name="exercise" style="display:none;"></textarea><br>
+
+
 <label>How is your general energy level?</label><br>
 <input type="checkbox" name="answer3a" value="Sufficient">&nbsp;Sufficient<br>
 <input type="checkbox" name="answer3a" value="Too Much">&nbsp;Too Much<br>
 <input type="checkbox" name="answer3a" value="Too Little">&nbsp;Too Little <br>
 
-<br><textarea id="general_energy_level" name="general_energy_level" style="display: none;"></textarea>
-</div>
+<br><textarea id="general_energy_level" name="general_energy_level" style="display:none;"></textarea>
 
-<div id="mydiv2c">
+
+
 <label>How is your energy level after eating?</label><br>
 <input type="checkbox" name="answer3b" value="Same">&nbsp;Same<br>
 <input type="checkbox" name="answer3b" value="Increased">&nbsp;Increased<br>
 <input type="checkbox" name="answer3b" value="Decreased">&nbsp;Decreased<br><br>
 
-<textarea id="energy_level_after_eating" name="energy_level_after_eating" style="display: none;"></textarea>
-</div>
+<textarea id="energy_level_after_eating" name="energy_level_after_eating" style="display:none;"></textarea>
+
 </div>
 
   </div>
@@ -885,121 +847,136 @@
 
 <!-- script section 4 -->
 <script type="text/javascript">
+        $("input[name=answer4]").change(function() {
+  updateAllChecked4();
+});
 
-        function updateTextArea3a() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer4]").prop('checked', true).change();
+  } else {
+    $("input[name=answer4]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
+function updateAllChecked4() {
+  $('#Appetite').text('');
+  $("input[name=answer4]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Appetite').text() ? $('#Appetite').text() + ', ' : '';
+      $('#Appetite').text(old_text + $(this).val());
+      
+    }
+  })
+}
 
-            $('#mydiv3a :checked').each(function () {
 
-                allVals.push($(this).val());
 
-            });
 
-            $('#Appetite').val(allVals)
 
-        }
 
-        $(function () {
-
-            $('#mydiv3a input').click(updateTextArea3a);
-
-            updateTextArea3a();
-
-        });
-
-    </script>
+      </script>
 
 <!-- end script section 4 -->
 <!-- script section 4 -->
 <script type="text/javascript">
+        $("input[name=answer4a]").change(function() {
+  updateAllChecked4a();
+});
 
-        function updateTextArea3b() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer4a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer4a]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
+function updateAllChecked4a() {
+  $('#Crave_Taste').text('');
+  $("input[name=answer4a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Crave_Taste').text() ? $('#Crave_Taste').text() + ', ' : '';
+      $('#Crave_Taste').text(old_text + $(this).val());
+      
+    }
+  })
+}
 
-            $('#mydiv3b :checked').each(function () {
 
-                allVals.push($(this).val());
 
-            });
 
-            $('#Crave_Taste').val(allVals)
 
-        }
 
-        $(function () {
-
-            $('#mydiv3b input').click(updateTextArea3b);
-
-            updateTextArea3b();
-
-        });
-
-    </script>
+      </script>
 
 <!-- end script section 4 -->
 <!-- script section 4 -->
-
 <script type="text/javascript">
+        $("input[name=answer4b]").change(function() {
+  updateAllChecked4b();
+});
 
-        function updateTextArea3c() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer4b]").prop('checked', true).change();
+  } else {
+    $("input[name=answer4b]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
+function updateAllChecked4b() {
+  $('#Avoid_Taste').text('');
+  $("input[name=answer4b]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Avoid_Taste').text() ? $('#Avoid_Taste').text() + ', ' : '';
+      $('#Avoid_Taste').text(old_text + $(this).val());
+      
+    }
+  })
+}
 
-            $('#mydiv3c :checked').each(function () {
 
-                allVals.push($(this).val());
 
-            });
 
-            $('#Avoid_Taste').val(allVals)
 
-        }
 
-        $(function () {
+      </script>
 
-            $('#mydiv3c input').click(updateTextArea3c);
-
-            updateTextArea3c();
-
-        });
-
-    </script>
 <!-- end script section 4 -->
+
+
+
+
 <!-- ////////////////Begin Section 4 -->
 <div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
   <div class="form controls">
         <label>Appetite - Do you:</label>
-<br>
-<div id="mydiv3a">
+
+  <br>
   <input type="checkbox" name="answer4" value="poor">&nbsp;poor<br>
 <input type="checkbox" name="answer4" value="good">&nbsp;good<br>
 <input type="checkbox" name="answer4" value="excessive">&nbsp;excessive<br>
 <input type="checkbox" name="answer4" value="constant appetite">&nbsp;constant appetite<br><br>
-<textarea id="Appetite" name="Appetite" style="display: none;"></textarea>
-</div>
+<textarea id="Appetite" name="Appetite" style="display:none;"></textarea>
 
-<div id="mydiv3b">
 <label>Crave these tastes</label><br>
 <input type="checkbox" name="answer4a" value="salty">&nbsp;salty<br>
 <input type="checkbox" name="answer4a" value="sour">&nbsp;sour<br>
 <input type="checkbox" name="answer4a" value="bitter">&nbsp;bitter<br>
 <input type="checkbox" name="answer4a" value="sweet">&nbsp;sweet<br>
 <input type="checkbox" name="answer4a" value="spicy">&nbsp;spicy<br>
-<textarea id="Crave_Taste" name="Crave_Taste" style="display: none;"></textarea><br>
-</div>
+<textarea id="Crave_Taste" name="Crave_Taste" style="display:none;"></textarea><br>
 
-<div id="mydiv3c">
+
 <label>Avoid these tastes</label><br>
 <input type="checkbox" name="answer4b" value="salty">&nbsp;salty<br>
 <input type="checkbox" name="answer4b" value="sour">&nbsp;sour<br>
 <input type="checkbox" name="answer4b" value="bitter">&nbsp;bitter<br>
 <input type="checkbox" name="answer4b" value="sweet">&nbsp;sweet<br>
 <input type="checkbox" name="answer4b" value="spicy">&nbsp;spicy<br><br>
-<textarea id="Avoid_Taste" name="Avoid_Taste" style="display: none;"></textarea>
-</div>
+<textarea id="Avoid_Taste" name="Avoid_Taste" style="display:none;"></textarea>
 </div>
 </div>
 </div>
@@ -1008,36 +985,35 @@
 <!-- //Script of section 5 -->
 
 <script type="text/javascript">
+        $("input[name=answer5]").change(function() {
+  updateAllChecked5();
+});
 
-        function updateTextArea4() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer5]").prop('checked', true).change();
+  } else {
+    $("input[name=answer5]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv4 :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Digestion').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv4 input').click(updateTextArea4);
-
-            updateTextArea4();
-
-        });
-
-    </script>
+function updateAllChecked5() {
+  $('#Digestion').text('');
+  $("input[name=answer5]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Digestion').text() ? $('#Digestion').text() + ', ' : '';
+      $('#Digestion').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- End script of section 5 -->
 
 
 
 <!-- ///////////////Begin Section 5 -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mydiv4">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
       <div class="form controls">
         <label>Digestion - Do you:</label><br>
@@ -1062,7 +1038,7 @@
 <input type="checkbox" name="answer5" value="Have belching">&nbsp;Have belching<br>
 <input type="checkbox" name="answer5" value="Have nausea">&nbsp;Have nausea<br>
 <input type="checkbox" name="answer5" value="Have vomiting">&nbsp;Have vomiting<br>
-<textarea id="Digestion" name="Digestion" style="display: none;"></textarea>
+<textarea id="Digestion" name="Digestion" style="display:none;"></textarea>
 </div>
   </div>
 </div>
@@ -1071,30 +1047,29 @@
 <!-- Script for section 6 -->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer6]").change(function() {
+  updateAllChecked6();
+});
 
-        function updateTextArea5() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer6]").prop('checked', true).change();
+  } else {
+    $("input[name=answer6]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv5 :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Stools').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv5 input').click(updateTextArea5);
-
-            updateTextArea5();
-
-        });
-
-    </script>
+function updateAllChecked6() {
+  $('#Stools').text('');
+  $("input[name=answer6]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Stools').text() ? $('#Stools').text() + ', ' : '';
+      $('#Stools').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 6 -->
 <!-- Script for section 6a -->
@@ -1156,7 +1131,7 @@ function updateAllChecked6b() {
 
 
 <!-- //////////////Begin Section 6 -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mydiv5">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
    <div class="form controls">
         <label>Stools - Do you:</label><br>
@@ -1187,8 +1162,14 @@ function updateAllChecked6b() {
   <input type="text" class="form-control" id="Number_of_daily_bowel_movements" name="Number_of_daily_bowel_movements" style="width: 70%;" required>
             </div><br><br>
           
-
+<!-- \\\\\\\\\\\\\\\\ -->
 </div>
+
+
+
+
+
+
 </div>
   </div>
 <div class="col-md-6 col-sm-6 col-lg-6">
@@ -1200,7 +1181,7 @@ function updateAllChecked6b() {
 <input type="checkbox" name="answer6" value="Notice a foul or repugnant odor from your stools">&nbsp;Notice a foul or repugnant odor from your stools<br>
 <input type="checkbox" name="answer6" value="otice a mucus-like substance in or on your stools">&nbsp;Notice a mucus-like substance in or on your stools<br>
 <input type="checkbox" name="answer6" value="Notice coffee grounds in your stools">&nbsp;Notice "coffee grounds" in your stools<br>
-<textarea id="Stools" name="Stools" style="display: none;"></textarea>
+<textarea id="Stools" name="Stools" style="display:none;"></textarea>
 </div>
   </div>
 </div>
@@ -1210,30 +1191,29 @@ function updateAllChecked6b() {
 <!-- Script for section 7 -->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer7]").change(function() {
+  updateAllChecked7();
+});
 
-        function updateTextArea6() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer7]").prop('checked', true).change();
+  } else {
+    $("input[name=answer7]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv6 :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Urine').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv6 input').click(updateTextArea6);
-
-            updateTextArea6();
-
-        });
-
-    </script>
+function updateAllChecked7() {
+  $('#Urine').text('');
+  $("input[name=answer7]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Urine').text() ? $('#Urine').text() + ', ' : '';
+      $('#Urine').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 7 -->
 <!-- Script for section 7a -->
@@ -1297,7 +1277,7 @@ function updateAllChecked7b() {
 
 
 <!-- ///////////Begin Section 7 -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mydiv6">
+<div class="col-md-12 col-sm-12 col-lg-12" >
   <div class="col-md-6 col-sm-6 col-lg-6">
       <div class="form controls">
         <label>Urine - Do You:</label><br>
@@ -1342,7 +1322,7 @@ function updateAllChecked7b() {
 <input type="checkbox" name="answer7" value="Notice blood in your urine">&nbsp;Notice blood in your urine<br>
 <input type="checkbox" name="answer7" value="Have strong-smelling urine">&nbsp;Have strong-smelling urine<br>
 <input type="checkbox" name="answer7" value="Have urinary tract infections">&nbsp;Have urinary tract infections  <br>
-<textarea id="Urine" name="Urine" style="display: none;"></textarea>
+<textarea id="Urine" name="Urine" style="display:none;"></textarea>
 
 
 </div>
@@ -1353,30 +1333,29 @@ function updateAllChecked7b() {
 <!-- Script for section 8 -->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer8]").change(function() {
+  updateAllChecked8();
+});
 
-        function updateTextArea7() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer8]").prop('checked', true).change();
+  } else {
+    $("input[name=answer8]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv7 :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#ReproductionMen').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv7 input').click(updateTextArea7);
-
-            updateTextArea7();
-
-        });
-
-    </script>
+function updateAllChecked8() {
+  $('#ReproductionMen').text('');
+  $("input[name=answer8]").each(function() {
+    if (this.checked) {
+      let old_text = $('#ReproductionMen').text() ? $('#ReproductionMen').text() + ', ' : '';
+      $('#ReproductionMen').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 8 -->
 <!-- Script for section 8a -->
@@ -1435,7 +1414,7 @@ function updateAllChecked8b() {
 <!-- // -->
 <!-- End Script of section 8b -->
 <!-- ///////////Begin Section 8 -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mydiv7">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
     
       <div class="form controls">
@@ -1465,6 +1444,18 @@ function updateAllChecked8b() {
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
   </div>
@@ -1476,7 +1467,7 @@ function updateAllChecked8b() {
 <input type="checkbox" name="answer8" value="Have itching in/on your genitals">&nbsp;Have itching in/on your genitals<br>
 <input type="checkbox" name="answer8" value="Have pain in your genitals">&nbsp;Have pain in your genitals<br>
 <input type="checkbox" name="answer8" value="Have an odor from your genitals?">&nbsp;Have an odor from your genitals?<br>
-<textarea id="ReproductionMen" name="ReproductionMen" style="display: none;"></textarea>
+<textarea id="ReproductionMen" name="ReproductionMen" style="display:none;"></textarea>
 </div>
 </div>
 </div><br>
@@ -1484,30 +1475,29 @@ function updateAllChecked8b() {
 <!-- Script for section 9 -->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer9]").change(function() {
+  updateAllChecked9();
+});
 
-        function updateTextArea8() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer9]").prop('checked', true).change();
+  } else {
+    $("input[name=answer9]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv8 :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#ReproductionWomen').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv8 input').click(updateTextArea8);
-
-            updateTextArea8();
-
-        });
-
-    </script>
+function updateAllChecked9() {
+  $('#ReproductionWomen').text('');
+  $("input[name=answer9]").each(function() {
+    if (this.checked) {
+      let old_text = $('#ReproductionWomen').text() ? $('#ReproductionWomen').text() + ', ' : '';
+      $('#ReproductionWomen').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 9 -->
 <!-- Script for section 9a -->
@@ -1765,52 +1755,50 @@ function updateAllChecked9i() {
 <!-- Script for section 9i -->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer9j]").change(function() {
+  updateAllChecked9j();
+});
 
-        function updateTextArea8clo() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer9j]").prop('checked', true).change();
+  } else {
+    $("input[name=answer9j]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#clo :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Clots').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#clo input').click(updateTextArea8clo);
-
-            updateTextArea8clo();
-
-        });
-
-    </script>
+function updateAllChecked9j() {
+  $('#Clots').text('');
+  $("input[name=answer9j]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Clots').text() ? $('#Clots').text() + ', ' : '';
+      $('#Clots').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 9i -->
 
 
 <!-- //////////Begin Section 9 -->
-<div class="col-md-12 col-sm-12 col-lg-12" >
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-12 col-lg-6">
     <div class="form controls">
         <label>Reproduction - Women</label><br>
-        <div id="mydiv8">
 <input type="checkbox" name="answer9" value="Are you pregnant now or have reason to believe you are">&nbsp;Are you pregnant now or have reason to believe you are<br>
 <input type="checkbox" name="answer9" value="cramps during your menstrual flow">&nbsp;cramps during your menstrual flow<br>
 <input type="checkbox" name="answer9" value="Are the cramps somewhat painful">&nbsp;Are the cramps somewhat painful<br>
 <input type="checkbox" name="answer9" value="Are the cramps very painful">&nbsp;Are the cramps very painful<br>
-<textarea id="ReproductionWomen" name="ReproductionWomen" style="display: none;"></textarea>
-</div>
-<div id="clo">
+<textarea id="ReproductionWomen" name="ReproductionWomen" style="display:none;"></textarea>
+
+
 <label>Are there clots in your menstrual flow</label><br>
 <input type="checkbox" name="answer9j" value="few clots">&nbsp;few clots<br>
 <input type="checkbox" name="answer9j" value="many clots">&nbsp;many clots<br>
-<textarea id="Clots" name="Clots" style="display: none;"></textarea>
-</div>
+<textarea id="Clots" name="Clots" style="display:none;"></textarea>
+
 <!-- ////// -->
  <!-- <div class="col-md-6 col-sm-6 col-lg-6"> -->
    <div class="form controls">
@@ -1917,67 +1905,65 @@ function updateAllChecked9i() {
 <!-- Script for section 10-->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer10]").change(function() {
+  updateAllChecked10();
+});
 
-        function updateTextArea9() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer10]").prop('checked', true).change();
+  } else {
+    $("input[name=answer10]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv9 :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Respiration').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv9 input').click(updateTextArea9);
-
-            updateTextArea9();
-
-        });
-
-    </script>
+function updateAllChecked10() {
+  $('#Respiration').text('');
+  $("input[name=answer10]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Respiration').text() ? $('#Respiration').text() + ', ' : '';
+      $('#Respiration').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 10-->
 
 <!-- Script for section 10a-->
 <!-- // -->
 <script type="text/javascript">
+        $("input[name=answer10a]").change(function() {
+  updateAllChecked10a();
+});
 
-        function updateTextArea9a() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer10a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer10a]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mydiv9a :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#cough').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mydiv9a input').click(updateTextArea9a);
-
-            updateTextArea9a();
-
-        });
-
-    </script>
+function updateAllChecked10a() {
+  $('#cough').text('');
+  $("input[name=answer10a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#cough').text() ? $('#cough').text() + ', ' : '';
+      $('#cough').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- // -->
 <!-- End Script of section 10a-->
 
 
 
 <!-- /////////Begin Section 10 -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mydiv9">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
     <div class="form controls">
       <br>
@@ -1989,6 +1975,9 @@ function updateAllChecked9i() {
 <input type="checkbox" name="answer10" value="Sneezing">&nbsp;Sneezing<br>
 
 <br>
+<label>A cough</label><br>
+<input type="checkbox" name="answer10a" value="dry Cough">&nbsp;dry&nbsp;<input type="checkbox" name="answer10a" value="wet Cough">&nbsp;wet<br>
+<textarea id="cough" name="cough" style="display:none;"></textarea>
 
 </div>
   </div>
@@ -2001,81 +1990,66 @@ function updateAllChecked9i() {
 <input type="checkbox" name="answer10" value="difficulty coughing phlegm up">&nbsp;difficulty coughing phlegm up<br>
 <input type="checkbox" name="answer10" value="Sinus congestion">&nbsp;Sinus congestion<br>
 <input type="checkbox" name="answer10" value="Sinus infections">&nbsp;Sinus infections<br>
-<textarea id="Respiration" name="Respiration" style="display: none;"></textarea>
+<textarea id="Respiration" name="Respiration" style="display:none;"></textarea>
 </div>
   </div>
- 
 </div>
-
-<div class="col-md-12 col-sm-12 col-lg-12" id="mydiv9a">
-  <div class="col-md-6 col-sm-6 col-lg-6">
-<div id="mydiv9a">
-<label>A cough</label><br>
-<input type="checkbox" name="answer10a" value="dry Cough">&nbsp;dry&nbsp;<input type="checkbox" name="answer10a" value="wet Cough">&nbsp;wet<br>
-<textarea id="cough" name="cough" style="display: none;"></textarea>
-</div>
-</div>
-</div>
- 
 <!-- ////////End Section 10 -->
 <script type="text/javascript">
+        $("input[name=answer11]").change(function() {
+  updateAllChecked11();
+});
 
-        function updateTextArea10() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer11]").prop('checked', true).change();
+  } else {
+    $("input[name=answer11]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mypain :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Pain').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mypain input').click(updateTextArea10);
-
-            updateTextArea10();
-
-        });
-
-    </script>
+function updateAllChecked11() {
+  $('#Pain').text('');
+  $("input[name=answer11]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Pain').text() ? $('#Pain').text() + ', ' : '';
+      $('#Pain').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 
 <script type="text/javascript">
+        $("input[name=answer11a]").change(function() {
+  updateAllChecked11a();
+});
 
-        function updateTextArea10a() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer11a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer11a]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#myhead :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Headaches').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#myhead input').click(updateTextArea10a);
-
-            updateTextArea10a();
-
-        });
-
-    </script>
+function updateAllChecked11a() {
+  $('#Headaches').text('');
+  $("input[name=answer11a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Headaches').text() ? $('#Headaches').text() + ', ' : '';
+      $('#Headaches').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 
 <!-- ////////Begin Section 11  -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mypain">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
     <div class="form controls">
       <br>
-
         <label>Pain - Do You Have:</label><br>
 <input type="checkbox" name="answer11" value="Rapid onset">&nbsp;Rapid onset<br>
 <input type="checkbox" name="answer11" value="Gradual onset">&nbsp;Gradual onset<br>
@@ -2083,6 +2057,10 @@ function updateAllChecked9i() {
 <input type="checkbox" name="answer11" value="Shifting location pain">&nbsp;Shifting location pain<br>
 <input type="checkbox" name="answer11" value="Dull pain">&nbsp;Dull pain<br>
 <input type="checkbox" name="answer11" value="Sharp pain">&nbsp;Sharp pain<br>
+<br>
+<label>Headaches</label><br>
+<input type="checkbox" name="answer11a" value="Frontal">&nbsp;Frontal&nbsp;<input type="checkbox" name="answer11a" value="Side">&nbsp;Side<br> 
+<input type="checkbox" name="answer11a" value="Back">&nbsp;Back&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="answer11" value="Behind the eyes">&nbsp;Behind the eyes <br><textarea id="Headaches" name="Headaches" style="display:none;"></textarea>
 </div>
 </div>
 <div class="col-md-6 col-sm-6 col-lg-6">
@@ -2093,101 +2071,41 @@ function updateAllChecked9i() {
 <input type="checkbox" name="answer11" value="Joint pain">&nbsp;Joint pain<br>
 <input type="checkbox" name="answer11" value="Low back pain">&nbsp;Low back pain<br>
 <input type="checkbox" name="answer11" value="Chest pain">&nbsp;Chest pain<br>
-<input type="checkbox" name="answer11" value="Pain under the ribs">&nbsp;Pain under the ribs<br><textarea id="Pain" name="Pain" style="display: none;"></textarea>
+<input type="checkbox" name="answer11" value="Pain under the ribs">&nbsp;Pain under the ribs<br><textarea id="Pain" name="Pain" style="display:none;"></textarea>
 </div>
   </div>
 </div>
-<div class="col-md-12 col-sm-12 col-lg-12" id="myhead">
-<div class="col-md-6 col-sm-6 col-lg-6">
-<label>Headaches</label><br>
-<input type="checkbox" name="answer11a" value="Frontal">&nbsp;Frontal&nbsp;<input type="checkbox" name="answer11a" value="Side">&nbsp;Side<br> 
-<input type="checkbox" name="answer11a" value="Back">&nbsp;Back&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="answer11" value="Behind the eyes">&nbsp;Behind the eyes <br><textarea id="Headaches" name="Headaches" style="display: none;"></textarea>
-</div>
-</div>
 <!-- ////////End Section 11 -->
 <script type="text/javascript">
+        $("input[name=answer12]").change(function() {
+  updateAllChecked12();
+});
 
-        function updateTextArea11() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer12]").prop('checked', true).change();
+  } else {
+    $("input[name=answer12]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#myeye :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Eyes').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#myeye input').click(updateTextArea11);
-
-            updateTextArea11();
-
-        });
-
-    </script>
-
-    <script type="text/javascript">
-
-        function updateTextArea12() {
-
-            var allVals = [];
-
-            $('#mynoise :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#noise_in_ears').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mynoise input').click(updateTextArea12);
-
-            updateTextArea12();
-
-        });
-
-    </script>
-
-    <script type="text/javascript">
-
-        function updateTextArea13() {
-
-            var allVals = [];
-
-            $('#myear :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Ears').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#myear input').click(updateTextArea13);
-
-            updateTextArea13();
-
-        });
-
-    </script>
+function updateAllChecked12() {
+  $('#Eyes').text('');
+  $("input[name=answer12]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Eyes').text() ? $('#Eyes').text() + ', ' : '';
+      $('#Eyes').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 
 <!-- ///////Begin  Section 12 -->
-<div class="col-md-12 col-sm-12 col-lg-12" >
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-12 col-lg-6">
     
-      <div class="form controls" id="myeye">
+      <div class="form controls">
         <br>
         <label>Head to Toes</label><br>
         <label>Eyes - Do you have:</label><br>
@@ -2199,66 +2117,108 @@ function updateAllChecked9i() {
 <input type="checkbox" name="answer12" value="gritty eyes">&nbsp;gritty eyes<br>
 <input type="checkbox" name="answer12" value="poor night vision">&nbsp;poor night vision<br>
 <input type="checkbox" name="answer12" value="See floaters">&nbsp;See floaters<br>
-<textarea id="Eyes" name="Eyes" style="display :none;"></textarea>
+<textarea id="Eyes" name="Eyes" style="display:none;"></textarea>
 </div>
   </div>
 
+  <script type="text/javascript">
+        $("input[name=answer13]").change(function() {
+  updateAllChecked13();
+});
 
-<div class="col-md-6 col-sm-6 col-lg-6">
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer13]").prop('checked', true).change();
+  } else {
+    $("input[name=answer13]").prop('checked', false).change();
+  }
+});
+
+function updateAllChecked13() {
+  $('#Ears').text('');
+  $("input[name=answer13]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Ears').text() ? $('#Ears').text() + ', ' : '';
+      $('#Ears').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
+
+<script type="text/javascript">
+        $("input[name=answer13a]").change(function() {
+  updateAllChecked13a();
+});
+
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer13a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer13a]").prop('checked', false).change();
+  }
+});
+
+function updateAllChecked13a() {
+  $('#noise_in_ears').text('');
+  $("input[name=answer13a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#noise_in_ears').text() ? $('#noise_in_ears').text() + ', ' : '';
+      $('#noise_in_ears').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
+
+
+<div class="col-md-6 col-sm-12 col-lg-6">
     <div class="form controls">
       <br><br>
-      <div id="mynoise">
         <label>Ears - Do you:</label><br>
-
+<input type="checkbox" name="answer13" value="Have difficulty hearing">&nbsp;Have difficulty hearing<br>
 <label>Have noise in your ears</label><br>
 <input type="checkbox" name="answer13a" value="High pitched">
 &nbsp;High-pitched&nbsp;
 <input type="checkbox" name="answer13a" value="Low pitched">&nbsp;Low-pitched <br>
 
-<textarea id="noise_in_ears" name="noise_in_ears" style="display :none;"></textarea>
-</div>
-<div id="myear">
-<input type="checkbox" name="answer13" value="Have difficulty hearing">&nbsp;Have difficulty hearing<br>
+<textarea id="noise_in_ears" name="noise_in_ears" style="display:none;"></textarea>
+
 <input type="checkbox" name="answer13" value="Have ear pain">&nbsp;Have ear pain<br>
 <input type="checkbox" name="answer13" value="Feel pressure in your ears">&nbsp;Feel pressure in your ears<br>
-<input type="checkbox" name="answer13" value="Have discharges from your ears">&nbsp;Have discharges from your ears<br><textarea id="Ears" name="Ears" style="display :none;"></textarea>
+<input type="checkbox" name="answer13" value="Have discharges from your ears">&nbsp;Have discharges from your ears<br><textarea id="Ears" name="Ears" style="display:none;"></textarea>
+
 </div>
 </div>
-</div>
-</div>
+</div><!-- //////End Section 13 -->
+<script type="text/javascript">
+        $("input[name=answer14]").change(function() {
+  updateAllChecked14();
+});
 
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer14]").prop('checked', true).change();
+  } else {
+    $("input[name=answer14]").prop('checked', false).change();
+  }
+});
 
-<!-- //////End Section 13 -->
+function updateAllChecked14() {
+  $('#Mouth').text('');
+  $("input[name=answer14]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Mouth').text() ? $('#Mouth').text() + ', ' : '';
+      $('#Mouth').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 
-
- <script type="text/javascript">
-
-        function updateTextArea14() {
-
-            var allVals = [];
-
-            $('#mymouth :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Mouth').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mymouth input').click(updateTextArea14);
-
-            updateTextArea14();
-
-        });
-
-    </script>
 
 <!-- /////Begin Section 14  -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mymouth">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
     
       <div class="form controls">
@@ -2274,7 +2234,7 @@ function updateAllChecked9i() {
       <div class="form controls">
         <br><br>
 <input type="checkbox" name="answer14" value="Bitter taste in your mouth">&nbsp;Bitter taste in your mouth<br>
-<input type="checkbox" name="answer14" value="Other tastes in your mouth">&nbsp;Other tastes in your mouth<br><textarea id="Mouth" name="Mouth" style="display :none;"></textarea>
+<input type="checkbox" name="answer14" value="Other tastes in your mouth">&nbsp;Other tastes in your mouth<br><textarea id="Mouth" name="Mouth" style="display:none;"></textarea>
 
 
 </div>
@@ -2282,34 +2242,33 @@ function updateAllChecked9i() {
   </div>
 </div>
 <!-- ////End Section 14 -->
- <script type="text/javascript">
+<script type="text/javascript">
+        $("input[name=answer15]").change(function() {
+  updateAllChecked15();
+});
 
-        function updateTextArea15() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer15]").prop('checked', true).change();
+  } else {
+    $("input[name=answer15]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#myteeth :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Teeth').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#myteeth input').click(updateTextArea15);
-
-            updateTextArea15();
-
-        });
-
-    </script>
+function updateAllChecked15() {
+  $('#Teeth').text('');
+  $("input[name=answer15]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Teeth ').text() ? $('#Teeth').text() + ', ' : '';
+      $('#Teeth ').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 
 <!-- ////Begin Section 14 -->
-<div class="col-md-12 col-sm-12 col-lg-12" id="myteeth">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
     
       <div class="form controls">
@@ -2328,7 +2287,7 @@ function updateAllChecked9i() {
       <div class="form controls">
         <br><br><br>
 <input type="checkbox" name="answer15" value="many fillings or crowns">&nbsp;many fillings or crowns<br>
-<input type="checkbox" name="answer15" value="Do you have tooth pain">&nbsp;Do you have tooth pain<br><textarea id="Teeth" name="Teeth" style="display :none;"></textarea>
+<input type="checkbox" name="answer15" value="Do you have tooth pain">&nbsp;Do you have tooth pain<br><textarea id="Teeth" name="Teeth" style="display:none;"></textarea>
 
 
 </div>
@@ -2337,62 +2296,33 @@ function updateAllChecked9i() {
 </div>
 <!-- End Section Section 14 -->
 <script type="text/javascript">
+        $("input[name=answer16]").change(function() {
+  updateAllChecked16();
+});
 
-        function updateTextArea16() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer16]").prop('checked', true).change();
+  } else {
+    $("input[name=answer16]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mythroat :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Throat').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mythroat input').click(updateTextArea16);
-
-            updateTextArea16();
-
-        });
-
-    </script>
-
-
-
-    <script type="text/javascript">
-
-        function updateTextArea17() {
-
-            var allVals = [];
-
-            $('#mynose :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Nose').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mynose input').click(updateTextArea17);
-
-            updateTextArea17();
-
-        });
-
-    </script>
+function updateAllChecked16() {
+  $('#Throat').text('');
+  $("input[name=answer16]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Throat').text() ? $('#').text() + ', ' : '';
+      $('#Throat ').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 
 <!-- //Begin Section 16-17-->
 <div class="col-md-12 col-sm-12 col-lg-12">
-  <div class="col-md-6 col-sm-6 col-lg-6" id="mythroat">
+  <div class="col-md-6 col-sm-6 col-lg-6">
     
       <div class="form controls">
         <br>
@@ -2402,19 +2332,44 @@ function updateAllChecked9i() {
 <input type="checkbox" name="answer16" value="mild sore throats often">&nbsp;mild sore throats often<br>
 <input type="checkbox" name="answer16" value="Difficulty swallowing">&nbsp;Difficulty swallowing<br>
 <input type="checkbox" name="answer16" value="Sensation of something in your throat">&nbsp;Sensation of something in your throat<br>
-<input type="checkbox" name="answer16" value="Phlegm in your throat">&nbsp;Phlegm in your throat<br><textarea id="Throat" name="Throat" style="display :none;"></textarea>
+<input type="checkbox" name="answer16" value="Phlegm in your throat">&nbsp;Phlegm in your throat<br><textarea id="Throat" name="Throat" style="display:none;"></textarea>
 </div>
 
   </div>
- <div class="col-md-6 col-sm-6 col-lg-6">
+  <script type="text/javascript">
+        $("input[name=answer17]").change(function() {
+  updateAllChecked17();
+});
+
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer17]").prop('checked', true).change();
+  } else {
+    $("input[name=answer17]").prop('checked', false).change();
+  }
+});
+
+function updateAllChecked17() {
+  $('#Nose').text('');
+  $("input[name=answer17]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Nose').text() ? $('#Nose').text() + ', ' : '';
+      $('#Nose').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
+
+<div class="col-md-6 col-sm-6 col-lg-6">
     
-      <div class="form controls" id="mynose">
+      <div class="form controls">
         <br>
         <label>Nose - Do you have:</label><br>
 <input type="checkbox" name="answer17" value="obstructed nose">&nbsp;obstructed nose<br>
 <input type="checkbox" name="answer17" value="nosebleeds">&nbsp;nosebleeds<br>
 <input type="checkbox" name="answer17" value="dry nose">&nbsp;dry nose<br>
-<textarea id="Nose" name="Nose" style="display :none;"></textarea>
+<textarea id="Nose" name="Nose" style="display:none;"></textarea>
 </div>
 
   </div>
@@ -2423,31 +2378,29 @@ function updateAllChecked9i() {
 
 <!-- Start Script 18 -->
 <script type="text/javascript">
+        $("input[name=answer18]").change(function() {
+  updateAllChecked18();
+});
 
-        function updateTextArea18() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer18]").prop('checked', true).change();
+  } else {
+    $("input[name=answer18]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mymuscle :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Muscles').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mymuscle input').click(updateTextArea18);
-
-            updateTextArea18();
-
-        });
-
-    </script>
-
+function updateAllChecked18() {
+  $('#Muscles').text('');
+  $("input[name=answer18]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Muscles').text() ? $('#Muscles').text() + ', ' : '';
+      $('#Muscles').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- end script no 18 -->
 <!-- Start Script 18a -->
 <script type="text/javascript">
@@ -2502,7 +2455,7 @@ function updateAllChecked18b() {
 </script>
 <!-- end script no 18b -->
 <!-- // Section 18-->
-<div class="col-md-12 col-sm-12 col-lg-12" id="mymuscle">
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
    <div class="form controls">
     <br>
@@ -2530,7 +2483,7 @@ function updateAllChecked18b() {
         <br>
 <!-- <input type="checkbox" name="answer18" value="Muscle tics">&nbsp;Muscle tics<br>
 <input type="checkbox" name="answer18" value="Muscle spasms">&nbsp;Muscle spasms<br> -->
-<textarea id="Muscles" name="Muscles" style="display: none;"></textarea>
+<textarea id="Muscles" name="Muscles" style="display:none;"></textarea>
 </div>
 
   </div>
@@ -2539,84 +2492,67 @@ function updateAllChecked18b() {
 <!-- //End Section 18-->
 <!-- Start Script 19 -->
 <script type="text/javascript">
+        $("input[name=answer19]").change(function() {
+  updateAllChecked19();
+});
 
-        function updateTextArea19() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer19]").prop('checked', true).change();
+  } else {
+    $("input[name=answer19]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#myemo :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Emotional_Mental_Thinking').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#myemo input').click(updateTextArea19);
-
-            updateTextArea19();
-
-        });
-
-    </script>
+function updateAllChecked19() {
+  $('#Emotional_Mental_Thinking').text('');
+  $("input[name=answer19]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Emotional_Mental_Thinking').text() ? $('#Emotional_Mental_Thinking').text() + ', ' : '';
+      $('#Emotional_Mental_Thinking').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- end script no 19 -->
 
 <!-- Start Script 19a -->
 <script type="text/javascript">
+        $("input[name=answer19a]").change(function() {
+  updateAllChecked19a();
+});
 
-        function updateTextArea19a() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer19a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer19a]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mypremo :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#emotions_predominant').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mypremo input').click(updateTextArea19a);
-
-            updateTextArea19a();
-
-        });
-
-    </script>
+function updateAllChecked19a() {
+  $('#emotions_predominant').text('');
+  $("input[name=answer19a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#emotions_predominant').text() ? $('#emotions_predominant').text() + ', ' : '';
+      $('#emotions_predominant').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- end script no 18 -->
 <!-- Begin Section 19 -->
-<div class="col-md-12 col-sm-12 col-lg-12" >
+<div class="col-md-12 col-sm-12 col-lg-12">
   <div class="col-md-6 col-sm-6 col-lg-6">
-    <div class="form controls" id="myemo">
+    <div class="form controls">
       <br>
         <label>Emotional/Mental/Thinking - Do you have:</label><br>
 <input type="checkbox" name="answer19" value="Have poor memory">&nbsp;Have poor memory<br>
 <input type="checkbox" name="answer19" value="Have mental restlessness">&nbsp;Have mental restlessness<br>
 
 <br>
-</div>
-  </div>
-<div class="col-md-6 col-sm-6 col-lg-6">
-      <div class="form controls">
-        <br><br>
-<input type="checkbox" name="answer19" value="Have difficulty concentrating">&nbsp;Have difficulty concentrating<br>
-<input type="checkbox" name="answer19" value="any stressful experiences">&nbsp;any stressful experiences<br>
-<br><br>
-<textarea id="Emotional_Mental_Thinking" name="Emotional_Mental_Thinking" style="display:none;"></textarea>
-</div>
-  </div>
-</div>
-
-<div class="col-md-12 col-sm-12 col-lg-12" id="mypremo">
-  <div class="col-md-6 col-sm-6 col-lg-6">
 <label>Are any of these emotions predominant</label><br>
 
 <input type="checkbox" name="answer19a" value="Fear">
@@ -2625,96 +2561,90 @@ function updateAllChecked18b() {
 <input type="checkbox" name="answer19a" value="Shock">&nbsp;Shock&nbsp;
 <input type="checkbox" name="answer19a" value="Worry">&nbsp;Worry&nbsp;
 <input type="checkbox" name="answer19a" value="Sadness">&nbsp;Sadness<br>
-<textarea id="emotions_predominant" name="emotions_predominant" style="display:none;"></textarea>
+
+
+
 
 </div>
+  </div>
+<div class="col-md-6 col-sm-6 col-lg-6">
+      <div class="form controls">
+        <br><br>
+<input type="checkbox" name="answer19" value="Have difficulty concentrating">&nbsp;Have difficulty concentrating<br>
+<input type="checkbox" name="answer19" value="any stressful experiences">&nbsp;any stressful experiences<br>
+<br><br>
+<!-- <input type="checkbox" name="answer19a" value="Shock">&nbsp;Shock&nbsp;
+<input type="checkbox" name="answer19a" value="Worry">&nbsp;Worry&nbsp;
+<input type="checkbox" name="answer19a" value="Sadness">&nbsp;Sadness<br> -->
+<textarea id="emotions_predominant" name="emotions_predominant" style="display:none;"></textarea>
+<textarea id="Emotional_Mental_Thinking" name="Emotional_Mental_Thinking" style="display:none;"></textarea>
 </div>
+  </div>
+
 <!-- End Section 19 -->
 <!-- start script 20 -->
 <script type="text/javascript">
+        $("input[name=answer20]").change(function() {
+  updateAllChecked20();
+});
 
-        function updateTextArea20() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer20]").prop('checked', true).change();
+  } else {
+    $("input[name=answer20]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#heavy :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#feeling_of_heaviness').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#heavy input').click(updateTextArea20);
-
-            updateTextArea20();
-
-        });
-
-    </script>
+function updateAllChecked20() {
+  $('#Miscellaneous').text('');
+  $("input[name=answer20]").each(function() {
+    if (this.checked) {
+      let old_text = $('#Miscellaneous').text() ? $('#Miscellaneous').text() + ', ' : '';
+      $('#Miscellaneous').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- end Script 20 -->
 
 <!-- start script 20a-->
 <script type="text/javascript">
+        $("input[name=answer20a]").change(function() {
+  updateAllChecked20a();
+});
 
-        function updateTextArea20a() {
+$("input[name=addall]").change(function() {
+  if (this.checked) {
+    $("input[name=answer20a]").prop('checked', true).change();
+  } else {
+    $("input[name=answer20a]").prop('checked', false).change();
+  }
+});
 
-            var allVals = [];
-
-            $('#mymisc :checked').each(function () {
-
-                allVals.push($(this).val());
-
-            });
-
-            $('#Miscellaneous').val(allVals)
-
-        }
-
-        $(function () {
-
-            $('#mymisc input').click(updateTextArea20a);
-
-            updateTextArea20a();
-
-        });
-
-    </script>
+function updateAllChecked20a() {
+  $('#feeling_of_heaviness').text('');
+  $("input[name=answer20a]").each(function() {
+    if (this.checked) {
+      let old_text = $('#feeling_of_heaviness').text() ? $('#feeling_of_heaviness').text() + ', ' : '';
+      $('#feeling_of_heaviness').text(old_text + $(this).val());
+      
+    }
+  })
+}
+</script>
 <!-- end Script 20 -->
 
 <!-- Begin Section 20 -->
-<div class="col-md-12 col-sm-12 col-lg-12" style="margin-left: 0px;padding:0px 0px 0px 0px !important;" id="mymisc">
-  <div class="col-md-6 col-sm-6 col-lg-6" >
+<div class="col-md-12 col-sm-12 col-lg-12" style="margin-left: 0px;padding:0px 0px 0px 0px !important;">
+  <div class="col-md-6 col-sm-6 col-lg-6">
    <div class="form controls">
     <br>
         <label>Miscellaneous - Do you:</label><br>
 <input type="checkbox" name="answer20" value="Feel your heart beat">&nbsp;Feel your heart beat<br>
 <input type="checkbox" name="answer20" value="Have dizziness">&nbsp;Have dizziness<br>
 <input type="checkbox" name="answer20" value="Have brittle nails">&nbsp;Have brittle nails<br>
- 
-</div>
-  </div>
-<div class="col-md-6 col-sm-6 col-lg-6" >
-    
-      <div class="form controls">
-        <br><br>
-<input type="checkbox" name="answer20" value="Have thirst without a desire to drink">&nbsp;Have thirst without a desire to drink<br>
-<input type="checkbox" name="answer20" value="Have rashes">&nbsp;Have rashes<br>
-<input type="checkbox" name="answer20" value="Have itching">&nbsp;Have itching<br>
-<textarea id="Miscellaneous" name="Miscellaneous" style="display: none;"></textarea>
-</div>
-
-  </div>
-</div>
-
-
-<div class="col-md-12 col-sm-12 col-lg-12" style="margin-left: 0px;padding:0px 0px 0px 0px !important;" id="heavy">
-  <div class="col-md-6 col-sm-6 col-lg-6" >
-
 
 <label>Have a feeling of heaviness</label><br>
 <input type="checkbox" name="answer20a" value="Body">&nbsp;Body&nbsp;
@@ -2723,11 +2653,27 @@ function updateAllChecked18b() {
 <textarea id="feeling_of_heaviness" name="feeling_of_heaviness" style="display:none;">
 </textarea>
 </div>
+  </div>
+<div class="col-md-6 col-sm-6 col-lg-6">
+    
+      <div class="form controls">
+        <br><br>
+<input type="checkbox" name="answer20" value="Have thirst without a desire to drink">&nbsp;Have thirst without a desire to drink<br>
+<input type="checkbox" name="answer20" value="Have rashes">&nbsp;Have rashes<br>
+<input type="checkbox" name="answer20" value="Have itching">&nbsp;Have itching<br>
+<textarea id="Miscellaneous" name="Miscellaneous" style="display:none;"></textarea>
+</div>
+
+  </div>
+</div>
 </div>
 <!-- End Section 20 -->
 
       <!-- ////////////////////// -->
-</div>
+
+
+
+      </div>
        <div class="modal-footer">
         <button type="submit" class="datas-btn btn btn-primary btn-sm" style="margin:0 auto;display:block;border-radius: 5px;border: 1px solid #babf10;">Submit</button>
         
@@ -2745,3 +2691,6 @@ function updateAllChecked18b() {
 <!-- end .container -->
 
 
+
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->

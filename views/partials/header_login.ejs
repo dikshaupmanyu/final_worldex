@@ -16,6 +16,8 @@
     
     <link rel="shortcut icon" href="favicon.png">    
     <!-- Bootstrap 3.3.2 -->
+     <script type="text/javascript" src="/intjs/app.js"></script>
+
     <link rel="stylesheet" href="/assets_home/css/bootstrap.min.css" type="text/css" defer>      
     <link rel="stylesheet" href="/assets_home/css/animate.css" type="text/css" defer>
     <link rel="stylesheet" href="/assets_home/css/font-awesome.min.css" type="text/css" defer>
@@ -486,16 +488,23 @@
                    
         </ul>
          
-      <!--  <ul class="nav navbar-nav navbar-right hidden-xs" ng-if = "vm.user.user_role === 'doctor'">
+          <% if (user.user_role === 'doctor') { %> 
+       <ul class="nav navbar-nav navbar-right hidden-xs">
           <li class="dropdown">
-          <a ui-sref="review-consult" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-bell"><span class="num" id="totalconsultuser" style="color: #babf10"></span></span></a>
+             
+          <a href="review-consult" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-bell"><span class="num" style="color: #babf10"><%= loadconsultdata.length %></span></span></a>
+                 
           </li>
       </ul>
-        <ul class="nav navbar-nav navbar-right hidden-xs" ng-if = "vm.user.user_role === 'user'">
+      <% } %>
+
+     <% if (user.user_role === 'user') { %>
+        <ul class="nav navbar-nav navbar-right hidden-xs">
           <li class="dropdown">
-          <a ui-sref="consult" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-bell"><span class="num" id="unread" style="color: #babf10"></span></span></a>
+          <a href="consult" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-bell"><span class="num" id="unread" style="color: #babf10"></span><%= totalreadconsultstatus %></span></a>
           </li>
-      </ul> -->
+      </ul>
+      <% } %>
          <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="/carts" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span>  &nbsp;$<span id="totalprice"></span></a>

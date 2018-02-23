@@ -24,7 +24,7 @@
 
 
 
-                    <li ng-class="{active: activeTab === 'order'}" class="active"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
+                    <li ng-class="{active: activeTab === 'order'}"><a href="order" ><i class="fa fa-user"  aria-hidden="true"></i> My Order</a></li>
 
 
                      <% if (user.user_role === 'admin') { %>
@@ -32,14 +32,14 @@
                     <li ng-class="{active: activeTab === 'managetransaction'}"><a href="managetransaction"><i class="fa fa-user"  aria-hidden="true"></i> Transaction Managment</a></li>
                     <li ng-class="{active: activeTab === 'symptom-admin'}"><a href="symptom-admin"><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                     <li ng-class="{active: activeTab === 'product-list'}"><a href="product-list" ><i class="fa fa-user-md"  aria-hidden="true"></i> Our Products</a></li>
-                     <li ng-class="{active: activeTab === 'admin'}"><a ui-sref="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
+                     <li ng-class="{active: activeTab === 'admin'}"><a href="admin"><i class="fa fa-plus"  aria-hidden="true"></i> User Management</a></li>
                      <li ng-class="{active: activeTab === 'add-symptoms'}"><a href="add-symptoms" ><i class="fa fa-user-md"  aria-hidden="true"></i> Add Symptoms</a></li>
                      <li ng-class="{active: activeTab === 'manage-symptoms'}"><a href="manage-symptoms"><i class="fa fa-user-md"  aria-hidden="true"></i> Manage Symptoms</a></li>
                     <% } %>
 
                       
                      <% if (user.user_role === 'user') { %>
-                     <li ng-class="{active: activeTab === 'consult'}"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
+                     <li ng-class="{active: activeTab === 'consult'}" class="active"><a href="consult" ><i class="fa fa-user-md" aria-hidden="true"></i> My Consultations</a></li>
                      <li ng-class="{active: activeTab === 'symptom-user'}"><a href="symptom-user" ><i class="fa fa-user-md"  aria-hidden="true"></i> Symptom History</a></li>
                      <% } %>
 
@@ -94,78 +94,159 @@
 
                                             
                                                         <div class="control-group" style="text-align: center;">
-                                                         <h4><b> Your Order Id - <%= orderid %> </b></h4>
+                                                         <h4><b> Your Consult Id - <%= consultid %> </b></h4>
 
                                                         </div>         
+                                         <% for (var i = 0; i < data.length; i++) if(data[i]._id == consultid) { %>
 
 
-                                <form method="post" class="form-horizontal" style="height: 300px;">
+                                                          <form class="form-horizontal" style="height: 200px;">             
+
+                                                                   
+                                                                 <div class="control-group">
+                                                                    <label class="control-label"> Name</label>
+                                                                    <div class="controls">
 
 
-                                 <table datatable="ng" id="example" class="table table-striped table-bordered" width="100%" ui-jq="datatable" ui-options="options">
-                                            <thead>
-                                              <tr>
-                                            
-                                                <th>Product Name</th>
-                                                <th>Product Price</th>
-                                                <th>Product Quantity</th>
-                                              
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                              
-                                              <tr>
-                                                <td><%= data.productname %></td>
-                                                <td>$ <%= data.productprice %></td>
-                                                <td><%= data.productqty %></td>
-                                               
-                                              </tr>
-                                              
-                                            </tbody>
-                                          </table>
+                                                                       <input type="text"  name="firstName" class="form-control" value="<%= user.firstName %>" readonly  />
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                         
+
+                                                                <div class="control-group">
+                                                                    <label class="control-label">Problem</label>
+                                                                    <div class="controls">
+
+                                                                        <input type="text" name="problem" class="form-control" value="<%= data[i].problem %>" readonly />
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="control-group">
+                                                                    <label class="control-label">Problem Area</label>
+                                                                    <div class="controls">
+                                                     <input type="text" class="form-control" value="<%= data[i].problemarea %>" readonly />
+                                                                    </div>
+                                                                </div>
+
+                                                              
+
+                                                                <div class="control-group">
+                                                                    <label class="control-label">Problem Detail</label>
+                                                                    <div class="controls">
+                                                                    <textarea class="form-control"  rows="3" readonly><%= data[i].problemdetail %></textarea>
+                                                                    </div>
+                                                                </div>
+                
+                               
+                                  </form>
+
+                                  <% } %>
+                                  <br>
+                                  <br>
+                                    <div class="control-group" style="text-align: center;">
+                                                         <h4><b> Doctor's Reply </b></h4>
+
+                                                        </div> 
+
+                                                        <br><br> 
+                                <% for (var k = 0; k < dataconsultreply.length; k++) if(dataconsultreply[k].consult_id == consultid) { %>
+                                                              
+                                <form action="/notification-query-update" method="post" class="form-horizontal" style="height:350px;overflow-x: auto;">
+                               
+                                <div>
+
+                                <input type="hidden" value="<%= k + 1 %>" id="totalreply" name="totalreply">
+
+                           <input type="hidden" value="<%= dataconsultreply[k]._id %>" name="consultreply_id">
+
+                           <input type="hidden" value="<%= consultid %>" name="current_id">
+
+                                                             <div class="control-group">
+                                                                    <label class="control-label">
+                                                                      Date
+                                                                    </label>
+                                                                    <div class="controls">
+                                                                         <input id="datetime" name="datetime" class=" form-control" value="<%= dataconsultreply[k].datetime %>"  readonly>
+                                                                    </div>
+                                                                </div>
+
+
+                                                   
+                                                             <div class="control-group">
+                                                                    <label class="control-label">
+                                                                      Doctor's Recommedation
+                                                                    </label>
+                                                                    <div class="controls">
+                                               <textarea  name="comment" class=" form-control" rows="3" readonly>
+                                                  <%= dataconsultreply[k].comment %> 
+
+                                                  
+                                               </textarea>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="control-group">
+                                                                    <label class="control-label">
+                                                                     Product Link
+                                                                    </label>
+                                                          
+
+     
+
+                                                                <div class="controls">
+
+
+                             <% for (var l = 0; l < dataconsultreply[k].product_id.split(',').length; l++) { %>                                         
+                              <a href="order-details?id=<%= dataconsultreply[k].product_id %>" target="_blank"> Click to go to the Product<br></a>
+
+                              <% } %>
+                                                                    </div>
+
+                                                                      <br>
+
+                                                                <div class="control-group">
+                                                                    <label class="control-label">
+                                                                      Enter your Query
+                                                                    </label>
+                                                                    <div class="controls">
+                                                                   
+                                                           <textarea id="queryconsult{{$index}}" name="query" class=" form-control col-md-6"  rows="2"></textarea>
+
+                                                                   
+
+                                                                       
+                                                           <button type="submit" style="text-decoration: none;outline: 0 none;" class="btn theme-btn"><i class="fa fa-arrow"></i> Send</button>
+                                                                
+                                                           
+                                                               
+                                                                        
+
+                                                                    
+                                                                  </div>
+                                                                </div>
+
                                                                   
-                                                 
-                                 </form>        
 
+                                                                    <hr>
 
-                             <% if(user.user_role == 'admin') { %>    
-                                  <div>
-                                  
-                                    <hr>
+                                                      
+                                                 <!--    </div> -->
 
-                      <% for (var i = 0; i < datas.length; i++) if(datas[i]._id == orderid) { %>
-          
-                                  <form method="post" action="/updateorder" style="height: 200px;">
-                                          <table>
-                                            <tbody>
-                                            
-                                              <td>&nbsp;Update Order Status : &nbsp;</td>
-                                                <input type="text" name="orderid" value="<%= orderid %>" style="display: none;">
+                                                    </div>
+                                                     </div>
 
-                                              <td><select class="form-control" id="o_status" name="o_status">
-                                           
-                                               <option value="" "<%= (datas[i].orderstatus == '')?'selected':'' %>">Select Order Status</option>
-                                                <option value="Pending" "<%= (datas[i].orderstatus == 'Pending')?'selected':'' %>">Pending</option>
-                                                <option value="Processing" "<%= (datas[i].orderstatus == 'Processing')?'selected':'' %>">Processing</option>
-                                                <option value="On Hold" "<%= (datas[i].orderstatus == 'On Hold')?'selected':'' %>">On Hold</option>
-                                                <option value="Completed" "<%= (datas[i].orderstatus == 'Completed')?'selected':'' %>">Completed</option>
-                                                <option value="Cancelled" "<%= (datas[i].orderstatus == 'Cancelled')?'selected':'' %>">Cancelled</option>
-                                                <option value="Refunded" "<%= (datas[i].orderstatus == 'Refunded')?'selected':'' %>">Refunded</option>
-                                                <option value="Failed" "<%=(datas[i].orderstatus == 'Failed')?'selected':'' %>">Failed</option>
-                                              </select> &nbsp;&nbsp;
+                                                               
+                                                    </div>
+                                                            </form>    
 
-                                              <input type="submit" class="btn theme-btn" value="Update">
-
-                                              </td>
-                                            
-                                            </tbody>
-                                          </table>
-                                            </form>
-                                     <% } %>       
-
+                                   <% } %>
                                         </div>
 
-                                        <% } %>
+                                      
 <!--<script type="text/javascript">
 
    var total = 0;
